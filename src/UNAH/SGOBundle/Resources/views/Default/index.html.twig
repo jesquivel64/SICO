@@ -13,4 +13,51 @@
     <h1>Sistema Gestor de Oficios</h1>
   </hgroup>
 </section>
+<section class="span6">
+    <form action="{{ path('oficio_create') }}" method="post" {{ form_enctype(form) }}>
+		<fieldset>
+		<legend>Agregar un Oficio</legend>
+        {{ form_widget(form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+		</fieldset>
+    </form>
+</section>
+<section class="span3">
+    <form action="{{ path('oficio_search_date') }}" method="get" {{ form_enctype(date_form) }}>
+		<fieldset>
+		<legend>Buscar Oficios por Periodo</legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(date_form) }}
+		</fieldset>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </form>
+</section>
+<section class="span3">
+    <form action="{{ path('oficio_search_numero') }}" method="get" {{ form_enctype(numero_form) }}>
+		<fieldset>
+		<legend>Buscar Oficios por N&uacute;mero</legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(numero_form) }}
+		</fieldset>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </form>
+</section>
+<section class="span3">
+    <form action="{{ path('oficio_search_depto') }}" method="get" {{ form_enctype(depto_form) }}>
+		<fieldset>
+		<legend>Buscar Oficios por Dependencia</legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(depto_form) }}
+		</fieldset>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </form>
+</section>
 {% endblock %}
