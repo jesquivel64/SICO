@@ -1,0 +1,23 @@
+UNAHSGOBundle_homepage:
+    pattern:  /
+    defaults: { _controller: UNAHSGOBundle:Default:index }
+
+UNAHSGOBundle_default:
+    pattern:  /home
+    defaults: { _controller: UNAHSGOBundle:Default:index }
+
+UNAHSGOBundle_departamento:
+    resource: "@UNAHSGOBundle/Resources/config/routing/departamento.yml"
+    prefix:   /departamento
+
+UNAHSGOBundle_oficio:
+    resource: "@UNAHSGOBundle/Resources/config/routing/oficio.yml"
+    prefix:   /oficio
+
+UNAHSGOBundle_comentario:
+    resource: "@UNAHSGOBundle/Resources/config/routing/comentario.yml"
+    prefix:   /comentario
+
+UNAHSGOBundle_adjunto:
+    resource: "@UNAHSGOBundle/Resources/config/routing/adjunto.yml"
+    prefix:   /adjunto

@@ -1,0 +1,30 @@
+comentario:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Comentario:index" }
+
+comentario_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Comentario:show" }
+
+comentario_new:
+    pattern:  /new/{oficio}
+    defaults: { _controller: "UNAHSGOBundle:Comentario:new" }
+
+comentario_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:Comentario:create" }
+    requirements: { _method: post }
+
+comentario_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Comentario:edit" }
+
+comentario_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Comentario:update" }
+    requirements: { _method: post|put }
+
+comentario_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Comentario:delete" }
+    requirements: { _method: post|delete }

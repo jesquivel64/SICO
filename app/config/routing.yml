@@ -1,0 +1,4 @@
+unahsgo:
+    resource: "@UNAHSGOBundle/Resources/config/routing.yml"
+    prefix:   /
+

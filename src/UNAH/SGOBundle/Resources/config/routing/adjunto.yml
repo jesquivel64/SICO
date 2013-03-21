@@ -1,0 +1,30 @@
+adjunto:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Adjunto:index" }
+
+adjunto_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Adjunto:show" }
+
+adjunto_new:
+    pattern:  /new/{oficio}
+    defaults: { _controller: "UNAHSGOBundle:Adjunto:new" }
+
+adjunto_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:Adjunto:create" }
+    requirements: { _method: post }
+
+adjunto_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Adjunto:edit" }
+
+adjunto_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Adjunto:update" }
+    requirements: { _method: post|put }
+
+adjunto_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Adjunto:delete" }
+    requirements: { _method: post|delete }

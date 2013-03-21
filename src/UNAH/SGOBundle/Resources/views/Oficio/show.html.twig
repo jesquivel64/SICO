@@ -1,0 +1,81 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<aside class="span3">
+  <nav class="well sidebar-nav">
+	<ul class="nav nav-list">
+     <li><a href="{{ path('oficio') }}">Regresar a Oficios</a></li>
+    <li><a href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar este Oficio</a></li>
+	<li><a href="{{ path('comentario_new', { 'oficio': entity.id }) }}">Registrar Seguimiento</a></li>
+	<li><a href="{{ path('adjunto_new', { 'oficio': entity.id }) }}">Agregar Adjunto</a></li>
+    </ul>
+  </nav>
+</aside>
+<section class="span9">
+<section class="hero-unit">
+  <hgroup>
+    <h1>{{ entity.numero }} - {{ entity.emisor }}</h1>
+  </hgroup>
+  <p>Oficio</p>
+</section>
+<ul>
+	<li>Descripci&oacute;n: {{ entity.descripcion }}</li>
+    <li>Recibi&oacute;: {{ entity.recibio }}</li>
+    <li>Fecha: {{ entity.fecha|date("d/m/Y") }}</li>
+</ul>
+<table class="table table-striped">
+	<caption>Seguimiento</caption>
+	<thead>
+		<tr>
+			<th>Comentario</th>
+			<th>Fecha</th>
+			<th>Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for seguimiento in entity.comentarios %}
+		<tr>
+			<td>{{ seguimiento.comentario }}</td>
+			<td>{{ seguimiento.fecha|date("d/m/Y") }}</td>
+			<td>
+			<ul>
+				<li>
+					<a href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a>
+				</li>
+			</ul>
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+<table class="table table-striped">
+	<caption>Adjuntos</caption>
+	<thead>
+		<tr>
+			<th>Comentario</th>
+			<th>Archivo</th>
+			<th>Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for adjunto in entity.adjuntos %}
+		<tr>
+			<td>{{ adjunto.nombre }}</td>
+            <td><a href="/{{ adjunto.getWebPath() }}">{{ adjunto.getWebPath() }}</a></td>
+			<td>
+				<ul>
+					<li>
+						<a href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+    <form action="{{ path('oficio_delete', { 'id': entity.id }) }}" method="post">
+		<input type="hidden" name="_method" value="DELETE" />
+		{{ form_widget(delete_form) }}
+		<button class="btn" type="submit">Eliminar este Oficio</button>
+	</form>
+</section>
+{% endblock %}
