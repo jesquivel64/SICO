@@ -28,3 +28,15 @@ oficio_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "UNAHSGOBundle:Oficio:delete" }
     requirements: { _method: post|delete }
+
+oficio_search_date:
+    pattern:  /fecha
+    defaults: { _controller: "UNAHSGOBundle:Oficio:searchDate" }
+
+oficio_search_numero:
+    pattern:  /numero
+    defaults: { _controller: "UNAHSGOBundle:Oficio:searchNumero" }
+
+oficio_search_depto:
+    pattern:  /dependencia
+    defaults: { _controller: "UNAHSGOBundle:Oficio:searchDepartamento" }

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use UNAH\SGOBundle\Entity\Oficio;
 use UNAH\SGOBundle\Form\OficioType;
+use UNAH\SGOBundle\Form\DepartamentoType;
 
 /**
  * Oficio controller.
@@ -26,12 +27,18 @@ class OficioController extends Controller
      */
     public function indexAction()
     {
+		$dateForm = $this->createDateSearchForm();
+		$numeroForm = $this->createNumeroSearchForm();
+		$deptoForm = $this->createDepartamentoSearchForm();
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('UNAHSGOBundle:Oficio')->findAll();
 
         return array(
             'entities' => $entities,
+			'date_form' => $dateForm->createView(),
+			'numero_form' => $numeroForm->createView(),
+			'depto_form' => $deptoForm->createView(),
         );
     }
 
@@ -96,7 +103,7 @@ class OficioController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Oficio entity.');
         }
-
+		
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -192,6 +199,154 @@ class OficioController extends Controller
 
         return $this->redirect($this->generateUrl('oficio'));
     }
+
+    /**
+     * Permite Efectuar busquedas por fecha
+     *
+     * @Route("/fecha", name="oficio_search_fecha")
+     * @Method("GET")
+     * @Template()
+     */
+	public function searchDateAction(Request $request)
+	{
+		$form = $this->createDateSearchForm();
+		$form->bind($request);
+		if ($form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			
+			$qb = $em->createQueryBuilder();
+			$query = $qb->select('o')
+				->from('UNAH\SGOBundle\Entity\Oficio', 'o')
+				->where($qb->expr()->between('o.fecha', ':inicio', ':fin'))
+				->setParameter('inicio', $form->get('inicio')->getData())
+				->setParameter('fin', $form->get('fin')->getData())
+				->getQuery();
+			
+			$oficios = $query->getResult();
+			$query = $qb->select('count(o)')
+				->where($qb->expr()->between('o.fecha', ':inicio', ':fin'))
+				->setParameter('inicio', $form->get('inicio')->getData())
+				->setParameter('fin', $form->get('fin')->getData())
+				->getQuery();
+			$count = $query->getSingleScalarResult();
+
+			return array(
+				'oficios'      => $oficios,
+				'inicio'       => $form->get('inicio')->getData(),
+				'fin'       => $form->get('fin')->getData(),
+				'date_form' => $form->createView(),
+				'count'     => $count,
+			);
+		}
+        return $this->redirect($this->generateUrl('oficio'));
+	}
+
+    /**
+     * Permite Efectuar busquedas por fecha
+     *
+     * @Route("/fecha", name="oficio_search_numero")
+     * @Method("GET")
+     * @Template()
+     */
+	public function searchNumeroAction(Request $request)
+	{
+		$form = $this->createNumeroSearchForm();
+		$form->bind($request);
+		if ($form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			
+			$qb = $em->createQueryBuilder();
+			$query = $qb->select('o')
+				->from('UNAH\SGOBundle\Entity\Oficio', 'o')
+				->where('o.numero = :numero')
+				->setParameter('numero', $form->get('numero')->getData())
+				->getQuery();
+			
+			$oficios = $query->getResult();
+			$query = $qb->select('count(o)')
+				->where('o.numero = :numero')
+				->setParameter('numero', $form->get('numero')->getData())
+				->getQuery();
+			$count = $query->getSingleScalarResult();
+
+			return array(
+				'oficios'      => $oficios,
+				'numero'       => $form->get('numero')->getData(),
+				'numero_form' => $form->createView(),
+				'count'     => $count,
+			);
+		}
+        return $this->redirect($this->generateUrl('oficio'));
+	}
+
+    /**
+     * Permite Efectuar busquedas por fecha
+     *
+     * @Route("/fecha", name="oficio_search_numero")
+     * @Method("GET")
+     * @Template()
+     */
+	public function searchDepartamentoAction(Request $request)
+	{
+		$form = $this->createDepartamentoSearchForm();
+		$form->bind($request);
+		if ($form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			
+			$qb = $em->createQueryBuilder();
+			$query = $qb->select('o')
+				->from('UNAH\SGOBundle\Entity\Oficio', 'o')
+				->where('o.emisor = :emisor')
+				->setParameter('emisor', $form->get('emisor')->getData())
+				->getQuery();
+			
+			$oficios = $query->getResult();
+			$query = $qb->select('count(o)')
+				->where('o.emisor = :emisor')
+				->setParameter('emisor', $form->get('emisor')->getData())
+				->getQuery();
+			$count = $query->getSingleScalarResult();
+
+			return array(
+				'oficios'      => $oficios,
+				'departamento'       => $form->get('emisor')->getData(),
+				'depto_form' => $form->createView(),
+				'count'     => $count,
+			);
+		}
+        return $this->redirect($this->generateUrl('oficio'));
+	}
+	
+	private function createDateSearchForm()
+	{
+		return $this->createFormBuilder()
+		->add('inicio', 'date', array(
+				'widget' => 'single_text',
+				'format' => 'dd/MM/yyyy',
+				'attr' => array('class' => 'datepicker')))
+		->add('fin', 'date', array(
+				'widget' => 'single_text',
+				'format' => 'dd/MM/yyyy',
+				'attr' => array('class' => 'datepicker')))
+		->getForm();
+	}
+	
+	private function createNumeroSearchForm()
+	{
+		return $this->createFormBuilder()
+		->add('numero')
+		->getForm();
+	}
+	
+	private function createDepartamentoSearchForm()
+	{
+		return $this->createFormBuilder()
+		->add('emisor', 'entity', array(
+			'class' => 'UNAH\SGOBundle\Entity\Departamento'
+			)
+		)
+		->getForm();
+	}
 
     /**
      * Creates a form to delete a Oficio entity by id.
