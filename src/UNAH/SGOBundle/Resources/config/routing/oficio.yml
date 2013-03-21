@@ -1,0 +1,30 @@
+oficio:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Oficio:index" }
+
+oficio_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Oficio:show" }
+
+oficio_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:Oficio:new" }
+
+oficio_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:Oficio:create" }
+    requirements: { _method: post }
+
+oficio_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Oficio:edit" }
+
+oficio_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Oficio:update" }
+    requirements: { _method: post|put }
+
+oficio_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Oficio:delete" }
+    requirements: { _method: post|delete }

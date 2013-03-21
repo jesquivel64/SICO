@@ -1,0 +1,53 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<aside class="span3">
+  <nav class="well sidebar-nav">
+	<ul class="nav nav-list">
+      <li><a href="{{ path('oficio_new') }}">Registrar un oficio</a></li>
+    </ul>
+  </nav>
+</aside>
+<section class="span9">
+<section class="hero-unit">
+  <hgroup>
+    <h1>Sistema Gestor de Oficios</h1>
+  </hgroup>
+  <p>Oficios</p>
+  </section>
+<section>
+    <h1>Lista de Oficios</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Descripcion</th>
+                <th>Recibio</th>
+                <th>Fecha</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('oficio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.numero }}</td>
+                <td>{{ entity.descripcion }}</td>
+                <td>{{ entity.recibio }}</td>
+                <td>{{ entity.fecha|date("d/m/Y") }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('oficio_show', { 'id': entity.id }) }}">mostrar</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('oficio_edit', { 'id': entity.id }) }}">editar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	</section>
+{% endblock %}

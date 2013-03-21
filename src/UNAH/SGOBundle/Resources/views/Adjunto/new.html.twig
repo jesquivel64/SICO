@@ -1,0 +1,23 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<aside class="span3">
+  <nav class="well sidebar-nav">
+	<ul class="nav nav-list">
+      <li><a href="{{ path('oficio') }}">Regresar a Oficios</a>
+      <li><a href="{{ path('oficio_show', { 'id': entity.oficio.id }) }}">Regresar a {{ entity.oficio.numero }} {{ entity.oficio.emisor }}</a></li>
+    </li>
+    </ul>
+  </nav>
+</aside>
+<section class="span6">
+    <form action="{{ path('adjunto_create') }}" method="post" {{ form_enctype(form) }}>
+		<fieldset>
+		<legend>Agregar un Adjunto a un oficio</legend>
+        {{ form_widget(form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+		</fieldset>
+    </form>
+</section>
+{% endblock %}

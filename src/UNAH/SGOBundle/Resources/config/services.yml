@@ -1,0 +1,7 @@
+parameters:
+#    unahsgo.example.class: UNAH\SGOBundle\Example
+
+services:
+#    unahsgo.example:
+#        class: %unahsgo.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
