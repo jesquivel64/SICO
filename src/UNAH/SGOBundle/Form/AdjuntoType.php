@@ -12,7 +12,6 @@ class AdjuntoType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('oficio')
 			->add('file')
         ;
     }

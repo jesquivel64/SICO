@@ -11,7 +11,7 @@ comentario_new:
     defaults: { _controller: "UNAHSGOBundle:Comentario:new" }
 
 comentario_create:
-    pattern:  /create
+    pattern:  /create/{oficio}
     defaults: { _controller: "UNAHSGOBundle:Comentario:create" }
     requirements: { _method: post }
 

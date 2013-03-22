@@ -12,7 +12,9 @@ class ComentarioType extends AbstractType
     {
         $builder
             ->add('comentario', 'textarea')
-            ->add('oficio')
+            /*->add('oficio', 'entity', array(
+				'class' => 'UNAHSGOBundle:Oficio',
+			))*/
             ->add('fecha', 'date', array(
 				'widget' => 'single_text',
 				'format' => 'dd/MM/yyyy',

@@ -31,8 +31,14 @@ class OficioController extends Controller
 		$numeroForm = $this->createNumeroSearchForm();
 		$deptoForm = $this->createDepartamentoSearchForm();
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('UNAHSGOBundle:Oficio')->findAll();
+		$qb = $em->createQueryBuilder();
+		$query = $qb->select('o')
+			->from('UNAH\SGOBundle\Entity\Oficio', 'o')
+			->setMaxResults(10)
+			->orderBy('o.id', 'DESC')
+			->getQuery();
+		
+        $entities = $query->getResult();
 
         return array(
             'entities' => $entities,
@@ -342,7 +348,7 @@ class OficioController extends Controller
 	{
 		return $this->createFormBuilder()
 		->add('emisor', 'entity', array(
-			'class' => 'UNAH\SGOBundle\Entity\Departamento'
+			'class' => 'UNAH\SGOBundle\Entity\Departamento',
 			)
 		)
 		->getForm();

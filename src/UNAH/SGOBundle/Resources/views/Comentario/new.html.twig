@@ -10,9 +10,9 @@
   </nav>
 </aside>
 <section class="span6">
-    <form action="{{ path('comentario_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('comentario_create', { 'oficio': oficio.id }) }}" method="post" {{ form_enctype(form) }}>
 		<fieldset>
-		<legend>Registrar Seguimiento a un oficio</legend>
+		<legend>Registrar Seguimiento a Oficio {{ entity.oficio.numero }} - {{ entity.oficio.emisor }}</legend>
         {{ form_widget(form) }}
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Guardar</button>
