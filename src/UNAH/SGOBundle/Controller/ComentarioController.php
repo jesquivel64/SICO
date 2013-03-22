@@ -33,7 +33,7 @@ class ComentarioController extends Controller
      * Creates a new Comentario entity.
      *
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $oficio)
     {
         $entity  = new Comentario();
         $form = $this->createForm(new ComentarioType(), $entity);
@@ -41,6 +41,9 @@ class ComentarioController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+		
+			$oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
+			$entity->setOficio($oficio);
             $em->persist($entity);
             $em->flush();
 
@@ -62,19 +65,20 @@ class ComentarioController extends Controller
         $entity = new Comentario();
 		
         $em = $this->getDoctrine()->getManager();
-
+		
         $oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
-
+		
         if (!$oficio) {
             throw $this->createNotFoundException('Unable to find Oficio entity.');
         }
 		$entity->setOficio($oficio);
 		
         $form   = $this->createForm(new ComentarioType(), $entity);
-
+		
         return $this->render('UNAHSGOBundle:Comentario:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+			'oficio' => $oficio,
         ));
     }
 
@@ -85,15 +89,15 @@ class ComentarioController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+		
         $entity = $em->getRepository('UNAHSGOBundle:Comentario')->find($id);
-
+		
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Comentario entity.');
         }
-
+		
         $deleteForm = $this->createDeleteForm($id);
-
+		
         return $this->render('UNAHSGOBundle:Comentario:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
@@ -106,16 +110,16 @@ class ComentarioController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+		
         $entity = $em->getRepository('UNAHSGOBundle:Comentario')->find($id);
-
+		
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Comentario entity.');
         }
-
+		
         $editForm = $this->createForm(new ComentarioType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
-
+		
         return $this->render('UNAHSGOBundle:Comentario:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -130,24 +134,24 @@ class ComentarioController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+		
         $entity = $em->getRepository('UNAHSGOBundle:Comentario')->find($id);
-
+		
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Comentario entity.');
         }
-
+		
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new ComentarioType(), $entity);
         $editForm->bind($request);
-
+		
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
+		
             return $this->redirect($this->generateUrl('comentario_edit', array('id' => $id)));
         }
-
+		
         return $this->render('UNAHSGOBundle:Comentario:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
