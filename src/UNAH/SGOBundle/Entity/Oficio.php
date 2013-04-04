@@ -52,21 +52,21 @@ class Oficio
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=255)
+     * @ORM\Column(name="estado", type="string", length=255, nullable=true)
      */
     private $estado;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="timestamp", type="datetimetz")
+     * @ORM\Column(name="timestamp", type="datetimetz", nullable=true)
      */
     private $fecha_de_recibido;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="emitido", type="datetimetz")
+     * @ORM\Column(name="emitido", type="datetimetz", nullable=true)
      */
     private $fecha_de_emision;
 	
