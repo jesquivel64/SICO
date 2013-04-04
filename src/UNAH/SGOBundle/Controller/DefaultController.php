@@ -34,6 +34,7 @@ class DefaultController extends Controller
 
         return array(
             'entities' => $entities,
+			'emision_form' => $dateForm->createView(),
 			'date_form' => $dateForm->createView(),
 			'numero_form' => $numeroForm->createView(),
 			'depto_form' => $deptoForm->createView(),
