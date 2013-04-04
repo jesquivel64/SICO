@@ -223,14 +223,14 @@ class OficioController extends Controller
 			$qb = $em->createQueryBuilder();
 			$query = $qb->select('o')
 				->from('UNAH\SGOBundle\Entity\Oficio', 'o')
-				->where($qb->expr()->between('o.fecha', ':inicio', ':fin'))
+				->where($qb->expr()->between('o.fecha_de_recibido', ':inicio', ':fin'))
 				->setParameter('inicio', $form->get('inicio')->getData())
 				->setParameter('fin', $form->get('fin')->getData())
 				->getQuery();
 			
 			$oficios = $query->getResult();
 			$query = $qb->select('count(o)')
-				->where($qb->expr()->between('o.fecha', ':inicio', ':fin'))
+				->where($qb->expr()->between('o.fecha_de_recibido', ':inicio', ':fin'))
 				->setParameter('inicio', $form->get('inicio')->getData())
 				->setParameter('fin', $form->get('fin')->getData())
 				->getQuery();

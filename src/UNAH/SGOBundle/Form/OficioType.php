@@ -14,11 +14,16 @@ class OficioType extends AbstractType
             ->add('numero')
             ->add('descripcion', 'textarea')
             ->add('recibio')
-            ->add('fecha', 'date', array(
+            ->add('estado', 'textarea')
+            ->add('fecha_de_emision', 'date', array(
 				'widget' => 'single_text',
 				'format' => 'dd/MM/yyyy',
 				'attr' => array('class' => 'datepicker')))
-            ->add('emisor')
+            ->add('fecha_de_recibido', 'date', array(
+				'widget' => 'single_text',
+				'format' => 'dd/MM/yyyy',
+				'attr' => array('class' => 'datepicker')))
+            ->add('emisor', null, array('label' => 'Dependencia'))
         ;
     }
 
