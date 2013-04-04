@@ -8,13 +8,14 @@
   </nav>
 </aside>
 <section class="span9">
-<section class="hero-unit">
-  <hgroup>
-    <h1>Sistema Gestor de Oficios</h1>
-  </hgroup>
-  <p>Oficios</p>
-  </section>
-<section>
+	<section class="hero-unit">
+	  <hgroup>
+		<h1>Sistema Gestor de Oficios</h1>
+	  </hgroup>
+	  <p>Oficios</p>
+	</section>
+<div class="row-fluid">
+<section class="span12">
     <h1>Lista de Oficios</h1>
     <table class="table table-striped">
 		<caption>Ultimos Oficios</caption>
@@ -24,8 +25,9 @@
                 <th>Numero</th>
                 <th>Descripcion</th>
                 <th>Recibio</th>
-                <th>Fecha</th>
-                <th>Actions</th>
+                <th>Recepci&oacute;n</th>
+                <th>Emisi&oacute;n</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -35,15 +37,12 @@
                 <td>{{ entity.numero }}</td>
                 <td>{{ entity.descripcion }}</td>
                 <td>{{ entity.recibio }}</td>
+                <td>{{ entity.estado }}</td>
                 <td>{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
+                <td>{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('oficio_show', { 'id': entity.id }) }}">mostrar</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('oficio_edit', { 'id': entity.id }) }}">editar</a>
-                    </li>
+					<a class="btn" href="{{ path('oficio_show', { 'id': entity.id }) }}">Mostrar</a>
+					<a class="btn" href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar</a>
                 </ul>
                 </td>
             </tr>
@@ -51,10 +50,22 @@
         </tbody>
     </table>
 </section>
-<section class="span3">
+<section class="span9">
+    <form action="{{ path('oficio_search_emision') }}" method="get" {{ form_enctype(emision_form) }}>
+		<fieldset>
+		<legend>Buscar por Fecha de Emisi&oacute;n</legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(emision_form) }}
+		</fieldset>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </form>
+</section>
+<section class="span9">
     <form action="{{ path('oficio_search_date') }}" method="get" {{ form_enctype(date_form) }}>
 		<fieldset>
-		<legend>Buscar por Periodo</legend>
+		<legend>Buscar por Fecha de Recibido</legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(date_form) }}
 		</fieldset>
@@ -63,7 +74,7 @@
         </div>
     </form>
 </section>
-<section class="span3">
+<section class="span9">
     <form action="{{ path('oficio_search_numero') }}" method="get" {{ form_enctype(numero_form) }}>
 		<fieldset>
 		<legend>Buscar por N&uacute;mero</legend>
@@ -75,7 +86,7 @@
         </div>
     </form>
 </section>
-<section class="span3">
+<section class="span9">
     <form action="{{ path('oficio_search_depto') }}" method="get" {{ form_enctype(depto_form) }}>
 		<fieldset>
 		<legend>Buscar por Dependencia</legend>
@@ -87,4 +98,5 @@
         </div>
     </form>
 </section>
+</div>
 {% endblock %}

@@ -27,8 +27,10 @@
                 <th>Numero</th>
                 <th>Descripcion</th>
                 <th>Recibio</th>
-                <th>Fecha</th>
-                <th>Actions</th>
+				<th>Estado</th>
+                <th>Recepci&oacute;n</th>
+                <th>Emisi&oacute;n</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -38,15 +40,12 @@
                 <td>{{ entity.numero }}</td>
                 <td>{{ entity.descripcion }}</td>
                 <td>{{ entity.recibio }}</td>
+                <td>{{ entity.estado }}</td>
                 <td>{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
+                <td>{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('oficio_show', { 'id': entity.id }) }}">mostrar</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('oficio_edit', { 'id': entity.id }) }}">editar</a>
-                    </li>
+					<a class="btn" href="{{ path('oficio_show', { 'id': entity.id }) }}">Mostrar</a>
+					<a class="btn" href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar</a>
                 </ul>
                 </td>
             </tr>

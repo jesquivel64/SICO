@@ -21,7 +21,8 @@
 	<li>Descripci&oacute;n: {{ entity.descripcion }}</li>
 	<li>Estado: {{ entity.estado }}</li>
     <li>Recibi&oacute;: {{ entity.recibio }}</li>
-    <li>Fecha: {{ entity.getFechaDeRecibido|date("d/m/Y") }}</li>
+    <li>Fecha de Recepci&oacute;n: {{ entity.getFechaDeRecibido|date("d/m/Y") }}</li>
+    <li>Fecha de Emisi&oacute;n: {{ entity.getFechaDeEmision|date("d/m/Y") }}</li>
 </ul>
 <table class="table table-striped">
 	<caption>Seguimiento</caption>
@@ -77,7 +78,7 @@
     <form action="{{ path('oficio_delete', { 'id': entity.id }) }}" method="post">
 		<input type="hidden" name="_method" value="DELETE" />
 		{{ form_widget(delete_form) }}
-		<button class="btn" type="submit">Eliminar este Oficio</button>
+		<button class="btn btn-danger" type="submit">Eliminar este Oficio</button>
 	</form>
 </section>
 {% endblock %}

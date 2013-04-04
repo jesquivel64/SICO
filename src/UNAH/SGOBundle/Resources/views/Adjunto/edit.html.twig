@@ -1,28 +1,28 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Adjunto edit</h1>
-
-    <form action="{{ path('adjunto_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<aside class="span3">
+  <nav class="well sidebar-nav">
+	<ul class="nav nav-list">
+      <li><a href="{{ path('departamento') }}">Regresar a Oficios</a>
+      <li><a href="{{ path('oficio_show', { 'id': entity.oficio.id }) }}">Regresar a {{ entity.oficio.numero }} {{ entity.oficio.emisor }}</a></li>
+    </ul>
+  </nav>
+</aside>
+<section class="span6">
+     <form action="{{ path('adjunto_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+		<fieldset>
+		<legend>Editar Adjunto</legend>
         <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
+		</fieldset>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Actualizar</button>
+        </div>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('adjunto') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('adjunto_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+	<form action="{{ path('adjunto_delete', { 'id': entity.id }) }}" method="post">
+		<input type="hidden" name="_method" value="DELETE" />
+		{{ form_widget(delete_form) }}
+		<button class="btn btn-danger" type="submit">Eliminar este Adjunto</button>
+	</form>
+</section>
 {% endblock %}

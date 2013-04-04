@@ -43,6 +43,7 @@ class OficioController extends Controller
         return array(
             'entities' => $entities,
 			'date_form' => $dateForm->createView(),
+			'emision_form' => $dateForm->createView(),
 			'numero_form' => $numeroForm->createView(),
 			'depto_form' => $deptoForm->createView(),
         );
@@ -231,6 +232,47 @@ class OficioController extends Controller
 			$oficios = $query->getResult();
 			$query = $qb->select('count(o)')
 				->where($qb->expr()->between('o.fecha_de_recibido', ':inicio', ':fin'))
+				->setParameter('inicio', $form->get('inicio')->getData())
+				->setParameter('fin', $form->get('fin')->getData())
+				->getQuery();
+			$count = $query->getSingleScalarResult();
+
+			return array(
+				'oficios'      => $oficios,
+				'inicio'       => $form->get('inicio')->getData(),
+				'fin'       => $form->get('fin')->getData(),
+				'date_form' => $form->createView(),
+				'count'     => $count,
+			);
+		}
+        return $this->redirect($this->generateUrl('oficio'));
+	}
+
+    /**
+     * Permite Efectuar busquedas por fecha
+     *
+     * @Route("/emitido", name="oficio_search_emitido")
+     * @Method("GET")
+     * @Template()
+     */
+	public function searchEmisionAction(Request $request)
+	{
+		$form = $this->createDateSearchForm();
+		$form->bind($request);
+		if ($form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			
+			$qb = $em->createQueryBuilder();
+			$query = $qb->select('o')
+				->from('UNAH\SGOBundle\Entity\Oficio', 'o')
+				->where($qb->expr()->between('o.fecha_de_emision', ':inicio', ':fin'))
+				->setParameter('inicio', $form->get('inicio')->getData())
+				->setParameter('fin', $form->get('fin')->getData())
+				->getQuery();
+			
+			$oficios = $query->getResult();
+			$query = $qb->select('count(o)')
+				->where($qb->expr()->between('o.fecha_de_emision', ':inicio', ':fin'))
 				->setParameter('inicio', $form->get('inicio')->getData())
 				->setParameter('fin', $form->get('fin')->getData())
 				->getQuery();

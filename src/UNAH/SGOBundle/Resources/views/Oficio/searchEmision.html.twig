@@ -54,9 +54,9 @@
     </table>
 </section>
 <section class="span6">
-    <form action="{{ path('oficio_search_date') }}" method="get" {{ form_enctype(date_form) }}>
+    <form action="{{ path('oficio_search_emision') }}" method="get" {{ form_enctype(date_form) }}>
 		<fieldset>
-		<legend>Buscar por Fecha de Recepci&oacute;n</legend>
+		<legend>Buscar por Fecha de Emisi&oacute;n</legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(date_form) }}
 		</fieldset>
