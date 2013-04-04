@@ -19,8 +19,9 @@
 </section>
 <ul>
 	<li>Descripci&oacute;n: {{ entity.descripcion }}</li>
+	<li>Estado: {{ entity.estado }}</li>
     <li>Recibi&oacute;: {{ entity.recibio }}</li>
-    <li>Fecha: {{ entity.fecha|date("d/m/Y") }}</li>
+    <li>Fecha: {{ entity.getFechaDeRecibido|date("d/m/Y") }}</li>
 </ul>
 <table class="table table-striped">
 	<caption>Seguimiento</caption>

@@ -48,13 +48,27 @@ class Oficio
      * @ORM\Column(name="recibio", type="string", length=255)
      */
     private $recibio;
+	
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="estado", type="string", length=255)
+     */
+    private $estado;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="timestamp", type="datetimetz")
      */
-    private $fecha;
+    private $fecha_de_recibido;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="emitido", type="datetimetz")
+     */
+    private $fecha_de_emision;
 	
 	/**
      * @ORM\OneToMany(targetEntity="Comentario", mappedBy="oficio")
@@ -177,29 +191,6 @@ class Oficio
         $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->adjuntos =  new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    /**
-     * Set fecha
-     *
-     * @param \DateTime $fecha
-     * @return Oficio
-     */
-    public function setFecha($fecha)
-    {
-        $this->fecha = $fecha;
-    
-        return $this;
-    }
-
-    /**
-     * Get fecha
-     *
-     * @return \DateTime 
-     */
-    public function getFecha()
-    {
-        return $this->fecha;
-    }
 
     /**
      * Add comentarios
@@ -271,4 +262,73 @@ class Oficio
 	{
 		return "Oficio ".$this->numero." ".$this->emisor->getNombre();
 	}
+
+    /**
+     * Set fecha_de_recibido
+     *
+     * @param \DateTime $fechaDeRecibido
+     * @return Oficio
+     */
+    public function setFechaDeRecibido($fechaDeRecibido)
+    {
+        $this->fecha_de_recibido = $fechaDeRecibido;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha_de_recibido
+     *
+     * @return \DateTime 
+     */
+    public function getFechaDeRecibido()
+    {
+        return $this->fecha_de_recibido;
+    }
+
+    /**
+     * Set fecha_de_emision
+     *
+     * @param \DateTime $fechaDeEmision
+     * @return Oficio
+     */
+    public function setFechaDeEmision($fechaDeEmision)
+    {
+        $this->fecha_de_emision = $fechaDeEmision;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha_de_emision
+     *
+     * @return \DateTime 
+     */
+    public function getFechaDeEmision()
+    {
+        return $this->fecha_de_emision;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param string $estado
+     * @return Oficio
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
 }
