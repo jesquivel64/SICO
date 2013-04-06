@@ -27,6 +27,7 @@ class DefaultController extends Controller
         $form   = $this->createForm(new OficioType(), $entity);
 		$dateForm = $this->createDateSearchForm();
 		$numeroForm = $this->createNumeroSearchForm();
+        $emisionForm = $this->createEmisionSearchForm();
 		$deptoForm = $this->createDepartamentoSearchForm();
         $em = $this->getDoctrine()->getManager();
 
@@ -34,7 +35,7 @@ class DefaultController extends Controller
 
         return array(
             'entities' => $entities,
-			'emision_form' => $dateForm->createView(),
+			'emision_form' => $emisionForm->createView(),
 			'date_form' => $dateForm->createView(),
 			'numero_form' => $numeroForm->createView(),
 			'depto_form' => $deptoForm->createView(),
@@ -63,6 +64,20 @@ class DefaultController extends Controller
 		->add('numero')
 		->getForm();
 	}
+    
+    private function createEmisionSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('inicio_emision', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->add('fin_emision', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->getForm();
+    }
 	
 	private function createDepartamentoSearchForm()
 	{

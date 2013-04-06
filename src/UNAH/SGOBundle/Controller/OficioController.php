@@ -28,22 +28,23 @@ class OficioController extends Controller
     public function indexAction()
     {
 		$dateForm = $this->createDateSearchForm();
-		$numeroForm = $this->createNumeroSearchForm();
-		$deptoForm = $this->createDepartamentoSearchForm();
+        $numeroForm = $this->createNumeroSearchForm();
+        $deptoForm = $this->createDepartamentoSearchForm();
+        $emisionForm = $this->createEmisionSearchForm();
         $em = $this->getDoctrine()->getManager();
-		$qb = $em->createQueryBuilder();
-		$query = $qb->select('o')
+        $qb = $em->createQueryBuilder();
+        $query = $qb->select('o')
 			->from('UNAH\SGOBundle\Entity\Oficio', 'o')
 			->setMaxResults(10)
 			->orderBy('o.id', 'DESC')
 			->getQuery();
-		
+
         $entities = $query->getResult();
 
         return array(
             'entities' => $entities,
 			'date_form' => $dateForm->createView(),
-			'emision_form' => $dateForm->createView(),
+			'emision_form' => $emisionForm->createView(),
 			'numero_form' => $numeroForm->createView(),
 			'depto_form' => $deptoForm->createView(),
         );
@@ -257,7 +258,7 @@ class OficioController extends Controller
      */
 	public function searchEmisionAction(Request $request)
 	{
-		$form = $this->createDateSearchForm();
+		$form = $this->createEmisionSearchForm();
 		$form->bind($request);
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -266,15 +267,15 @@ class OficioController extends Controller
 			$query = $qb->select('o')
 				->from('UNAH\SGOBundle\Entity\Oficio', 'o')
 				->where($qb->expr()->between('o.fecha_de_emision', ':inicio', ':fin'))
-				->setParameter('inicio', $form->get('inicio')->getData())
-				->setParameter('fin', $form->get('fin')->getData())
+				->setParameter('inicio', $form->get('inicio_emision')->getData())
+				->setParameter('fin', $form->get('fin_emision')->getData())
 				->getQuery();
 			
 			$oficios = $query->getResult();
 			$query = $qb->select('count(o)')
 				->where($qb->expr()->between('o.fecha_de_emision', ':inicio', ':fin'))
-				->setParameter('inicio', $form->get('inicio')->getData())
-				->setParameter('fin', $form->get('fin')->getData())
+                ->setParameter('inicio', $form->get('inicio_emision')->getData())
+                ->setParameter('fin', $form->get('fin_emision')->getData())
 				->getQuery();
 			$count = $query->getSingleScalarResult();
 
@@ -378,6 +379,20 @@ class OficioController extends Controller
 				'attr' => array('class' => 'datepicker')))
 		->getForm();
 	}
+    
+    private function createEmisionSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('inicio_emision', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->add('fin_emision', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->getForm();
+    }
 	
 	private function createNumeroSearchForm()
 	{
