@@ -2,22 +2,28 @@
 {% block content %}
 <aside class="span3">
   <nav class="well sidebar-nav">
-	<ul class="nav nav-list">
-      <li><a href="{{ path('oficio') }}">Regresar a Oficios</a>
-      <li><a href="{{ path('oficio_show', { 'id': entity.oficio.id }) }}">Regresar a {{ entity.oficio.numero }} {{ entity.oficio.emisor }}</a></li>
-    </li>
+    <ul class="nav nav-list">
+      <li>
+        <a href="{{ path('oficio') }}">Regresar a Oficios</a>
+      <li>
+        <a href="{{ path('oficio_show', { 'id': entity.oficio.id }) }}">Regresar a {{ entity.oficio.numero }} {{ entity.oficio.emisor }}</a>
+      </li>
     </ul>
   </nav>
 </aside>
 <section class="span6">
-    <form action="{{ path('comentario_create', { 'oficio': oficio.id }) }}" method="post" {{ form_enctype(form) }}>
-		<fieldset>
-		<legend>Registrar Seguimiento a Oficio {{ entity.oficio.numero }} - {{ entity.oficio.emisor }}</legend>
-        {{ form_widget(form) }}
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-		</fieldset>
-    </form>
+  <form action="{{ path('comentario_create', { 'oficio': oficio.id }) }}" method="post" {{ form_enctype(form) }}>
+    <fieldset>
+      <legend>
+        Registrar Seguimiento a Oficio {{ entity.oficio.numero }} - {{ entity.oficio.emisor }}
+      </legend>
+      {{ form_widget(form) }}
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          Guardar
+        </button>
+      </div>
+    </fieldset>
+  </form>
 </section>
 {% endblock %}
