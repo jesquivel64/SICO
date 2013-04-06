@@ -2,56 +2,63 @@
 {% block content %}
 <aside class="span3">
   <nav class="well sidebar-nav">
-	<ul class="nav nav-list">
-     <li><a href="{{ path('departamento') }}">Regresar a Dependencias</a></li>
-    <li><a href="{{ path('departamento_edit', { 'id': entity.id }) }}">Editar esta Dependencia</a></li>
+    <ul class="nav nav-list">
+      <li>
+        <a href="{{ path('departamento') }}">Regresar a Dependencias</a>
+      </li>
+      <li>
+        <a href="{{ path('departamento_edit', { 'id': entity.id }) }}">Editar esta Dependencia</a>
+      </li>
     </ul>
   </nav>
 </aside>
 <section class="span9">
-<section class="hero-unit">
-  <hgroup>
-    <h1>{{ entity.nombre }}</h1>
-  </hgroup>
-  <p>Dependencia</p>
-</section>
-<table class="table table-striped">
-		<thead>
-            <tr>
-                <th>Id</th>
-                <th>Numero</th>
-                <th>Descripcion</th>
-                <th>Recibio</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-		{% for oficio in entity.oficios %}
-            <tr>
-                <td><a href="{{ path('oficio_show', { 'id': entity.id }) }}">{{ oficio.id }}</a></td>
-                <td>{{ oficio.numero }}</td>
-                <td>{{ oficio.descripcion }}</td>
-                <td>{{ oficio.recibio }}</td>
-                <td>{{ oficio.fecha|date("d/m/Y") }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('oficio_show', { 'id': oficio.id }) }}">mostrar</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('oficio_edit', { 'id': oficio.id }) }}">editar</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-	<form action="{{ path('departamento_delete', { 'id': entity.id }) }}" method="post">
-		<input type="hidden" name="_method" value="DELETE" />
-		{{ form_widget(delete_form) }}
-		<button class="btn" type="submit">Eliminar esta Dependencia</button>
-	</form>
+  <section class="hero-unit">
+    <hgroup>
+      <h1>{{ entity.nombre }}</h1>
+    </hgroup>
+    <p>
+      Dependencia
+    </p>
+  </section>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Numero</th>
+        <th>Descripcion</th>
+        <th>Recibio</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for oficio in entity.oficios %}
+      <tr>
+        <td><a href="{{ path('oficio_show', { 'id': entity.id }) }}">{{ oficio.id }}</a></td>
+        <td>{{ oficio.numero }}</td>
+        <td>{{ oficio.descripcion }}</td>
+        <td>{{ oficio.recibio }}</td>
+        <td>{{ oficio.fecha|date("d/m/Y") }}</td>
+        <td>
+        <ul>
+          <li>
+            <a href="{{ path('oficio_show', { 'id': oficio.id }) }}">mostrar</a>
+          </li>
+          <li>
+            <a href="{{ path('oficio_edit', { 'id': oficio.id }) }}">editar</a>
+          </li>
+        </ul></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <form action="{{ path('departamento_delete', { 'id': entity.id }) }}" method="post">
+    <input type="hidden" name="_method" value="DELETE" />
+    {{ form_widget(delete_form) }}
+    <button class="btn" type="submit">
+      Eliminar esta Dependencia
+    </button>
+  </form>
 </section>
 {% endblock %}

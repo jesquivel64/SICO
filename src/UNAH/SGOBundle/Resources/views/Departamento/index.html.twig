@@ -2,45 +2,48 @@
 {% block content %}
 <aside class="span3">
   <nav class="well sidebar-nav">
-	<ul class="nav nav-list">
-      <li><a href="{{ path('departamento_new') }}">Registrar una Dependencia</a></li>
+    <ul class="nav nav-list">
+      <li>
+        <a href="{{ path('departamento_new') }}">Registrar una Dependencia</a>
+      </li>
     </ul>
   </nav>
 </aside>
 <section class="span9">
-<section class="hero-unit">
-  <hgroup>
-    <h1>Sistema Gestor de Oficios</h1>
-  </hgroup>
-  <p>Dependencias</p>
+  <section class="hero-unit">
+    <hgroup>
+      <h1>Sistema Gestor de Oficios</h1>
+    </hgroup>
+    <p>
+      Dependencias
+    </p>
   </section>
-<section>
+  <section>
     <h1>Lista de Dependencias</h1>
     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for entity in entities %}
-            <tr>
-                <td>{{ entity.id }}</td>
-                <td><a href="{{ path('departamento_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('departamento_show', { 'id': entity.id }) }}">mostrar</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('departamento_edit', { 'id': entity.id }) }}">editar</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
+        <tr>
+          <td>{{ entity.id }}</td>
+          <td><a href="{{ path('departamento_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
+          <td>
+          <ul>
+            <li>
+              <a href="{{ path('departamento_show', { 'id': entity.id }) }}">mostrar</a>
+            </li>
+            <li>
+              <a href="{{ path('departamento_edit', { 'id': entity.id }) }}">editar</a>
+            </li>
+          </ul></td>
+        </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
-	</section>
-{% endblock %}
+  </section>
+  {% endblock %}
