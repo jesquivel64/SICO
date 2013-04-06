@@ -1,0 +1,1 @@
+php app/console doctrine:migrations:version 20130406055131 --add
