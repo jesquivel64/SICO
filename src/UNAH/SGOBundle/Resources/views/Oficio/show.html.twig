@@ -38,13 +38,7 @@
 		<tr>
 			<td>{{ seguimiento.comentario }}</td>
 			<td>{{ seguimiento.fecha|date("d/m/Y") }}</td>
-			<td>
-			<ul>
-				<li>
-					<a href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a>
-				</li>
-			</ul>
-			</td>
+			<td><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a></td>
 		</tr>
 	{% endfor %}
 	</tbody>
@@ -63,14 +57,8 @@
 	{% for adjunto in entity.adjuntos %}
 		<tr>
 			<td>{{ adjunto.nombre }}</td>
-            <td><a href="/{{ adjunto.getWebPath() }}">{{ adjunto.getWebPath() }}</a></td>
-			<td>
-				<ul>
-					<li>
-						<a href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a>
-					</li>
-				</ul>
-			</td>
+            <td><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
+			<td><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
 		</tr>
 	{% endfor %}
 	</tbody>
