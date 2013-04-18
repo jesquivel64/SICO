@@ -281,8 +281,8 @@ class OficioController extends Controller
 
 			return array(
 				'oficios'      => $oficios,
-				'inicio'       => $form->get('inicio')->getData(),
-				'fin'       => $form->get('fin')->getData(),
+				'inicio'       => $form->get('inicio_emision')->getData(),
+				'fin'       => $form->get('fin_emision')->getData(),
 				'date_form' => $form->createView(),
 				'count'     => $count,
 			);
