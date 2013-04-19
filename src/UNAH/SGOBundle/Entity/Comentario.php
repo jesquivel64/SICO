@@ -41,6 +41,13 @@ class Comentario
      */
     private $fecha;
 	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="estado", type="string", length=255)
+     */
+	private $estado;
+	
     /**
      * Get id
      *
@@ -118,5 +125,28 @@ class Comentario
     public function getFecha()
     {
         return $this->fecha;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param string $estado
+     * @return Comentario
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

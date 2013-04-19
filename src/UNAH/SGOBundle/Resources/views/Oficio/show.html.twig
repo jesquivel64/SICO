@@ -25,11 +25,12 @@
     <li>Fecha de Emisi&oacute;n: {{ entity.getFechaDeEmision|date("d/m/Y") }}</li>
 </ul>
 <table class="table table-striped">
-	<caption>Seguimiento</caption>
+	<caption>Bit&aacute;cora de Seguimientos</caption>
 	<thead>
 		<tr>
-			<th>Comentario</th>
+			<th>Seguimiento</th>
 			<th>Fecha</th>
+			<th>Estado</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>
@@ -38,7 +39,10 @@
 		<tr>
 			<td>{{ seguimiento.comentario }}</td>
 			<td>{{ seguimiento.fecha|date("d/m/Y") }}</td>
-			<td><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a></td>
+			<td>{{ seguimiento.estado }}</td>
+			<td>
+				<a class="btn btn-danger" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a>
+			</td>
 		</tr>
 	{% endfor %}
 	</tbody>

@@ -33,6 +33,10 @@ oficio_search_date:
     pattern:  /fecha
     defaults: { _controller: "UNAHSGOBundle:Oficio:searchDate" }
 
+oficio_search:
+    pattern:  /buscar
+    defaults: { _controller: "UNAHSGOBundle:Oficio:search" }
+
 oficio_search_emision:
     pattern:  /emision
     defaults: { _controller: "UNAHSGOBundle:Oficio:searchEmision" }

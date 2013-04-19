@@ -49,6 +49,28 @@ class OficioController extends Controller
 			'depto_form' => $deptoForm->createView(),
         );
     }
+	
+	/**
+     * Lists all Oficio entities.
+     *
+     * @Route("/", name="oficio")
+     * @Method("GET")
+     * @Template()
+     */
+    public function searchAction()
+    {
+		$dateForm = $this->createDateSearchForm();
+        $numeroForm = $this->createNumeroSearchForm();
+        $deptoForm = $this->createDepartamentoSearchForm();
+        $emisionForm = $this->createEmisionSearchForm();
+
+        return array(
+			'date_form' => $dateForm->createView(),
+			'emision_form' => $emisionForm->createView(),
+			'numero_form' => $numeroForm->createView(),
+			'depto_form' => $deptoForm->createView(),
+        );
+    }
 
     /**
      * Creates a new Oficio entity.
