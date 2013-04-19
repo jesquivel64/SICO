@@ -6,9 +6,6 @@
       <li>
         <a href="{{ path('oficio_new') }}">Registrar un oficio</a>
       </li>
-      <li>
-        <a href="{{ path('oficio_search') }}">B&uacute;squeda de Oficios</a>
-      </li>
     </ul>
   </nav>
 </aside>
@@ -21,56 +18,6 @@
       Oficios
     </p>
   </section>
-  <div class="row-fluid">
-    <section class="span12">
-      <h1>Lista de Oficios</h1>
-      <table class="table table-striped">
-        <caption>
-          Ultimos Oficios
-        </caption>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Numero</th>
-            <th>Descripcion</th>
-            <th>Recibio</th>
-            <th>Recepci&oacute;n</th>
-            <th>Emisi&oacute;n</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for entity in entities %}
-          <tr>
-            <td><a href="{{ path('oficio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.numero }}</td>
-            <td>{{ entity.descripcion }}</td>
-            <td>{{ entity.recibio }}</td>
-            <td>{{ entity.estado }}</td>
-            <td>{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
-            <td>{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
-            <td><a class="btn btn-primary" href="{{ path('oficio_show', { 'id': entity.id }) }}">Mostrar</a><a class="btn btn-success" href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar</a> </ul> </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </section>
-    <section class="span9">
-      <form action="{{ path('oficio_search_emision') }}" method="get" {{ form_enctype(emision_form) }}>
-        <fieldset>
-          <legend>
-            Buscar por Fecha de Emisi&oacute;n
-          </legend>
-          <input type="hidden" name="_method" value="GET" />
-          {{ form_widget(emision_form) }}
-        </fieldset>
-        <div class="form-actions">
-          <button class="btn btn-primary" type="submit">
-            Buscar
-          </button>
-        </div>
-      </form>
-    </section>
     <section class="span9">
       <form action="{{ path('oficio_search_date') }}" method="get" {{ form_enctype(date_form) }}>
         <fieldset>

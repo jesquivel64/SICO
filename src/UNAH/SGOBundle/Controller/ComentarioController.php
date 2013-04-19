@@ -44,9 +44,11 @@ class ComentarioController extends Controller
 		
 			$oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
 			$entity->setOficio($oficio);
+			$oficio->setEstado($entity->getEstado());
             $em->persist($entity);
+			$em->persist($entity);
             $em->flush();
-
+			
             return $this->redirect($this->generateUrl('oficio_show', array('id' => $entity->getOficio()->getId())));
         }
 
@@ -167,7 +169,6 @@ class ComentarioController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
-
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('UNAHSGOBundle:Comentario')->find($id);
@@ -175,11 +176,15 @@ class ComentarioController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Comentario entity.');
             }
-
+			
+			$oficio = $entity->getOficio();
+			
             $em->remove($entity);
             $em->flush();
+			
+            return $this->redirect($this->generateUrl('oficio_show', array('id' => $oficio->getId())));
         }
-
+		
         return $this->redirect($this->generateUrl('comentario'));
     }
 

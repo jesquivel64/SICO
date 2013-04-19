@@ -22,24 +22,13 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-	
         $entity = new Oficio();
         $form   = $this->createForm(new OficioType(), $entity);
-		$dateForm = $this->createDateSearchForm();
-		$numeroForm = $this->createNumeroSearchForm();
-        $emisionForm = $this->createEmisionSearchForm();
-		$deptoForm = $this->createDepartamentoSearchForm();
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('UNAHSGOBundle:Oficio')->findAll();
 
         return array(
-            'entities' => $entities,
-			'emision_form' => $emisionForm->createView(),
-			'date_form' => $dateForm->createView(),
-			'numero_form' => $numeroForm->createView(),
-			'depto_form' => $deptoForm->createView(),
-			'entity' => $entity,
             'form'   => $form->createView(),
         );
     }

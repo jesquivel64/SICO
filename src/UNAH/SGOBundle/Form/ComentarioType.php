@@ -12,6 +12,7 @@ class ComentarioType extends AbstractType
     {
         $builder
             ->add('comentario', 'textarea')
+			->add('estado')
             /*->add('oficio', 'entity', array(
 				'class' => 'UNAHSGOBundle:Oficio',
 			))*/
