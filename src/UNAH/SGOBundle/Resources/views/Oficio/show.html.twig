@@ -1,12 +1,16 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
 <aside class="span3">
-  <nav class="well sidebar-nav">
-	<ul class="nav nav-list">
-     <li><a href="{{ path('oficio') }}">Regresar a Oficios</a></li>
-    <li><a href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar este Oficio</a></li>
-	<li><a href="{{ path('comentario_new', { 'oficio': entity.id }) }}">Registrar Seguimiento</a></li>
-	<li><a href="{{ path('adjunto_new', { 'oficio': entity.id }) }}">Agregar Adjunto</a></li>
+  <nav class="sidebar-nav">
+    <ul class="nav nav-tabs nav-stacked">
+		<li><a href="{{ path('oficio') }}">Regresar a Oficios</a></li>
+      <li><a href="{{ path('oficio_new') }}">Registrar un oficio</a></li>
+      <li><a href="{{ path('oficio_search') }}">B&uacute;squeda de Oficios</a></li>
+    </ul>
+    <ul class="nav nav-tabs nav-stacked">
+		<li><a href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar este Oficio</a></li>
+		<li><a href="{{ path('comentario_new', { 'oficio': entity.id }) }}">Registrar Seguimiento</a></li>
+		<li><a href="{{ path('adjunto_new', { 'oficio': entity.id }) }}">Agregar Adjunto</a></li>
     </ul>
   </nav>
 </aside>
