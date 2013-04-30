@@ -14,6 +14,8 @@ class OficioType extends AbstractType
             ->add('numero')
             ->add('descripcion', 'textarea')
             ->add('recibio')
+            ->add('remitente')
+            ->add('destinatario')
             ->add('estado', 'textarea')
             ->add('fecha_de_emision', 'date', array(
 				'widget' => 'single_text',

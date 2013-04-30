@@ -21,11 +21,11 @@ class Oficio
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="numero", type="integer")
+     * @ORM\Column(name="numero", type="string", length=255)
      */
     private $numero;
 
@@ -55,6 +55,20 @@ class Oficio
      * @ORM\Column(name="estado", type="string", length=255, nullable=true)
      */
     private $estado;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remitente", type="string", length=255, nullable=true)
+     */
+    private $remitente;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destinatario", type="string", length=255, nullable=true)
+     */
+    private $destinatario;
 
     /**
      * @var \DateTime
@@ -330,5 +344,51 @@ class Oficio
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set remitente
+     *
+     * @param string $remitente
+     * @return Oficio
+     */
+    public function setRemitente($remitente)
+    {
+        $this->remitente = $remitente;
+    
+        return $this;
+    }
+
+    /**
+     * Get remitente
+     *
+     * @return string 
+     */
+    public function getRemitente()
+    {
+        return $this->remitente;
+    }
+
+    /**
+     * Set destinatario
+     *
+     * @param string $destinatario
+     * @return Oficio
+     */
+    public function setDestinatario($destinatario)
+    {
+        $this->destinatario = $destinatario;
+    
+        return $this;
+    }
+
+    /**
+     * Get destinatario
+     *
+     * @return string 
+     */
+    public function getDestinatario()
+    {
+        return $this->destinatario;
     }
 }

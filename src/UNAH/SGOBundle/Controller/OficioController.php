@@ -42,11 +42,11 @@ class OficioController extends Controller
         $entities = $query->getResult();
 
         return array(
-            'entities' => $entities,
-			'date_form' => $dateForm->createView(),
-			'emision_form' => $emisionForm->createView(),
-			'numero_form' => $numeroForm->createView(),
-			'depto_form' => $deptoForm->createView(),
+            'entities'      => $entities,
+			'date_form'     => $dateForm->createView(),
+			'emision_form'  => $emisionForm->createView(),
+			'numero_form'   => $numeroForm->createView(),
+			'depto_form'    => $deptoForm->createView(),
         );
     }
 	
@@ -63,12 +63,14 @@ class OficioController extends Controller
         $numeroForm = $this->createNumeroSearchForm();
         $deptoForm = $this->createDepartamentoSearchForm();
         $emisionForm = $this->createEmisionSearchForm();
+        $comentarioForm = $this->createDepartamentoComentarioSearchForm();
 
         return array(
 			'date_form' => $dateForm->createView(),
 			'emision_form' => $emisionForm->createView(),
 			'numero_form' => $numeroForm->createView(),
 			'depto_form' => $deptoForm->createView(),
+			'comentario_form' => $comentarioForm->createView(),
         );
     }
 
@@ -261,8 +263,8 @@ class OficioController extends Controller
 			$count = $query->getSingleScalarResult();
 
 			return array(
-				'oficios'      => $oficios,
-				'inicio'       => $form->get('inicio')->getData(),
+				'oficios'   => $oficios,
+				'inicio'    => $form->get('inicio')->getData(),
 				'fin'       => $form->get('fin')->getData(),
 				'date_form' => $form->createView(),
 				'count'     => $count,
@@ -302,8 +304,8 @@ class OficioController extends Controller
 			$count = $query->getSingleScalarResult();
 
 			return array(
-				'oficios'      => $oficios,
-				'inicio'       => $form->get('inicio_emision')->getData(),
+				'oficios'   => $oficios,
+				'inicio'    => $form->get('inicio_emision')->getData(),
 				'fin'       => $form->get('fin_emision')->getData(),
 				'date_form' => $form->createView(),
 				'count'     => $count,
@@ -341,10 +343,10 @@ class OficioController extends Controller
 			$count = $query->getSingleScalarResult();
 
 			return array(
-				'oficios'      => $oficios,
-				'numero'       => $form->get('numero')->getData(),
-				'numero_form' => $form->createView(),
-				'count'     => $count,
+				'oficios'       => $oficios,
+				'numero'        => $form->get('numero')->getData(),
+				'numero_form'   => $form->createView(),
+				'count'         => $count,
 			);
 		}
         return $this->redirect($this->generateUrl('oficio'));
@@ -357,9 +359,9 @@ class OficioController extends Controller
      * @Method("GET")
      * @Template()
      */
-	public function searchDepartamentoAction(Request $request)
+	public function searchDepartamentoComentarioAction(Request $request)
 	{
-		$form = $this->createDepartamentoSearchForm();
+		$form = $this->createDepartamentoComentarioSearchForm();
 		$form->bind($request);
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -368,25 +370,68 @@ class OficioController extends Controller
 			$query = $qb->select('o')
 				->from('UNAH\SGOBundle\Entity\Oficio', 'o')
 				->where('o.emisor = :emisor')
+                ->andwhere('o.descripcion LIKE :descripcion')
 				->setParameter('emisor', $form->get('emisor')->getData())
+                ->setParameter('descripcion', $form->get('descripcion')->getData())
 				->getQuery();
 			
 			$oficios = $query->getResult();
 			$query = $qb->select('count(o)')
-				->where('o.emisor = :emisor')
-				->setParameter('emisor', $form->get('emisor')->getData())
+                ->where('o.emisor = :emisor')
+				->andwhere('o.descripcion LIKE :descripcion')
+                ->setParameter('emisor', $form->get('emisor')->getData())
+                ->setParameter('descripcion', $form->get('descripcion')->getData())
 				->getQuery();
 			$count = $query->getSingleScalarResult();
 
 			return array(
-				'oficios'      => $oficios,
-				'departamento'       => $form->get('emisor')->getData(),
-				'depto_form' => $form->createView(),
-				'count'     => $count,
+				'oficios'       => $oficios,
+				'departamento'  => $form->get('emisor')->getData(),
+				'descripcion'   => $form->get('descripcion')->getData(),
+				'depto_form'    => $form->createView(),
+				'count'         => $count,
 			);
 		}
         return $this->redirect($this->generateUrl('oficio'));
 	}
+
+    /**
+     * Permite Efectuar busquedas por fecha
+     *
+     * @Route("/fecha", name="oficio_search_numero")
+     * @Method("GET")
+     * @Template()
+     */
+    public function searchDepartamentoAction(Request $request)
+    {
+        $form = $this->createDepartamentoSearchForm();
+        $form->bind($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $qb = $em->createQueryBuilder();
+            $query = $qb->select('o')
+                ->from('UNAH\SGOBundle\Entity\Oficio', 'o')
+                ->where('o.emisor = :emisor')
+                ->setParameter('emisor', $form->get('emisor')->getData())
+                ->getQuery();
+            
+            $oficios = $query->getResult();
+            $query = $qb->select('count(o)')
+                ->where('o.emisor = :emisor')
+                ->setParameter('emisor', $form->get('emisor')->getData())
+                ->getQuery();
+            $count = $query->getSingleScalarResult();
+
+            return array(
+                'oficios'       => $oficios,
+                'departamento'  => $form->get('emisor')->getData(),
+                'depto_form'    => $form->createView(),
+                'count'         => $count,
+            );
+        }
+        return $this->redirect($this->generateUrl('oficio'));
+    }
 	
 	private function createDateSearchForm()
 	{
@@ -432,6 +477,17 @@ class OficioController extends Controller
 		)
 		->getForm();
 	}
+    
+    private function createDepartamentoComentarioSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('descripcion', 'textarea')
+        ->add('emisor', 'entity', array(
+            'class' => 'UNAH\SGOBundle\Entity\Departamento',
+            )
+        )
+        ->getForm();
+    }
 
     /**
      * Creates a form to delete a Oficio entity by id.

@@ -48,3 +48,7 @@ oficio_search_numero:
 oficio_search_depto:
     pattern:  /dependencia
     defaults: { _controller: "UNAHSGOBundle:Oficio:searchDepartamento" }
+    
+oficio_search_depto_comentario:
+    pattern:  /dependencia/descripcion
+    defaults: { _controller: "UNAHSGOBundle:Oficio:searchDepartamentoComentario" }
