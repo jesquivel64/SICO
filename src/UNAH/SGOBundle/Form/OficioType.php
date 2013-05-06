@@ -12,10 +12,9 @@ class OficioType extends AbstractType
     {
         $builder
             ->add('numero')
-            ->add('descripcion', 'textarea')
-            ->add('recibio')
             ->add('remitente')
             ->add('destinatario')
+            ->add('descripcion', 'textarea')
             ->add('estado', 'textarea')
             ->add('fecha_de_emision', 'date', array(
 				'widget' => 'single_text',
@@ -26,6 +25,7 @@ class OficioType extends AbstractType
 				'format' => 'dd/MM/yyyy',
 				'attr' => array('class' => 'datepicker')))
             ->add('emisor', null, array('label' => 'Dependencia'))
+            ->add('recibio')
         ;
     }
 
