@@ -372,7 +372,7 @@ class OficioController extends Controller
 				->where('o.emisor = :emisor')
                 ->andwhere('o.descripcion LIKE :descripcion')
 				->setParameter('emisor', $form->get('emisor')->getData())
-                ->setParameter('descripcion', $form->get('descripcion')->getData())
+                ->setParameter('descripcion', "%".$form->get('descripcion')->getData()."%")
 				->getQuery();
 			
 			$oficios = $query->getResult();
@@ -380,7 +380,7 @@ class OficioController extends Controller
                 ->where('o.emisor = :emisor')
 				->andwhere('o.descripcion LIKE :descripcion')
                 ->setParameter('emisor', $form->get('emisor')->getData())
-                ->setParameter('descripcion', $form->get('descripcion')->getData())
+                ->setParameter('descripcion', "%".$form->get('descripcion')->getData()."%")
 				->getQuery();
 			$count = $query->getSingleScalarResult();
 
