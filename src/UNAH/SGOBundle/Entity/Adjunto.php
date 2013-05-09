@@ -34,7 +34,7 @@ class Adjunto
     public $path;
 	
 	/**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(maxSize="100M")
      */
     public $file;
 	
