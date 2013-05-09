@@ -38,11 +38,11 @@ class AdjuntoController extends Controller
         $entity  = new Adjunto();
         $form = $this->createForm(new AdjuntoType(), $entity);
         $form->bind($request);
+        $em = $this->getDoctrine()->getManager();
+        
+        $oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-			
-			$oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
 			$entity->setOficio($oficio);
 			
 			$entity->upload();
@@ -55,6 +55,7 @@ class AdjuntoController extends Controller
         return $this->render('UNAHSGOBundle:Adjunto:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'oficio' => $oficio,
         ));
     }
 
