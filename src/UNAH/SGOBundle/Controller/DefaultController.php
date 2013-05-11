@@ -23,6 +23,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $entity = new Oficio();
+        $entity->setRecibio($this->getUser()->getUsername());
         $form   = $this->createForm(new OficioType(), $entity);
         $em = $this->getDoctrine()->getManager();
 
