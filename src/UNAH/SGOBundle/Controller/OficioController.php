@@ -111,7 +111,8 @@ class OficioController extends Controller
     public function newAction()
     {
         $entity = new Oficio();
-        $form   = $this->createForm(new OficioType(), $entity);
+        $entity->setRecibio($this->getUser()->getUsername());
+        $form = $this->createForm(new OficioType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -129,7 +130,7 @@ class OficioController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('UNAHSGOBundle:Oficio')->find($id);
 
         if (!$entity) {
@@ -195,8 +196,8 @@ class OficioController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('oficio_edit', array('id' => $id)));
+            
+            return $this->redirect($this->generateUrl('oficio'));
         }
 
         return array(
