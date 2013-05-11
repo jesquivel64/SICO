@@ -143,16 +143,17 @@ class AdjuntoController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Adjunto entity.');
         }
+        $oficio = $entity->getOficio();
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new AdjuntoType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $entity->upload();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('adjunto_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('oficio_show', array('id' => $oficio->getId())));
         }
 		
         return $this->render('UNAHSGOBundle:Adjunto:edit.html.twig', array(
@@ -174,13 +175,14 @@ class AdjuntoController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('UNAHSGOBundle:Adjunto')->find($id);
-
+            $oficio = $entity->getOficio();
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Adjunto entity.');
             }
-
+            $entity->removeUpload();
             $em->remove($entity);
             $em->flush();
+            return $this->redirect($this->generateUrl('oficio_show', array('id' => $oficio->getId())));
         }
 
         return $this->redirect($this->generateUrl('adjunto'));
