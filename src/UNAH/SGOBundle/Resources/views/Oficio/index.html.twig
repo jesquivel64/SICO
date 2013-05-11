@@ -2,7 +2,7 @@
 {% block content %}
 <aside class="span3">
   <nav class="sidebar-nav">
-    <ul class="nav nav-tabs nav-stacked">
+    <ul class="nav nav-tabs nav-stacked no-print">
       <li>
         <a href="{{ path('oficio_new') }}">Registrar un oficio</a>
       </li>
@@ -30,26 +30,26 @@
         </caption>
         <thead>
           <tr>
-            <th>Id</th>
+            <th class="no-print">Id</th>
             <th>Numero</th>
             <th>Descripcion</th>
             <th>Recibio</th>
             <th>Recepci&oacute;n</th>
             <th>Emisi&oacute;n</th>
-            <th>Acciones</th>
+            <th class="no-print">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {% for entity in entities %}
           <tr>
-            <td><a href="{{ path('oficio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td class="no-print"><a href="{{ path('oficio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.numero }}</td>
             <td>{{ entity.descripcion }}</td>
             <td>{{ entity.recibio }}</td>
             <td>{{ entity.estado }}</td>
             <td>{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
             <td>{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
-            <td><a class="btn btn-primary" href="{{ path('oficio_show', { 'id': entity.id }) }}">Mostrar</a><a class="btn btn-success" href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar</a> </ul> </td>
+            <td class="no-print"><a class="btn btn-primary" href="{{ path('oficio_show', { 'id': entity.id }) }}">Mostrar</a><a class="btn btn-success" href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar</a> </ul> </td>
           </tr>
           {% endfor %}
         </tbody>
