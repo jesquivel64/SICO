@@ -1,7 +1,7 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
 <aside class="span3">
-  <nav class="sidebar-nav">
+  <nav class="sidebar-nav no-print">
     <ul class="nav nav-tabs nav-stacked">
 		<li><a href="{{ path('oficio') }}">Regresar a Oficios</a></li>
       <li><a href="{{ path('oficio_new') }}">Registrar un oficio</a></li>
@@ -37,7 +37,7 @@
 			<th>Seguimiento</th>
 			<th>Fecha</th>
 			<th>Estado</th>
-			<th>Acciones</th>
+			<th class="no-print">Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -46,7 +46,7 @@
 			<td>{{ seguimiento.comentario }}</td>
 			<td>{{ seguimiento.fecha|date("d/m/Y") }}</td>
 			<td>{{ seguimiento.estado }}</td>
-			<td>
+			<td class="no-print">
 				<a class="btn btn-danger" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a>
 			</td>
 		</tr>
@@ -60,20 +60,20 @@
 		<tr>
 			<th>Comentario</th>
 			<th>Archivo</th>
-			<th>Acciones</th>
+			<th class="no-print">Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
 	{% for adjunto in entity.adjuntos %}
 		<tr>
 			<td>{{ adjunto.nombre }}</td>
-            <td><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
-			<td><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
+      <td><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
+			<td  class="no-print"><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
 		</tr>
 	{% endfor %}
 	</tbody>
 </table>
-    <form action="{{ path('oficio_delete', { 'id': entity.id }) }}" method="post">
+    <form class="no-print" action="{{ path('oficio_delete', { 'id': entity.id }) }}" method="post">
 		<input type="hidden" name="_method" value="DELETE" />
 		{{ form_widget(delete_form) }}
 		<button class="btn btn-danger" type="submit">Eliminar este Oficio</button>

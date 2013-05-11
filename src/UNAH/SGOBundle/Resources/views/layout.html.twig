@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{{ asset('bundles/unahsgo/css/bootstrap.css') }}">
 <link rel="stylesheet" href="{{ asset('bundles/unahsgo/css/bootstrap-responsive.css') }}">
 <link rel="stylesheet" href="{{ asset('bundles/unahsgo/css/jquery-ui.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/unahsgo/css/print.css') }}" media="print">
 <style type="text/css">
     body {
         padding-top: 60px;
@@ -49,7 +50,7 @@
 {% endblock %}
 {% block body %}
 <header>
-  <nav id="top" class="navbar navbar-inverse navbar-fixed-top">
+  <nav id="top" class="navbar navbar-inverse navbar-fixed-top no-print">
     <div class="navbar-inner">
       <div class="container-fluid">
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
