@@ -28,9 +28,16 @@ class DocumentoSalida
     private $tipo;
     
     /**
-     * @ORM\ManyToMany(targetEntity="Departamento", mappedBy="documentosEnviados")
+     * @ORM\ManyToMany(targetEntity="Departamento", inversedBy="documentosEnviados")
+     * @ORM\JoinTable(name="documentossalida_departamento")
      */
     private $departamentos;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Oficio", inversedBy="respuestas")
+     * @ORM\JoinTable(name="documentossalida_oficio")
+     */
+    private $oficiosRespondidos;
 
     /**
      * @var string
@@ -463,5 +470,38 @@ class DocumentoSalida
     public function getComentarios()
     {
         return $this->comentarios;
+    }
+
+    /**
+     * Add oficiosRespondidos
+     *
+     * @param \UNAH\SGOBundle\Entity\Oficio $oficiosRespondidos
+     * @return DocumentoSalida
+     */
+    public function addOficiosRespondido(\UNAH\SGOBundle\Entity\Oficio $oficiosRespondidos)
+    {
+        $this->oficiosRespondidos[] = $oficiosRespondidos;
+
+        return $this;
+    }
+
+    /**
+     * Remove oficiosRespondidos
+     *
+     * @param \UNAH\SGOBundle\Entity\Oficio $oficiosRespondidos
+     */
+    public function removeOficiosRespondido(\UNAH\SGOBundle\Entity\Oficio $oficiosRespondidos)
+    {
+        $this->oficiosRespondidos->removeElement($oficiosRespondidos);
+    }
+
+    /**
+     * Get oficiosRespondidos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOficiosRespondidos()
+    {
+        return $this->oficiosRespondidos;
     }
 }

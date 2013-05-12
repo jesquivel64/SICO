@@ -93,7 +93,19 @@ class Oficio
      * @ORM\OneToMany(targetEntity="Adjunto", mappedBy="oficio")
      */
     protected $adjuntos;
-
+    
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="respondido", type="boolean", nullable=true)
+     */
+    private $respondido;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="DocumentoSalida", inversedBy="oficiosRespondidos")
+     */
+    private $respuestas;
 
     /**
      * Get id
@@ -390,5 +402,61 @@ class Oficio
     public function getDestinatario()
     {
         return $this->destinatario;
+    }
+
+    /**
+     * Set respondido
+     *
+     * @param boolean $respondido
+     * @return Oficio
+     */
+    public function setRespondido($respondido)
+    {
+        $this->respondido = $respondido;
+
+        return $this;
+    }
+
+    /**
+     * Get respondido
+     *
+     * @return boolean 
+     */
+    public function getRespondido()
+    {
+        return $this->respondido;
+    }
+
+    /**
+     * Add respuestas
+     *
+     * @param \UNAH\SGOBundle\Entity\DocumentoSalida $respuestas
+     * @return Oficio
+     */
+    public function addRespuesta(\UNAH\SGOBundle\Entity\DocumentoSalida $respuestas)
+    {
+        $this->respuestas[] = $respuestas;
+        $this->respondido = TRUE;
+        return $this;
+    }
+
+    /**
+     * Remove respuestas
+     *
+     * @param \UNAH\SGOBundle\Entity\DocumentoSalida $respuestas
+     */
+    public function removeRespuesta(\UNAH\SGOBundle\Entity\DocumentoSalida $respuestas)
+    {
+        $this->respuestas->removeElement($respuestas);
+    }
+
+    /**
+     * Get respuestas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRespuestas()
+    {
+        return $this->respuestas;
     }
 }

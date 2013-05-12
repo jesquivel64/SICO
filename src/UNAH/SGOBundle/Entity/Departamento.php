@@ -35,7 +35,7 @@ class Departamento
     protected $oficios;
     
     /**
-     * @ORM\ManyToMany(targetEntity="DocumentoSalida", mappedBy="departamentos")
+     * @ORM\ManyToMany(targetEntity="DocumentoSalida", inversedBy="departamentos")
      */
     private $documentosEnviados;
 
