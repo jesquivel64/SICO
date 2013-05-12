@@ -33,6 +33,11 @@ class Departamento
      * @ORM\OneToMany(targetEntity="Oficio", mappedBy="emisor")
      */
     protected $oficios;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="DocumentoSalida", mappedBy="departamentos")
+     */
+    private $documentosEnviados;
 
     /**
      * Get id
@@ -109,4 +114,37 @@ class Departamento
 	{
 		return $this->nombre;
 	}
+
+    /**
+     * Add documentosEnviados
+     *
+     * @param \UNAH\SGOBundle\Entity\DocumentosSalida $documentosEnviados
+     * @return Departamento
+     */
+    public function addDocumentosEnviado(\UNAH\SGOBundle\Entity\DocumentoSalida $documentosEnviados)
+    {
+        $this->documentosEnviados[] = $documentosEnviados;
+
+        return $this;
+    }
+
+    /**
+     * Remove documentosEnviados
+     *
+     * @param \UNAH\SGOBundle\Entity\DocumentosSalida $documentosEnviados
+     */
+    public function removeDocumentosEnviado(\UNAH\SGOBundle\Entity\DocumentoSalida $documentosEnviados)
+    {
+        $this->documentosEnviados->removeElement($documentosEnviados);
+    }
+
+    /**
+     * Get documentosEnviados
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocumentosEnviados()
+    {
+        return $this->documentosEnviados;
+    }
 }

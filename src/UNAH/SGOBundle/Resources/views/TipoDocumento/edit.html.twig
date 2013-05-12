@@ -1,0 +1,29 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row-fluid">
+  <aside class="span3">
+    <nav class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li>
+          <a href="{{ path('tipodocumento') }}">Regresar a Tipos de Documentos</a>
+        </li>
+        <li>
+          <a href="{{ path('tipodocumento_show', { 'id': entity.id }) }}">Regresar a {{ entity.nombre }}</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <section class="span6">
+    <h1>Editar Tipo de Documento</h1>
+    <form action="{{ path('tipodocumento_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+      <input type="hidden" name="_method" value="PUT" />
+      {{ form_widget(edit_form) }}
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          Actualizar
+        </button>
+      </div>
+    </form>
+  </section>
+</section>
+{% endblock %}

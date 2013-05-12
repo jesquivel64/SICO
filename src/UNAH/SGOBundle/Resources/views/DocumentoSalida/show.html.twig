@@ -3,17 +3,15 @@
 <section class="row-fluid">
   <section class="span12">
   <hgroup class="page-header">
-    <h1>Oficio {{ entity.numero }} <small>{{ entity.emisor }}</small></h1>
+    <h1>{{ entity.tipo }} {{ entity.numero }} <small>Vice-Rectoria Acad&eacute;mica</small></h1>
   </hgroup>
   <div class="navbar no-print">
     <div class="navbar-inner">
       <ul class="nav">
-        <li><a href="{{ path('oficio') }}">Regresar a Oficios</a></li>
-        <li><a href="{{ path('oficio_new') }}">Registrar un oficio</a></li>
-        <li><a href="{{ path('oficio_search') }}">B&uacute;squeda de Oficios</a></li>
-        <li><a href="{{ path('oficio_edit', { 'id': entity.id }) }}">Editar este Oficio</a></li>
-        <li><a href="{{ path('comentario_new', { 'oficio': entity.id }) }}">Registrar Seguimiento</a></li>
-        <li><a href="{{ path('adjunto_new', { 'oficio': entity.id }) }}">Agregar Adjunto</a></li>
+        <li><a href="{{ path('salida') }}">Regresar a Envio de Documentos</a></li>
+        <li><a href="{{ path('salida_new') }}">Registrar un Envio de Documento</a></li>
+        <li><a href="{{ path('salida_edit', { 'id': entity.id }) }}">Editar este Documento</a></li>
+        <li><a href="{{ path('adjuntosalida_new', { 'documento': entity.id }) }}">Agregar Adjunto</a></li>
       </ul>
     </div>
   </div>
@@ -26,9 +24,6 @@
         Descripci&oacute;n: {{ entity.descripcion }}
       </li>
       <li>
-        Estado: {{ entity.estado }}
-      </li>
-      <li>
         Remitente: {{ entity.remitente }}
       </li>
       <li>
@@ -36,6 +31,9 @@
       </li>
       <li>
         Recibi&oacute;: {{ entity.recibio }}
+      </li>
+      <li>
+        Fecha de Recepci&oacute;n: {{ entity.getFechaDeEnvio|date("d/m/Y") }}
       </li>
       <li>
         Fecha de Recepci&oacute;n: {{ entity.getFechaDeRecibido|date("d/m/Y") }}
@@ -84,16 +82,16 @@
         <tr>
           <td>{{ adjunto.nombre }}</td>
           <td><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
-          <td  class="no-print"><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
+          <td  class="no-print"><a class="btn btn-success" href="{{ path('adjuntosalida_edit', { 'id': adjunto.id }) }}">editar</a></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-    <form class="no-print" action="{{ path('oficio_delete', { 'id': entity.id }) }}" method="post">
+    <form class="no-print" action="{{ path('salida_delete', { 'id': entity.id }) }}" method="post">
       <input type="hidden" name="_method" value="DELETE" />
       {{ form_widget(delete_form) }}
       <button class="btn btn-danger" type="submit">
-        Eliminar este Oficio
+        Eliminar este Documento
       </button>
     </form>
   </section>

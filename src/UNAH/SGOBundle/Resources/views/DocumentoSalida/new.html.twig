@@ -1,0 +1,29 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row-fluid">
+<aside class="span3">
+  <nav class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li>
+        <a href="{{ path('salida') }}">Regresar a Envios de Documentos</a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+<section class="span6">
+  <form action="{{ path('salida_create') }}" method="post" {{ form_enctype(form) }}>
+    <fieldset>
+      <legend>
+        Registrar Envio de un Documento
+      </legend>
+      {{ form_widget(form) }}
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          Guardar
+        </button>
+      </div>
+    </fieldset>
+  </form>
+</section>
+</section>
+{% endblock %}

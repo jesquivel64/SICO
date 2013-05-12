@@ -1,5 +1,5 @@
 {% extends '::base.html.twig' %}
-{% block title %}Sistema de Gesti&oacute;n de Oficios de la ViceRectoria Acad&eacute;mica{% endblock %}
+{% block title %}Sistema Integrado de Correspondencia de la ViceRectoria Acad&eacute;mica{% endblock %}
 {% block stylesheets %}
 <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}">
 <link rel="stylesheet" href="{{ asset('bundles/unahsgo/css/bootstrap.css') }}">
@@ -75,6 +75,9 @@
             <li>
               <a href="{{ path('oficio') }}">Oficios</a>
             <li>
+            <li>
+              <a href="{{ path('salida') }}">Envio de Documentos</a>
+            <li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -83,9 +86,7 @@
   {% block heading %}{% endblock %}
 </header>
 <div class="container-fluid">
-  <section id="contenido" class="row-fluid">
     {% block content %}{% endblock %}
-  </section>
   <hr>
   <footer class="row-fluid">
 	<span class="span12"></span>

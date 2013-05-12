@@ -5,9 +5,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * AdjuntoSalida
+ *
+ * @ORM\Table()
  * @ORM\Entity
  */
-class Adjunto
+class AdjuntoSalida
 {
     /**
      * @ORM\Id
@@ -17,10 +20,10 @@ class Adjunto
     public $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Oficio", inversedBy="adjuntos")
-     * @ORM\JoinColumn(name="oficio_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="DocumentoSalida", inversedBy="adjuntos")
+     * @ORM\JoinColumn(name="documento_salida_id", referencedColumnName="id")
      */
-    private $oficio;
+    private $documento;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -63,7 +66,7 @@ class Adjunto
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/documents';
+        return 'uploads/documents/salida';
     }
 	
 	private $filenameForRemove;
@@ -133,7 +136,7 @@ class Adjunto
      * Set nombre
      *
      * @param string $nombre
-     * @return Adjunto
+     * @return AdjuntoSalida
      */
     public function setNombre($nombre)
     {
@@ -156,7 +159,7 @@ class Adjunto
      * Set path
      *
      * @param string $path
-     * @return Adjunto
+     * @return AdjuntoSalida
      */
     public function setPath($path)
     {
@@ -176,25 +179,25 @@ class Adjunto
     }
 
     /**
-     * Set oficio
+     * Set documento
      *
-     * @param \UNAH\SGOBundle\Entity\Oficio $oficio
-     * @return Adjunto
+     * @param \UNAH\SGOBundle\Entity\DocumentoSalida $documento
+     * @return AdjuntoSalida
      */
-    public function setOficio(\UNAH\SGOBundle\Entity\Oficio $oficio = null)
+    public function setDocumento(\UNAH\SGOBundle\Entity\DocumentoSalida $documento = null)
     {
-        $this->oficio = $oficio;
-    
+        $this->documento = $documento;
+
         return $this;
     }
 
     /**
-     * Get oficio
+     * Get documento
      *
-     * @return \UNAH\SGOBundle\Entity\Oficio 
+     * @return \UNAH\SGOBundle\Entity\DocumentoSalida 
      */
-    public function getOficio()
+    public function getDocumento()
     {
-        return $this->oficio;
+        return $this->documento;
     }
 }

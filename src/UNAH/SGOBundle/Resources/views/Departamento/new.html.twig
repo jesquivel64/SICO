@@ -1,27 +1,29 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
-<aside class="span3">
-  <nav class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li>
-        <a href="{{ path('departamento') }}">Regresar a Dependencias</a>
-      </li>
-    </ul>
-  </nav>
-</aside>
-<section class="span6">
-  <form action="{{ path('departamento_create') }}" method="post" {{ form_enctype(form) }}>
-    <fieldset>
-      <legend>
-        Agregar una Dependencia
-      </legend>
-      {{ form_widget(form) }}
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">
-          Create
-        </button>
-      </div>
-    </fieldset>
-  </form>
+<section class="row-fluid">
+  <aside class="span3">
+    <nav class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li>
+          <a href="{{ path('departamento') }}">Regresar a Dependencias</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <section class="span6">
+    <form action="{{ path('departamento_create') }}" method="post" {{ form_enctype(form) }}>
+      <fieldset>
+        <legend>
+          Agregar una Dependencia
+        </legend>
+        {{ form_widget(form) }}
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">
+            Create
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </section>
 </section>
 {% endblock %}

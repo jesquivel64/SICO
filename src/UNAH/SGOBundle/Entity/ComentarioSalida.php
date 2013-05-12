@@ -5,12 +5,12 @@ namespace UNAH\SGOBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Comentario
+ * ComentarioSalida
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Comentario
+class ComentarioSalida
 {
     /**
      * @var integer
@@ -22,10 +22,10 @@ class Comentario
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Oficio", inversedBy="comentarios")
-     * @ORM\JoinColumn(name="oficio_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="DocumentoSalida", inversedBy="comentarios")
+     * @ORM\JoinColumn(name="documento_salida_id", referencedColumnName="id")
      */
-    private $oficio;
+    private $documento;
 	
     /**
      * @var string
@@ -148,5 +148,28 @@ class Comentario
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set documento
+     *
+     * @param \UNAH\SGOBundle\Entity\DocumentoSalida $documento
+     * @return ComentarioSalida
+     */
+    public function setDocumento(\UNAH\SGOBundle\Entity\DocumentoSalida $documento = null)
+    {
+        $this->documento = $documento;
+
+        return $this;
+    }
+
+    /**
+     * Get documento
+     *
+     * @return \UNAH\SGOBundle\Entity\DocumentoSalida 
+     */
+    public function getDocumento()
+    {
+        return $this->documento;
     }
 }
