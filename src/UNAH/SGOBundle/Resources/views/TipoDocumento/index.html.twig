@@ -2,9 +2,9 @@
 {% block content %}
 <section class="row-fluid">
   <section class="span12">
-      <hgroup class="page-header">
-        <h1>Dependencias <small>Sistema Integrado de Correspondencia</small></h1>
-      </hgroup>
+    <hgroup class="page-header">
+      <h1>Tipos de Documentos <small>Sistema Integrado de Correspondencia</small></h1>
+    </hgroup>
   </section>
 </section>
 <section class="row-fluid">
@@ -21,21 +21,21 @@
         {% for entity in entities %}
         <tr>
           <td>{{ entity.id }}</td>
-          <td><a href="{{ path('departamento_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
+          <td><a href="{{ path('tipodocumento_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
           <td>
           <ul>
             <li>
-              <a class="btn btn-success" href="{{ path('departamento_show', { 'id': entity.id }) }}">mostrar</a>
+              <a class="btn btn-success" href="{{ path('tipodocumento_show', { 'id': entity.id }) }}">mostrar</a>
             </li>
             <li>
-              <a class="btn btn-info" href="{{ path('departamento_edit', { 'id': entity.id }) }}">editar</a>
+              <a class="btn btn-info" href="{{ path('tipodocumento_edit', { 'id': entity.id }) }}">editar</a>
             </li>
           </ul></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-  <a class="btn btn-large btn-primary" href="{{ path('departamento_new') }}">Registrar una Dependencia</a>
+    <a class="btn btn-primary" href="{{ path('tipodocumento_new') }}">Nuevo Tipo de Documento</a>
   </section>
 </section>
 {% endblock %}

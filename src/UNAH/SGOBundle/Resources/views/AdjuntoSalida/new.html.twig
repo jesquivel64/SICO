@@ -5,21 +5,23 @@
     <nav class="well sidebar-nav">
       <ul class="nav nav-list">
         <li>
-          <a href="{{ path('oficio') }}">Regresar a Oficios</a>
+          <a href="{{ path('salida') }}">Regresar a Oficios</a>
+        <li>
+          <a href="{{ path('salida_show', { 'id': documento.id }) }}">Regresar a {{ documento.tipo }} {{ documento.numero }}</a>
         </li>
       </ul>
     </nav>
   </aside>
   <section class="span6">
-    <form action="{{ path('oficio_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('adjuntosalida_create', { 'documento': documento.id }) }}" method="post" {{ form_enctype(form) }}>
       <fieldset>
         <legend>
-          Agregar un Oficio
+          Agregar un Adjunto a {{ documento.tipo }} {{ documento.numero }}
         </legend>
         {{ form_widget(form) }}
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">
-            Guardar
+          <button class="btn btn-primary" type="submit">
+            Create
           </button>
         </div>
       </fieldset>

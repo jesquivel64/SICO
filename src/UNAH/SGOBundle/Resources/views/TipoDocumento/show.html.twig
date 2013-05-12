@@ -1,0 +1,38 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row-fluid">
+  <aside class="span3">
+    <nav class="sidebar-nav no-print">
+      <ul class="nav nav-tabs nav-stacked">
+        <li>
+          <a href="{{ path('tipodocumento') }}">Regresar a Tipos de Documentos</a>
+        </li>
+        <li>
+          <a href="{{ path('tipodocumento_edit', { 'id': entity.id }) }}">Editar este Tipo de Documento</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <section class="span6">
+    <hgroup class="page-header">
+      <h1>{{ entity.nombre }} <small>Tipo de Documento</small></h1>
+    </hgroup>
+  </section>
+</section>
+<section class="row-fluid">
+  <section class="span12">
+    <table class="table table-striped table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+  </section>
+</section>
+{% endblock %}

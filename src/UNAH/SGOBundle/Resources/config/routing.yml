@@ -21,3 +21,15 @@ UNAHSGOBundle_comentario:
 UNAHSGOBundle_adjunto:
     resource: "@UNAHSGOBundle/Resources/config/routing/adjunto.yml"
     prefix:   /adjunto
+
+UNAHSGOBundle_tipodocumento:
+    resource: "@UNAHSGOBundle/Resources/config/routing/tipodocumento.yml"
+    prefix:   /tipodocumento
+
+UNAHSGOBundle_salida:
+    resource: "@UNAHSGOBundle/Resources/config/routing/documentosalida.yml"
+    prefix:   /salida
+
+UNAHSGOBundle_adjuntosalida:
+    resource: "@UNAHSGOBundle/Resources/config/routing/adjuntosalida.yml"
+    prefix:   /adjuntosalida

@@ -1,0 +1,30 @@
+adjuntosalida:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:AdjuntoSalida:index" }
+
+adjuntosalida_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:AdjuntoSalida:show" }
+
+adjuntosalida_new:
+    pattern:  /new/{documento}
+    defaults: { _controller: "UNAHSGOBundle:AdjuntoSalida:new" }
+
+adjuntosalida_create:
+    pattern:  /create/{documento}
+    defaults: { _controller: "UNAHSGOBundle:AdjuntoSalida:create" }
+    requirements: { _method: post }
+
+adjuntosalida_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:AdjuntoSalida:edit" }
+
+adjuntosalida_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:AdjuntoSalida:update" }
+    requirements: { _method: post|put }
+
+adjuntosalida_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:AdjuntoSalida:delete" }
+    requirements: { _method: post|delete }

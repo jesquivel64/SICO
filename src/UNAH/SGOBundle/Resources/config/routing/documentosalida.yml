@@ -1,0 +1,30 @@
+salida:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:index" }
+
+salida_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:show" }
+
+salida_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:new" }
+
+salida_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:create" }
+    requirements: { _method: post }
+
+salida_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:edit" }
+
+salida_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:update" }
+    requirements: { _method: post|put }
+
+salida_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:delete" }
+    requirements: { _method: post|delete }
