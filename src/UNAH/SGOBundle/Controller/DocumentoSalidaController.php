@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use UNAH\SGOBundle\Entity\DocumentoSalida;
 use UNAH\SGOBundle\Form\DocumentoSalidaType;
+use UNAH\SGOBundle\Entity\Oficio;
 
 /**
  * DocumentoSalida controller.
@@ -21,8 +22,14 @@ class DocumentoSalidaController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $query = $qb->select('d')
+            ->from('UNAH\SGOBundle\Entity\DocumentoSalida', 'd')
+            ->setMaxResults(10)
+            ->orderBy('d.id', 'DESC')
+            ->getQuery();
 
-        $entities = $em->getRepository('UNAHSGOBundle:DocumentoSalida')->findAll();
+        $entities = $query->getResult();
 
         return $this->render('UNAHSGOBundle:DocumentoSalida:index.html.twig', array(
             'entities' => $entities,
@@ -96,23 +103,69 @@ class DocumentoSalidaController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('UNAHSGOBundle:DocumentoSalida')->find($id);
-
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find DocumentoSalida entity.');
         }
-
+        
         $editForm = $this->createForm(new DocumentoSalidaType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
-
+        
         return $this->render('UNAHSGOBundle:DocumentoSalida:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
+    
+    public function responderAction($oficio)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
+        
+        $entity = new DocumentoSalida();
+        $form   = $this->createForm(new DocumentoSalidaType(), $entity);
+        
+        return $this->render('UNAHSGOBundle:DocumentoSalida:responder.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'oficio' => $oficio,
+        ));
+    }
+    
+    /**
+     * Creates a new DocumentoSalida entity.
+     *
+     */
+    public function respuestaAction(Request $request, $oficio)
+    {
+        $entity  = new DocumentoSalida();
+        $form = $this->createForm(new DocumentoSalidaType(), $entity);
+        $form->bind($request);
+        $em = $this->getDoctrine()->getManager();
+        
+        $oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
+        
+        if ($form->isValid()) {
+            // Agregar el documento a las respuestas  del oficio
+            $entity->addOficiosRespondido($oficio);
+            $em->persist($entity);
+            $oficio->addRespuesta($entity);
+            $em->persist($oficio);
+            $em->flush();
+            
+            return $this->redirect($this->generateUrl('salida_show', array('id' => $entity->getId())));
+        }
 
+        return $this->render('UNAHSGOBundle:DocumentoSalida:responder.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'oficio' => $oficio,
+        ));
+    }
+    
     /**
      * Edits an existing DocumentoSalida entity.
      *
@@ -120,21 +173,21 @@ class DocumentoSalidaController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('UNAHSGOBundle:DocumentoSalida')->find($id);
-
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find DocumentoSalida entity.');
         }
-
+        
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new DocumentoSalidaType(), $entity);
         $editForm->bind($request);
-
+        
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
+        
             return $this->redirect($this->generateUrl('salida_edit', array('id' => $id)));
         }
 

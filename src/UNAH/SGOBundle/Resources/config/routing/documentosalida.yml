@@ -28,3 +28,12 @@ salida_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:delete" }
     requirements: { _method: post|delete }
+
+salida_responder:
+    pattern:  /responder/{oficio}
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:responder" }
+
+salida_respuesta:
+    pattern:  /respuesta/{oficio}
+    defaults: { _controller: "UNAHSGOBundle:DocumentoSalida:respuesta" }
+    requirements: { _method: post }
