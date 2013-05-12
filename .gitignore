@@ -169,3 +169,4 @@ pip-log.txt
 /app/logs/*
 /vendor/
 /app/config/parameters.yml
+/web/uploads/
