@@ -5,12 +5,11 @@ namespace UNAH\SGOBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DocumentoSalida
- *
- * @ORM\Table()
+ * Documento
  * @ORM\Entity
+ * @ORM\Table()
  */
-class DocumentoSalida
+class Documento
 {
     /**
      * @var integer
@@ -19,99 +18,129 @@ class DocumentoSalida
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
+    protected $id;
+    
     /**
-     * @ORM\ManyToOne(targetEntity="TipoDocumento", inversedBy="documentosSalida")
+     * @ORM\ManyToOne(targetEntity="TipoDocumento", inversedBy="documentos")
      * @ORM\JoinColumn(name="tipo_documento_id", referencedColumnName="id")
      */
-    private $tipo;
+    protected $tipo;
     
-    /**
-     * @ORM\ManyToMany(targetEntity="Departamento", inversedBy="documentosEnviados")
-     * @ORM\JoinTable(name="documentossalida_departamento")
-     */
-    private $departamentos;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="Oficio", inversedBy="respuestas")
-     * @ORM\JoinTable(name="documentossalida_oficio")
-     */
-    private $oficiosRespondidos;
-
     /**
      * @var string
      *
      * @ORM\Column(name="numero", type="string", length=255)
      */
-    private $numero;
-
+    protected $numero;
+    
     /**
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=255)
      */
-    private $descripcion;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="recibio", type="string", length=255)
-     */
-    private $recibio;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="remitente", type="string", length=255)
-     */
-    private $remitente;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="destinatario", type="string", length=255)
-     */
-    private $destinatario;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_de_emision", type="datetime")
-     */
-    private $fechaDeEmision;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_de_envio", type="datetime")
-     */
-    private $fechaDeEnvio;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_de_recibido", type="datetime")
-     */
-    private $fechaDeRecibido;
+    protected $descripcion;
     
     /**
-     * @ORM\OneToMany(targetEntity="AdjuntoSalida", mappedBy="documento")
+     * @var string
+     *
+     * @ORM\Column(name="autor", type="string", length=255)
      */
-    protected $adjuntos;
+    protected $autor;
     
-    /**
-     * @ORM\OneToMany(targetEntity="ComentarioSalida", mappedBy="documento")
-     */
-    protected $comentarios;
-
     /**
      * @var string
      *
      * @ORM\Column(name="entregado", type="string", length=255)
      */
-    private $entregado;
-
+    protected $entregado;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destinatario", type="string", length=255)
+     */
+    protected $destinatario;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="recibio", type="string", length=255)
+     */
+    protected $recibio;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_de_emision", type="datetime")
+     */
+    protected $fechaDeEmision;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_de_envio", type="datetime")
+     */
+    protected $fechaDeEnvio;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_de_recibido", type="datetime")
+     */
+    protected $fechaDeRecibido;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Adjunto", mappedBy="documento")
+     */
+    protected $adjuntos;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Comentario", mappedBy="documento")
+     */
+    protected $comentarios;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="estado", type="string", length=255, nullable=true)
+     */
+    protected $estado;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Departamento", inversedBy="documentosRecibidos")
+     * @ORM\JoinColumn(name="emisor_id", referencedColumnName="id")
+     */
+    protected $emisor;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Departamento", inversedBy="documentosEnviados")
+     * @ORM\JoinTable(name="enviado_departamento")
+     */
+    private $receptores;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="respondido", type="boolean")
+     */
+    private $respondido = FALSE;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="recibido", type="boolean")
+     */
+    private $recibido = FALSE;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->adjuntos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->receptores = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -127,7 +156,7 @@ class DocumentoSalida
      * Set numero
      *
      * @param string $numero
-     * @return DocumentoSalida
+     * @return Documento
      */
     public function setNumero($numero)
     {
@@ -150,7 +179,7 @@ class DocumentoSalida
      * Set descripcion
      *
      * @param string $descripcion
-     * @return DocumentoSalida
+     * @return Documento
      */
     public function setDescripcion($descripcion)
     {
@@ -170,56 +199,56 @@ class DocumentoSalida
     }
 
     /**
-     * Set recibio
+     * Set autor
      *
-     * @param string $recibio
-     * @return DocumentoSalida
+     * @param string $autor
+     * @return Documento
      */
-    public function setRecibio($recibio)
+    public function setAutor($autor)
     {
-        $this->recibio = $recibio;
+        $this->autor = $autor;
 
         return $this;
     }
 
     /**
-     * Get recibio
+     * Get autor
      *
      * @return string 
      */
-    public function getRecibio()
+    public function getAutor()
     {
-        return $this->recibio;
+        return $this->autor;
     }
 
     /**
-     * Set remitente
+     * Set entregado
      *
-     * @param string $remitente
-     * @return DocumentoSalida
+     * @param string $entregado
+     * @return Documento
      */
-    public function setRemitente($remitente)
+    public function setEntregado($entregado)
     {
-        $this->remitente = $remitente;
+        $this->entregado = $entregado;
 
         return $this;
     }
 
     /**
-     * Get remitente
+     * Get entregado
      *
      * @return string 
      */
-    public function getRemitente()
+    public function getEntregado()
     {
-        return $this->remitente;
+        return $this->entregado;
     }
 
     /**
      * Set destinatario
      *
      * @param string $destinatario
-     * @return DocumentoSalida
+     * @return Documento
      */
     public function setDestinatario($destinatario)
     {
@@ -239,10 +268,33 @@ class DocumentoSalida
     }
 
     /**
+     * Set recibio
+     *
+     * @param string $recibio
+     * @return Documento
+     */
+    public function setRecibio($recibio)
+    {
+        $this->recibio = $recibio;
+
+        return $this;
+    }
+
+    /**
+     * Get recibio
+     *
+     * @return string 
+     */
+    public function getRecibio()
+    {
+        return $this->recibio;
+    }
+
+    /**
      * Set fechaDeEmision
      *
      * @param \DateTime $fechaDeEmision
-     * @return DocumentoSalida
+     * @return Documento
      */
     public function setFechaDeEmision($fechaDeEmision)
     {
@@ -265,7 +317,7 @@ class DocumentoSalida
      * Set fechaDeEnvio
      *
      * @param \DateTime $fechaDeEnvio
-     * @return DocumentoSalida
+     * @return Documento
      */
     public function setFechaDeEnvio($fechaDeEnvio)
     {
@@ -288,7 +340,7 @@ class DocumentoSalida
      * Set fechaDeRecibido
      *
      * @param \DateTime $fechaDeRecibido
-     * @return DocumentoSalida
+     * @return Documento
      */
     public function setFechaDeRecibido($fechaDeRecibido)
     {
@@ -308,63 +360,33 @@ class DocumentoSalida
     }
 
     /**
-     * Set adjuntos
+     * Set estado
      *
-     * @param array $adjuntos
-     * @return DocumentoSalida
+     * @param string $estado
+     * @return Documento
      */
-    public function setAdjuntos($adjuntos)
+    public function setEstado($estado)
     {
-        $this->adjuntos = $adjuntos;
+        $this->estado = $estado;
 
         return $this;
     }
 
     /**
-     * Get adjuntos
-     *
-     * @return array 
-     */
-    public function getAdjuntos()
-    {
-        return $this->adjuntos;
-    }
-
-    /**
-     * Set entregado
-     *
-     * @param string $entregado
-     * @return DocumentoSalida
-     */
-    public function setEntregado($entregado)
-    {
-        $this->entregado = $entregado;
-
-        return $this;
-    }
-
-    /**
-     * Get entregado
+     * Get estado
      *
      * @return string 
      */
-    public function getEntregado()
+    public function getEstado()
     {
-        return $this->entregado;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->adjuntos = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->estado;
     }
 
     /**
      * Set tipo
      *
      * @param \UNAH\SGOBundle\Entity\TipoDocumento $tipo
-     * @return DocumentoSalida
+     * @return Documento
      */
     public function setTipo(\UNAH\SGOBundle\Entity\TipoDocumento $tipo = null)
     {
@@ -386,10 +408,10 @@ class DocumentoSalida
     /**
      * Add adjuntos
      *
-     * @param \UNAH\SGOBundle\Entity\AdjuntoSalida $adjuntos
-     * @return DocumentoSalida
+     * @param \UNAH\SGOBundle\Entity\Adjunto $adjuntos
+     * @return Documento
      */
-    public function addAdjunto(\UNAH\SGOBundle\Entity\AdjuntoSalida $adjuntos)
+    public function addAdjunto(\UNAH\SGOBundle\Entity\Adjunto $adjuntos)
     {
         $this->adjuntos[] = $adjuntos;
 
@@ -399,53 +421,30 @@ class DocumentoSalida
     /**
      * Remove adjuntos
      *
-     * @param \UNAH\SGOBundle\Entity\AdjuntoSalida $adjuntos
+     * @param \UNAH\SGOBundle\Entity\Adjunto $adjuntos
      */
-    public function removeAdjunto(\UNAH\SGOBundle\Entity\AdjuntoSalida $adjuntos)
+    public function removeAdjunto(\UNAH\SGOBundle\Entity\Adjunto $adjuntos)
     {
         $this->adjuntos->removeElement($adjuntos);
     }
 
     /**
-     * Add departamentos
-     *
-     * @param \UNAH\SGOBundle\Entity\Departamento $departamentos
-     * @return DocumentoSalida
-     */
-    public function addDepartamento(\UNAH\SGOBundle\Entity\Departamento $departamentos)
-    {
-        $this->departamentos[] = $departamentos;
-
-        return $this;
-    }
-
-    /**
-     * Remove departamentos
-     *
-     * @param \UNAH\SGOBundle\Entity\Departamento $departamentos
-     */
-    public function removeDepartamento(\UNAH\SGOBundle\Entity\Departamento $departamentos)
-    {
-        $this->departamentos->removeElement($departamentos);
-    }
-
-    /**
-     * Get departamentos
+     * Get adjuntos
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDepartamentos()
+    public function getAdjuntos()
     {
-        return $this->departamentos;
+        return $this->adjuntos;
     }
 
     /**
      * Add comentarios
      *
-     * @param \UNAH\SGOBundle\Entity\ComentarioSalida $comentarios
-     * @return DocumentoSalida
+     * @param \UNAH\SGOBundle\Entity\Comentario $comentarios
+     * @return Documento
      */
-    public function addComentario(\UNAH\SGOBundle\Entity\ComentarioSalida $comentarios)
+    public function addComentario(\UNAH\SGOBundle\Entity\Comentario $comentarios)
     {
         $this->comentarios[] = $comentarios;
 
@@ -455,9 +454,9 @@ class DocumentoSalida
     /**
      * Remove comentarios
      *
-     * @param \UNAH\SGOBundle\Entity\ComentarioSalida $comentarios
+     * @param \UNAH\SGOBundle\Entity\Comentario $comentarios
      */
-    public function removeComentario(\UNAH\SGOBundle\Entity\ComentarioSalida $comentarios)
+    public function removeComentario(\UNAH\SGOBundle\Entity\Comentario $comentarios)
     {
         $this->comentarios->removeElement($comentarios);
     }
@@ -470,38 +469,5 @@ class DocumentoSalida
     public function getComentarios()
     {
         return $this->comentarios;
-    }
-
-    /**
-     * Add oficiosRespondidos
-     *
-     * @param \UNAH\SGOBundle\Entity\Oficio $oficiosRespondidos
-     * @return DocumentoSalida
-     */
-    public function addOficiosRespondido(\UNAH\SGOBundle\Entity\Oficio $oficiosRespondidos)
-    {
-        $this->oficiosRespondidos[] = $oficiosRespondidos;
-
-        return $this;
-    }
-
-    /**
-     * Remove oficiosRespondidos
-     *
-     * @param \UNAH\SGOBundle\Entity\Oficio $oficiosRespondidos
-     */
-    public function removeOficiosRespondido(\UNAH\SGOBundle\Entity\Oficio $oficiosRespondidos)
-    {
-        $this->oficiosRespondidos->removeElement($oficiosRespondidos);
-    }
-
-    /**
-     * Get oficiosRespondidos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getOficiosRespondidos()
-    {
-        return $this->oficiosRespondidos;
     }
 }

@@ -22,10 +22,10 @@ class Comentario
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Oficio", inversedBy="comentarios")
-     * @ORM\JoinColumn(name="oficio_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Documento", inversedBy="comentarios")
+     * @ORM\JoinColumn(name="documento_id", referencedColumnName="id")
      */
-    private $oficio;
+    private $documento;
 	
     /**
      * @var string
@@ -67,7 +67,6 @@ class Comentario
     public function setComentario($comentario)
     {
         $this->comentario = $comentario;
-    
         return $this;
     }
 
@@ -84,24 +83,23 @@ class Comentario
     /**
      * Set emisor
      *
-     * @param \UNAH\SGOBundle\Entity\Oficio $emisor
+     * @param \UNAH\SGOBundle\Entity\Documento $documento
      * @return Comentario
      */
-    public function setOficio(\UNAH\SGOBundle\Entity\Oficio $oficio = null)
+    public function setDocumento(\UNAH\SGOBundle\Entity\Documento $documento = null)
     {
-        $this->oficio = $oficio;
-    
+        $this->documento = $documento;
         return $this;
     }
 
     /**
      * Get emisor
      *
-     * @return \UNAH\SGOBundle\Entity\Oficio 
+     * @return \UNAH\SGOBundle\Entity\Documento 
      */
-    public function getOficio()
+    public function getDocumento()
     {
-        return $this->oficio;
+        return $this->documento;
     }
 
     /**
@@ -136,7 +134,6 @@ class Comentario
     public function setEstado($estado)
     {
         $this->estado = $estado;
-    
         return $this;
     }
 

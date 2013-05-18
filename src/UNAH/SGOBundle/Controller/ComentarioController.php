@@ -33,25 +33,25 @@ class ComentarioController extends Controller
      * Creates a new Comentario entity.
      *
      */
-    public function createAction(Request $request, $oficio)
+    public function createAction(Request $request, $documento)
     {
         $entity  = new Comentario();
         $form = $this->createForm(new ComentarioType(), $entity);
         $form->bind($request);
-
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-		
-			$oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
-			$entity->setOficio($oficio);
-			$oficio->setEstado($entity->getEstado());
-            $em->persist($entity);
+		    
+			$documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
+			$entity->setDocumento($documento);
+			$documento->setEstado($entity->getEstado());
+            $em->persist($documento);
 			$em->persist($entity);
             $em->flush();
 			
-            return $this->redirect($this->generateUrl('oficio_show', array('id' => $entity->getOficio()->getId())));
+            return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getDocumento()->getId())));
         }
-
+        
         return $this->render('UNAHSGOBundle:Comentario:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -62,25 +62,25 @@ class ComentarioController extends Controller
      * Displays a form to create a new Comentario entity.
      *
      */
-    public function newAction($oficio)
+    public function newAction($documento)
     {
         $entity = new Comentario();
 		
         $em = $this->getDoctrine()->getManager();
 		
-        $oficio = $em->getRepository('UNAHSGOBundle:Oficio')->find($oficio);
+        $documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
 		
         if (!$oficio) {
             throw $this->createNotFoundException('Unable to find Oficio entity.');
         }
-		$entity->setOficio($oficio);
+		$entity->setDocumento($documento);
 		
         $form   = $this->createForm(new ComentarioType(), $entity);
 		
         return $this->render('UNAHSGOBundle:Comentario:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-			'oficio' => $oficio,
+			'documento' => $documento,
         ));
     }
 
@@ -177,12 +177,12 @@ class ComentarioController extends Controller
                 throw $this->createNotFoundException('Unable to find Comentario entity.');
             }
 			
-			$oficio = $entity->getOficio();
+			$documento = $entity->getDocumento();
 			
             $em->remove($entity);
             $em->flush();
 			
-            return $this->redirect($this->generateUrl('oficio_show', array('id' => $oficio->getId())));
+            return $this->redirect($this->generateUrl('documento_show', array('id' => $documento->getId())));
         }
 		
         return $this->redirect($this->generateUrl('comentario'));

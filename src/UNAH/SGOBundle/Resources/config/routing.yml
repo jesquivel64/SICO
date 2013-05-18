@@ -10,10 +10,6 @@ UNAHSGOBundle_departamento:
     resource: "@UNAHSGOBundle/Resources/config/routing/departamento.yml"
     prefix:   /departamento
 
-UNAHSGOBundle_oficio:
-    resource: "@UNAHSGOBundle/Resources/config/routing/oficio.yml"
-    prefix:   /oficio
-
 UNAHSGOBundle_comentario:
     resource: "@UNAHSGOBundle/Resources/config/routing/comentario.yml"
     prefix:   /comentario
@@ -25,11 +21,3 @@ UNAHSGOBundle_adjunto:
 UNAHSGOBundle_tipodocumento:
     resource: "@UNAHSGOBundle/Resources/config/routing/tipodocumento.yml"
     prefix:   /tipodocumento
-
-UNAHSGOBundle_salida:
-    resource: "@UNAHSGOBundle/Resources/config/routing/documentosalida.yml"
-    prefix:   /salida
-
-UNAHSGOBundle_adjuntosalida:
-    resource: "@UNAHSGOBundle/Resources/config/routing/adjuntosalida.yml"
-    prefix:   /adjuntosalida

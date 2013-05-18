@@ -30,14 +30,22 @@ class Departamento
     private $nombre;
 	
 	/**
-     * @ORM\OneToMany(targetEntity="Oficio", mappedBy="emisor")
+     * @ORM\OneToMany(targetEntity="Documento", mappedBy="emisor")
      */
-    protected $oficios;
+    protected $documentos;
     
     /**
-     * @ORM\ManyToMany(targetEntity="DocumentoSalida", inversedBy="departamentos")
+     * @ORM\ManyToMany(targetEntity="Documento", inversedBy="receptores")
      */
     private $documentosEnviados;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->documentosRecibidos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documentosEnviados = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -58,7 +66,7 @@ class Departamento
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -72,56 +80,46 @@ class Departamento
         return $this->nombre;
     }
 
-    public function __construct()
-    {
-        $this->oficios = new ArrayCollection();
-    }
-
     /**
-     * Add oficios
+     * Add documentosRecibidos
      *
-     * @param \UNAH\SGOBundle\Entity\Oficio $oficios
+     * @param \UNAH\SGOBundle\Entity\DocumentoRecibido $documentosRecibidos
      * @return Departamento
      */
-    public function addOficio(\UNAH\SGOBundle\Entity\Oficio $oficios)
+    public function addDocumentosRecibido(\UNAH\SGOBundle\Entity\DocumentoRecibido $documentosRecibidos)
     {
-        $this->oficios[] = $oficios;
-    
+        $this->documentosRecibidos[] = $documentosRecibidos;
+
         return $this;
     }
 
     /**
-     * Remove oficios
+     * Remove documentosRecibidos
      *
-     * @param \UNAH\SGOBundle\Entity\Oficio $oficios
+     * @param \UNAH\SGOBundle\Entity\DocumentoRecibido $documentosRecibidos
      */
-    public function removeOficio(\UNAH\SGOBundle\Entity\Oficio $oficios)
+    public function removeDocumentosRecibido(\UNAH\SGOBundle\Entity\DocumentoRecibido $documentosRecibidos)
     {
-        $this->oficios->removeElement($oficios);
+        $this->documentosRecibidos->removeElement($documentosRecibidos);
     }
 
     /**
-     * Get oficios
+     * Get documentosRecibidos
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getOficios()
+    public function getDocumentosRecibidos()
     {
-        return $this->oficios;
+        return $this->documentosRecibidos;
     }
-	
-	public function __toString()
-	{
-		return $this->nombre;
-	}
 
     /**
      * Add documentosEnviados
      *
-     * @param \UNAH\SGOBundle\Entity\DocumentosSalida $documentosEnviados
+     * @param \UNAH\SGOBundle\Entity\DocumentoEnviado $documentosEnviados
      * @return Departamento
      */
-    public function addDocumentosEnviado(\UNAH\SGOBundle\Entity\DocumentoSalida $documentosEnviados)
+    public function addDocumentosEnviado(\UNAH\SGOBundle\Entity\DocumentoEnviado $documentosEnviados)
     {
         $this->documentosEnviados[] = $documentosEnviados;
 
@@ -131,9 +129,9 @@ class Departamento
     /**
      * Remove documentosEnviados
      *
-     * @param \UNAH\SGOBundle\Entity\DocumentosSalida $documentosEnviados
+     * @param \UNAH\SGOBundle\Entity\DocumentoEnviado $documentosEnviados
      */
-    public function removeDocumentosEnviado(\UNAH\SGOBundle\Entity\DocumentoSalida $documentosEnviados)
+    public function removeDocumentosEnviado(\UNAH\SGOBundle\Entity\DocumentoEnviado $documentosEnviados)
     {
         $this->documentosEnviados->removeElement($documentosEnviados);
     }

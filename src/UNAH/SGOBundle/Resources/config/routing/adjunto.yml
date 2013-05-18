@@ -7,11 +7,11 @@ adjunto_show:
     defaults: { _controller: "UNAHSGOBundle:Adjunto:show" }
 
 adjunto_new:
-    pattern:  /new/{oficio}
+    pattern:  /new/{documento}
     defaults: { _controller: "UNAHSGOBundle:Adjunto:new" }
 
 adjunto_create:
-    pattern:  /create/{oficio}
+    pattern:  /create/{documento}
     defaults: { _controller: "UNAHSGOBundle:Adjunto:create" }
     requirements: { _method: post }
 

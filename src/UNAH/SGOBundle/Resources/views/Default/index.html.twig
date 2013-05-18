@@ -4,10 +4,10 @@
   <nav class="sidebar-nav">
     <ul class="nav nav-tabs nav-stacked">
       <li>
-        <a href="{{ path('oficio_new') }}">Registrar un Oficio</a>
+        
       </li>
       <li>
-        <a href="{{ path('oficio_search') }}">B&uacute;squeda de Oficios</a>
+        
       </li>
     </ul>
   </nav>
@@ -15,23 +15,11 @@
 <section class="span9">
   <section class="hero-unit">
     <hgroup>
-      <h1>Sistema Gestor de Oficios</h1>
+      <h1>Sistema Integrado de Correspondencia</h1>
     </hgroup>
   </section>
   <section class="span9">
-    <form action="{{ path('oficio_create') }}" method="post" {{ form_enctype(form) }}>
-      <fieldset>
-        <legend>
-          Agregar un Oficio
-        </legend>
-        {{ form_widget(form) }}
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">
-            Guardar
-          </button>
-        </div>
-      </fieldset>
-    </form>
+    
   </section>
 </section>
 {% endblock %}

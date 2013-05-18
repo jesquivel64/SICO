@@ -17,10 +17,10 @@ class Adjunto
     public $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Oficio", inversedBy="adjuntos")
-     * @ORM\JoinColumn(name="oficio_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Documento", inversedBy="adjuntos")
+     * @ORM\JoinColumn(name="documento_id", referencedColumnName="id")
      */
-    private $oficio;
+    private $documento;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -138,7 +138,7 @@ class Adjunto
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -161,7 +161,7 @@ class Adjunto
     public function setPath($path)
     {
         $this->path = $path;
-    
+
         return $this;
     }
 
@@ -176,25 +176,25 @@ class Adjunto
     }
 
     /**
-     * Set oficio
+     * Set documento
      *
-     * @param \UNAH\SGOBundle\Entity\Oficio $oficio
+     * @param \UNAH\SGOBundle\Entity\Documento $documento
      * @return Adjunto
      */
-    public function setOficio(\UNAH\SGOBundle\Entity\Oficio $oficio = null)
+    public function setDocumento(\UNAH\SGOBundle\Entity\Documento $documento = null)
     {
-        $this->oficio = $oficio;
-    
+        $this->documento = $documento;
+
         return $this;
     }
 
     /**
-     * Get oficio
+     * Get documento
      *
-     * @return \UNAH\SGOBundle\Entity\Oficio 
+     * @return \UNAH\SGOBundle\Entity\Documento 
      */
-    public function getOficio()
+    public function getDocumento()
     {
-        return $this->oficio;
+        return $this->documento;
     }
 }

@@ -7,11 +7,11 @@ comentario_show:
     defaults: { _controller: "UNAHSGOBundle:Comentario:show" }
 
 comentario_new:
-    pattern:  /new/{oficio}
+    pattern:  /new/{documento}
     defaults: { _controller: "UNAHSGOBundle:Comentario:new" }
 
 comentario_create:
-    pattern:  /create/{oficio}
+    pattern:  /create/{documento}
     defaults: { _controller: "UNAHSGOBundle:Comentario:create" }
     requirements: { _method: post }
 

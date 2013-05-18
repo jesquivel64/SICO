@@ -20,19 +20,25 @@ class TipoDocumento
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
     /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
      */
     private $nombre;
-
+    
     /**
-     * @ORM\ManyToOne(targetEntity="DocumentoSalida", inversedBy="tipoDocumento")
-     * @ORM\JoinColumn(name="tipo_documento_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Documento", mappedBy="tipo")
      */
-    private $documentosSalida;
+    private $documentos;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->documentos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -53,7 +59,7 @@ class TipoDocumento
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -68,30 +74,35 @@ class TipoDocumento
     }
 
     /**
-     * Set documentosSalida
+     * Add documentos
      *
-     * @param \UNAH\SGOBundle\Entity\DocumentoSalida $documentosSalida
+     * @param \UNAH\SGOBundle\Entity\Documento $documentos
      * @return TipoDocumento
      */
-    public function setDocumentosSalida(\UNAH\SGOBundle\Entity\DocumentoSalida $documentosSalida = null)
+    public function addDocumento(\UNAH\SGOBundle\Entity\Documento $documentos)
     {
-        $this->documentosSalida = $documentosSalida;
+        $this->documentos[] = $documentos;
 
         return $this;
     }
 
     /**
-     * Get documentosSalida
+     * Remove documentos
      *
-     * @return \UNAH\SGOBundle\Entity\DocumentoSalida 
+     * @param \UNAH\SGOBundle\Entity\Documento $documentos
      */
-    public function getDocumentosSalida()
+    public function removeDocumento(\UNAH\SGOBundle\Entity\Documento $documentos)
     {
-        return $this->documentosSalida;
+        $this->documentos->removeElement($documentos);
     }
-    
-    public function __toString()
+
+    /**
+     * Get documentos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocumentos()
     {
-        return $this->nombre;
+        return $this->documentos;
     }
 }
