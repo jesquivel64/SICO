@@ -105,4 +105,9 @@ class TipoDocumento
     {
         return $this->documentos;
     }
+    
+    public function __toString()
+    {
+        return $this->nombre;
+    }
 }

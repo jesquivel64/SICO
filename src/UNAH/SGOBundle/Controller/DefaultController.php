@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use UNAH\SGOBundle\Entity\Oficio;
-use UNAH\SGOBundle\Form\OficioType;
 use UNAH\SGOBundle\Form\DepartamentoType;
 
 class DefaultController extends Controller
@@ -22,15 +20,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $entity = new Oficio();
-        $entity->setRecibio($this->getUser()->getUsername());
-        $form   = $this->createForm(new OficioType(), $entity);
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('UNAHSGOBundle:Oficio')->findAll();
-
+        $tipos = $em->getRepository('UNAHSGOBundle:TipoDocumento')->findAll();
         return array(
-            'form'   => $form->createView(),
+            'tipos' => $tipos,
         );
     }
 	

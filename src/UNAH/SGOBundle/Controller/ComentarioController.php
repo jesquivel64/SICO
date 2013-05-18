@@ -28,7 +28,7 @@ class ComentarioController extends Controller
             'entities' => $entities,
         ));
     }
-
+    
     /**
      * Creates a new Comentario entity.
      *
@@ -57,7 +57,7 @@ class ComentarioController extends Controller
             'form'   => $form->createView(),
         ));
     }
-
+    
     /**
      * Displays a form to create a new Comentario entity.
      *
@@ -83,7 +83,7 @@ class ComentarioController extends Controller
 			'documento' => $documento,
         ));
     }
-
+    
     /**
      * Finds and displays a Comentario entity.
      *
@@ -104,7 +104,7 @@ class ComentarioController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
     }
-
+    
     /**
      * Displays a form to edit an existing Comentario entity.
      *
@@ -128,7 +128,7 @@ class ComentarioController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-
+    
     /**
      * Edits an existing Comentario entity.
      *
@@ -160,7 +160,7 @@ class ComentarioController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-
+    
     /**
      * Deletes a Comentario entity.
      *
@@ -187,7 +187,7 @@ class ComentarioController extends Controller
 		
         return $this->redirect($this->generateUrl('comentario'));
     }
-
+    
     /**
      * Creates a form to delete a Comentario entity by id.
      *

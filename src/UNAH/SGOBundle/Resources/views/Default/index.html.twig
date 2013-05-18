@@ -1,25 +1,18 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
-<aside class="span3">
-  <nav class="sidebar-nav">
-    <ul class="nav nav-tabs nav-stacked">
-      <li>
-        
-      </li>
-      <li>
-        
-      </li>
-    </ul>
-  </nav>
-</aside>
-<section class="span9">
-  <section class="hero-unit">
-    <hgroup>
-      <h1>Sistema Integrado de Correspondencia</h1>
-    </hgroup>
+<div class="row-fluid">
+  <hgroup class="span12 page-header">
+    <h1>Sistema Integrado de Correspondencia</h1>
+  </hgroup>
+</div>
+{% for tipo in tipos %}
+<div class="row-fluid">
+  <section class="span6">
+    <a href="{{ path('documento_enviando', { 'tipo': tipo.id }) }}">Enviar un {{ tipo.nombre }}</a>
   </section>
-  <section class="span9">
-    
+  <section class="span6">
+    <a href="{{ path('documento_recibiendo', { 'tipo': tipo.id }) }}">Recibir un {{ tipo.nombre }}</a>
   </section>
-</section>
+</div>
+{% endfor %}
 {% endblock %}

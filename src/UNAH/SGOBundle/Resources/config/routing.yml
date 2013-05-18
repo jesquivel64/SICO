@@ -21,3 +21,7 @@ UNAHSGOBundle_adjunto:
 UNAHSGOBundle_tipodocumento:
     resource: "@UNAHSGOBundle/Resources/config/routing/tipodocumento.yml"
     prefix:   /tipodocumento
+
+UNAHSGOBundle_documento:
+    resource: "@UNAHSGOBundle/Resources/config/routing/documento.yml"
+    prefix:   /documento

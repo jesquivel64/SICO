@@ -116,21 +116,21 @@ class Documento
      * @ORM\ManyToMany(targetEntity="Departamento", inversedBy="documentosEnviados")
      * @ORM\JoinTable(name="enviado_departamento")
      */
-    private $receptores;
+    protected $receptores;
     
     /**
      * @var boolean
      *
      * @ORM\Column(name="respondido", type="boolean")
      */
-    private $respondido = FALSE;
+    protected $respondido = FALSE;
     
     /**
      * @var boolean
      *
      * @ORM\Column(name="recibido", type="boolean")
      */
-    private $recibido = FALSE;
+    protected $recibido = FALSE;
     
     /**
      * Constructor
@@ -469,5 +469,107 @@ class Documento
     public function getComentarios()
     {
         return $this->comentarios;
+    }
+
+    /**
+     * Set respondido
+     *
+     * @param boolean $respondido
+     * @return Documento
+     */
+    public function setRespondido($respondido)
+    {
+        $this->respondido = $respondido;
+
+        return $this;
+    }
+
+    /**
+     * Get respondido
+     *
+     * @return boolean 
+     */
+    public function getRespondido()
+    {
+        return $this->respondido;
+    }
+
+    /**
+     * Set recibido
+     *
+     * @param boolean $recibido
+     * @return Documento
+     */
+    public function setRecibido($recibido)
+    {
+        $this->recibido = $recibido;
+
+        return $this;
+    }
+
+    /**
+     * Get recibido
+     *
+     * @return boolean 
+     */
+    public function getRecibido()
+    {
+        return $this->recibido;
+    }
+
+    /**
+     * Set emisor
+     *
+     * @param \UNAH\SGOBundle\Entity\Departamento $emisor
+     * @return Documento
+     */
+    public function setEmisor(\UNAH\SGOBundle\Entity\Departamento $emisor = null)
+    {
+        $this->emisor = $emisor;
+
+        return $this;
+    }
+
+    /**
+     * Get emisor
+     *
+     * @return \UNAH\SGOBundle\Entity\Departamento 
+     */
+    public function getEmisor()
+    {
+        return $this->emisor;
+    }
+
+    /**
+     * Add receptores
+     *
+     * @param \UNAH\SGOBundle\Entity\Departamento $receptores
+     * @return Documento
+     */
+    public function addReceptore(\UNAH\SGOBundle\Entity\Departamento $receptores)
+    {
+        $this->receptores[] = $receptores;
+
+        return $this;
+    }
+
+    /**
+     * Remove receptores
+     *
+     * @param \UNAH\SGOBundle\Entity\Departamento $receptores
+     */
+    public function removeReceptore(\UNAH\SGOBundle\Entity\Departamento $receptores)
+    {
+        $this->receptores->removeElement($receptores);
+    }
+
+    /**
+     * Get receptores
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReceptores()
+    {
+        return $this->receptores;
     }
 }

@@ -22,6 +22,7 @@
 <section class="row-fluid">
   <section class="span12">
     <table class="table table-striped table-bordered">
+      <caption>Documentos Recibidos en la Vicerrectoria</caption>
       <thead>
         <tr>
           <th class="no-print">Id</th>
@@ -36,17 +37,20 @@
         </tr>
       </thead>
       <tbody>
-        {% for oficio in entity.oficios %}
+        {% for documento in entity.documentos %}
         <tr>
-          <td class="no-print"><a href="{{ path('oficio_show', { 'id': entity.id }) }}">{{ oficio.id }}</a></td>
-          <td>{{ oficio.numero }}</td>
-          <td>{{ oficio.emisor }}</td>
-          <td>{{ oficio.descripcion }}</td>
-          <td>{{ oficio.recibio }}</td>
-          <td>{{ oficio.estado }}</td>
-          <td>{{ oficio.getFechaDeRecibido|date("d/m/Y") }}</td>
-          <td>{{ oficio.getFechaDeEmision|date("d/m/Y") }}</td>
-          <td class="no-print"><a class="btn btn-primary" href="{{ path('oficio_show', { 'id': oficio.id }) }}">Mostrar</a><a class="btn btn-success" href="{{ path('oficio_edit', { 'id': oficio.id }) }}">Editar</a> </ul> </td>
+          <td class="no-print"><a href="{{ path('documento_show', { 'id': documento.id }) }}">{{ documento.id }}</a></td>
+          <td>{{ documento.numero }}</td>
+          <td>{{ documento.emisor }}</td>
+          <td>{{ documento.descripcion }}</td>
+          <td>{{ documento.recibio }}</td>
+          <td>{{ documento.estado }}</td>
+          <td>{{ documento.getFechaDeRecibido|date("d/m/Y") }}</td>
+          <td>{{ documento.getFechaDeEmision|date("d/m/Y") }}</td>
+          <td class="no-print">
+            <a class="btn btn-primary" href="{{ path('documento_show', { 'id': documento.id }) }}">Mostrar</a>
+            <a class="btn btn-success" href="{{ path('documento_edit', { 'id': documento.id }) }}">Editar</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

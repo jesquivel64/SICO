@@ -83,10 +83,10 @@ class Departamento
     /**
      * Add documentosRecibidos
      *
-     * @param \UNAH\SGOBundle\Entity\DocumentoRecibido $documentosRecibidos
+     * @param \UNAH\SGOBundle\Entity\Documento $documentosRecibidos
      * @return Departamento
      */
-    public function addDocumentosRecibido(\UNAH\SGOBundle\Entity\DocumentoRecibido $documentosRecibidos)
+    public function addDocumentosRecibido(\UNAH\SGOBundle\Entity\Documento $documentosRecibidos)
     {
         $this->documentosRecibidos[] = $documentosRecibidos;
 
@@ -96,9 +96,9 @@ class Departamento
     /**
      * Remove documentosRecibidos
      *
-     * @param \UNAH\SGOBundle\Entity\DocumentoRecibido $documentosRecibidos
+     * @param \UNAH\SGOBundle\Entity\Documento $documentosRecibidos
      */
-    public function removeDocumentosRecibido(\UNAH\SGOBundle\Entity\DocumentoRecibido $documentosRecibidos)
+    public function removeDocumentosRecibido(\UNAH\SGOBundle\Entity\Documento $documentosRecibidos)
     {
         $this->documentosRecibidos->removeElement($documentosRecibidos);
     }
@@ -116,10 +116,10 @@ class Departamento
     /**
      * Add documentosEnviados
      *
-     * @param \UNAH\SGOBundle\Entity\DocumentoEnviado $documentosEnviados
+     * @param \UNAH\SGOBundle\Entity\Documento $documentosEnviados
      * @return Departamento
      */
-    public function addDocumentosEnviado(\UNAH\SGOBundle\Entity\DocumentoEnviado $documentosEnviados)
+    public function addDocumentosEnviado(\UNAH\SGOBundle\Entity\Documento $documentosEnviados)
     {
         $this->documentosEnviados[] = $documentosEnviados;
 
@@ -129,9 +129,9 @@ class Departamento
     /**
      * Remove documentosEnviados
      *
-     * @param \UNAH\SGOBundle\Entity\DocumentoEnviado $documentosEnviados
+     * @param \UNAH\SGOBundle\Entity\Documento $documentosEnviados
      */
-    public function removeDocumentosEnviado(\UNAH\SGOBundle\Entity\DocumentoEnviado $documentosEnviados)
+    public function removeDocumentosEnviado(\UNAH\SGOBundle\Entity\Documento $documentosEnviados)
     {
         $this->documentosEnviados->removeElement($documentosEnviados);
     }
@@ -144,5 +144,43 @@ class Departamento
     public function getDocumentosEnviados()
     {
         return $this->documentosEnviados;
+    }
+
+    /**
+     * Add documentos
+     *
+     * @param \UNAH\SGOBundle\Entity\Documento $documentos
+     * @return Departamento
+     */
+    public function addDocumento(\UNAH\SGOBundle\Entity\Documento $documentos)
+    {
+        $this->documentos[] = $documentos;
+
+        return $this;
+    }
+
+    /**
+     * Remove documentos
+     *
+     * @param \UNAH\SGOBundle\Entity\Documento $documentos
+     */
+    public function removeDocumento(\UNAH\SGOBundle\Entity\Documento $documentos)
+    {
+        $this->documentos->removeElement($documentos);
+    }
+    
+    /**
+     * Get documentos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocumentos()
+    {
+        return $this->documentos;
+    }
+    
+    public function __toString() 
+    {
+        return $this->nombre;
     }
 }

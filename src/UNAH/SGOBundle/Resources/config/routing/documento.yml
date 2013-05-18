@@ -1,0 +1,48 @@
+documento:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Documento:index" }
+
+documento_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Documento:show" }
+
+documento_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:Documento:new" }
+
+documento_create:
+    pattern:  /create/{tipo}
+    defaults: { _controller: "UNAHSGOBundle:Documento:create" }
+    requirements: { _method: post }
+
+documento_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Documento:edit" }
+
+documento_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Documento:update" }
+    requirements: { _method: post|put }
+
+documento_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Documento:delete" }
+    requirements: { _method: post|delete }
+
+documento_recibiendo:
+    pattern:  /recibiendo/{tipo}
+    defaults: { _controller: "UNAHSGOBundle:Documento:recibiendo" }
+
+documento_recibir:
+    pattern:  /recibir/{tipo}
+    defaults: { _controller: "UNAHSGOBundle:Documento:recibir" }
+    requirements: { _method: post }
+
+documento_enviando:
+    pattern:  /enviando/{tipo}
+    defaults: { _controller: "UNAHSGOBundle:Documento:enviando" }
+
+documento_enviar:
+    pattern:  /enviar/{tipo}
+    defaults: { _controller: "UNAHSGOBundle:Documento:enviar" }
+    requirements: { _method: post }
