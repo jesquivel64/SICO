@@ -74,7 +74,7 @@ class AdjuntoController extends Controller
         if (!$documento) {
             throw $this->createNotFoundException('Unable to find Documento entity.');
         }
-		$entity->setOficio($documento);
+		$entity->setDocumento($documento);
 		
         $form   = $this->createForm(new AdjuntoType(), $entity);
 

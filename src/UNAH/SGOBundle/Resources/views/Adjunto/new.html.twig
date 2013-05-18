@@ -4,19 +4,19 @@
   <nav class="well sidebar-nav">
     <ul class="nav nav-list">
       <li>
-        <a href="{{ path('oficio') }}">Regresar a Oficios</a>
+        <a href="{{ path('documento') }}">Regresar a Oficios</a>
       <li>
-        <a href="{{ path('oficio_show', { 'id': oficio.id }) }}">Regresar a {{ oficio.numero }} {{ oficio.emisor }}</a>
+        <a href="{{ path('documento_show', { 'id': documento.id }) }}">Regresar a {{ documento.numero }} {{ documento.emisor }}</a>
       </li>
       </li>
     </ul>
   </nav>
 </aside>
 <section class="span6">
-  <form action="{{ path('adjunto_create', { 'oficio': oficio.id }) }}" method="post" {{ form_enctype(form) }}>
+  <form action="{{ path('adjunto_create', { 'documento': documento.id }) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
       <legend>
-        Agregar un Adjunto a a Oficio {{ oficio.numero }} - {{ oficio.emisor }}
+        Agregar un Adjunto a a {{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}
       </legend>
       {{ form_widget(form) }}
       <div class="form-actions">

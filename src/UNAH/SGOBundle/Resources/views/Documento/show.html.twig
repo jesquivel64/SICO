@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Documento</h1>
+    <h1>{{ entity.numero }} <small>{{ entity.tipo }} {% if not entity.recibido %}Enviado{% endif %}</small></h1>
 
     <table class="record_properties">
         <tbody>
@@ -67,6 +67,11 @@
     <li>
         <a href="{{ path('documento_edit', { 'id': entity.id }) }}">
             Edit
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('adjunto_new', { 'documento': entity.id }) }}">
+            Agregar Adjunto
         </a>
     </li>
     <li>
