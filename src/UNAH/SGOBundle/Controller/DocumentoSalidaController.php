@@ -236,4 +236,61 @@ class DocumentoSalidaController extends Controller
             ->getForm()
         ;
     }
+    
+    private function createDateSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('inicio', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->add('fin', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->add('tipo', 'entity', array(
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
+    
+    private function createEmisionSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('inicio_emision', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->add('fin_emision', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->add('tipo', 'entity', array(
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
+    
+    private function createNumeroSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('numero')
+        ->add('tipo', 'entity', array(
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
+    
+    private function createDepartamentoSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('tipo', 'entity', array(
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
 }

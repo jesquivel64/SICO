@@ -217,7 +217,7 @@ class OficioController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
-
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('UNAHSGOBundle:Oficio')->find($id);
@@ -225,7 +225,9 @@ class OficioController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Oficio entity.');
             }
-
+            foreach ($entity->getAdjuntos() as $adjunto) {
+                $em->remove($adjunto);
+            }
             $em->remove($entity);
             $em->flush();
         }
