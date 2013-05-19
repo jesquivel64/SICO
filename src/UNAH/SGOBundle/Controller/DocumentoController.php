@@ -352,8 +352,8 @@ class DocumentoController extends Controller
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
                 ->setParameter('recibido', TRUE)
-                ->setParameter('inicio', $form->get('inicio')->getData())
-                ->setParameter('fin', $form->get('fin')->getData())
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             $recibidos = $query->getSingleScalarResult();
             
@@ -361,8 +361,8 @@ class DocumentoController extends Controller
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
                 ->setParameter('recibido', FALSE)
-                ->setParameter('inicio', $form->get('inicio')->getData())
-                ->setParameter('fin', $form->get('fin')->getData())
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             $enviados = $query->getSingleScalarResult();
             
@@ -372,8 +372,8 @@ class DocumentoController extends Controller
                 ->andWhere('d.respondido = :respondido')
                 ->setParameter('recibido', TRUE)
                 ->setParameter('respondido', TRUE)
-                ->setParameter('inicio', $form->get('inicio')->getData())
-                ->setParameter('fin', $form->get('fin')->getData())
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             $respondidos = $query->getSingleScalarResult();
             
@@ -383,8 +383,8 @@ class DocumentoController extends Controller
                 ->andWhere('d.respondido = :respondido')
                 ->setParameter('recibido', TRUE)
                 ->setParameter('respondido', FALSE)
-                ->setParameter('inicio', $form->get('inicio')->getData())
-                ->setParameter('fin', $form->get('fin')->getData())
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             $noRespondidos = $query->getSingleScalarResult();
             
@@ -396,8 +396,8 @@ class DocumentoController extends Controller
                 ->andWhere('d.recibido = :recibido')
                 ->groupBy('t.id')
                 ->setParameter('recibido', FALSE)
-                ->setParameter('inicio', $form->get('inicio')->getData())
-                ->setParameter('fin', $form->get('fin')->getData())
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             $tipo = $query->getResult();
             
@@ -409,8 +409,8 @@ class DocumentoController extends Controller
                 ->andWhere('d.recibido = :recibido')
                 ->groupBy('t.id')
                 ->setParameter('recibido', TRUE)
-                ->setParameter('inicio', $form->get('inicio')->getData())
-                ->setParameter('fin', $form->get('fin')->getData())
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             $tipo_recibido = $query->getResult();
             
@@ -422,8 +422,8 @@ class DocumentoController extends Controller
                 ->andWhere('d.recibido = :recibido')
                 ->groupBy('e.id')
                 ->setParameter('recibido', TRUE)
-                ->setParameter('inicio', $form->get('inicio')->getData())
-                ->setParameter('fin', $form->get('fin')->getData())
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             
             $emisor = $query->getResult();
@@ -436,8 +436,8 @@ class DocumentoController extends Controller
                 'emisor' => $emisor,
                 'tipo' => $tipo,
                 'tipo_recibido' => $tipo_recibido,
-                'inicio' => $form->get('inicio')->getData(),
-                'fin' => $form->get('fin')->getData(),
+                'inicio' => $form->get('inicio_periodo')->getData(),
+                'fin' => $form->get('fin_periodo')->getData(),
                 'date_form' => $form->createView(),
             );
         }
@@ -820,11 +820,11 @@ class DocumentoController extends Controller
     private function createPeriodoSearchForm()
     {
         return $this->createFormBuilder()
-       ->add('inicio', 'date', array(
+       ->add('inicio_periodo', 'date', array(
                'widget' => 'single_text',
                'format' => 'dd/MM/yyyy',
                'attr' => array('class' => 'datepicker')))
-       ->add('fin', 'date', array(
+       ->add('fin_periodo', 'date', array(
                'widget' => 'single_text',
                'format' => 'dd/MM/yyyy',
                'attr' => array('class' => 'datepicker')))
