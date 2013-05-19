@@ -17,9 +17,18 @@ class DocumentoEnviadoType extends AbstractType
             ->add('entregado')
             ->add('destinatario')
             ->add('recibio')
-            ->add('fechaDeEmision')
-            ->add('fechaDeEnvio')
-            ->add('fechaDeRecibido')
+            ->add('fechaDeEmision', 'date', array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker')))
+            ->add('fechaDeEnvio', 'date', array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker')))
+            ->add('fechaDeRecibido', 'date', array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker')))
             ->add('estado')
             ->add('receptores')
         ;
