@@ -355,7 +355,6 @@ class DocumentoController extends Controller
                 ->setParameter('inicio', $form->get('inicio')->getData())
                 ->setParameter('fin', $form->get('fin')->getData())
                 ->getQuery();
-            
             $recibidos = $query->getSingleScalarResult();
             
             $query = $qb->select('count(d)')
@@ -365,7 +364,6 @@ class DocumentoController extends Controller
                 ->setParameter('inicio', $form->get('inicio')->getData())
                 ->setParameter('fin', $form->get('fin')->getData())
                 ->getQuery();
-            
             $enviados = $query->getSingleScalarResult();
             
             $query = $qb->select('count(d)')
@@ -377,8 +375,44 @@ class DocumentoController extends Controller
                 ->setParameter('inicio', $form->get('inicio')->getData())
                 ->setParameter('fin', $form->get('fin')->getData())
                 ->getQuery();
-            
             $respondidos = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andWhere('d.respondido = :respondido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('respondido', FALSE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            $noRespondidos = $query->getSingleScalarResult();
+            
+            $qb = $em->createQueryBuilder('d', 't');
+            $query = $qb->select('count(d) as cantidad, t.nombre')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->leftJoin('d.tipo', 't')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('t.id')
+                ->setParameter('recibido', FALSE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            $tipo = $query->getResult();
+            
+            $qb = $em->createQueryBuilder('d', 't');
+            $query = $qb->select('count(d) as cantidad, t.nombre')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->leftJoin('d.tipo', 't')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('t.id')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            $tipo_recibido = $query->getResult();
             
             $qb = $em->createQueryBuilder('d', 'e');
             $query = $qb->select('count(d) as cantidad, e.nombre')
@@ -397,8 +431,11 @@ class DocumentoController extends Controller
             return array(
                 'recibidos' => $recibidos,
                 'respondidos' => $respondidos,
+                'noRespondidos' => $noRespondidos,
                 'enviados' => $enviados,
                 'emisor' => $emisor,
+                'tipo' => $tipo,
+                'tipo_recibido' => $tipo_recibido,
                 'inicio' => $form->get('inicio')->getData(),
                 'fin' => $form->get('fin')->getData(),
                 'date_form' => $form->createView(),

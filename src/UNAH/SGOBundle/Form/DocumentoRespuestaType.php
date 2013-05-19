@@ -13,20 +13,20 @@ class DocumentoRespuestaType extends AbstractType
         $builder
             ->add('tipo')
             ->add('numero')
-            ->add('descripcion')
+            ->add('descripcion', 'textarea')
             ->add('autor')
             ->add('entregado')
             ->add('destinatario')
             ->add('recibio')
-            ->add('fechaDeEmision', 'date', array(
+            ->add('fecha_de_emision', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('fechaDeEnvio', 'date', array(
+            ->add('fecha_de_envio', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('fechaDeRecibido', 'date', array(
+            ->add('fecha_de_recibido', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
