@@ -1,0 +1,65 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<div class="row-fluid">
+<section class="span12">
+    <hgroup class="page-header">
+      <h1>Estad&iacute;sticas <small>{{ tipo }}</small></h1>
+    </hgroup>
+  </section>
+</div>
+<div class="row-fluid">
+  <section class="span12">
+    <canvas id="eficiencia" width="400" height="400"></canvas>
+    <canvas id="dependencias" width="400" height="400"></canvas>
+    <p>Recibidos: {{ recibidos }}</p>
+    <p>Respondidos: {{ respondidos }}</p>
+    <p>Enviados: {{ enviados }}</p>
+    {% for dato in emisor %}
+    <p>{{ dato.nombre }}: {{ dato.cantidad }}</p>
+    {% endfor %}
+  </section>
+</div>
+{% block javascript %}
+<script src="{{ asset('bundles/unahsgo/js/Chart.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    var ctx = document.getElementById("eficiencia").getContext("2d");
+    var data = {
+    labels : ["Recibidos","Respondidos","Enviados"],
+    datasets : [
+      {
+        fillColor : "rgba(220,220,220,0.5)",
+        strokeColor : "rgba(220,220,220,1)",
+        pointColor : "rgba(220,220,220,1)",
+        pointStrokeColor : "#fff",
+        data : [{{ recibidos }}, {{ respondidos }}, {{ enviados }}]
+      },
+    ]
+  };
+  var eficiencia = new Chart(ctx).Bar(data, {
+    scaleOverride : true,
+    scaleSteps : Math.max({{ recibidos }}, {{ respondidos }}, {{ enviados }}) + 1,
+    scaleStepWidth : 1,
+    scaleStartValue : 0
+  });
+  var ctx = document.getElementById("dependencias").getContext("2d");
+  var data = {
+    labels : [{% for dato in emisor %} "{{ dato.nombre }}", {% endfor %}],
+    datasets : [
+      {
+        fillColor : "rgba(220,220,220,0.5)",
+        strokeColor : "rgba(220,220,220,1)",
+        pointColor : "rgba(220,220,220,1)",
+        pointStrokeColor : "#fff",
+        data : [{% for dato in emisor %} {{ dato.cantidad }}, {% endfor %}]
+      },
+    ]
+  };
+  var eficiencia = new Chart(ctx).Bar(data, {
+    scaleOverride : true,
+    scaleSteps : Math.max({% for dato in emisor %} {{ dato.cantidad }}, {% endfor %} 1) + 1,
+    scaleStepWidth : 1,
+    scaleStartValue : 0
+  });
+</script>
+{% endblock %}
+{% endblock %}

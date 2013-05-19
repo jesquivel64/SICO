@@ -26,12 +26,9 @@ class DocumentoController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        
-        $entities = $em->getRepository('UNAHSGOBundle:Documento')->findAll();
-        
+        $periodo_tipo_form = $this->createDateSearchForm();
         return $this->render('UNAHSGOBundle:Documento:index.html.twig', array(
-            'entities' => $entities,
+            'periodo_tipo_form' => $periodo_tipo_form->createView(),
         ));
     }
     
@@ -335,6 +332,92 @@ class DocumentoController extends Controller
     /**
     * Permite Efectuar busquedas por fecha
     *
+    * @Route("/estadistica/fecha", name="documento_estadistica_fecha")
+    * @Method("GET")
+    * @Template()
+    */
+    public function estadisticaPeriodoAction(Request $request)
+    {
+        $form = $this->createDateSearchForm();
+        $form->bind($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $tipo = $form->get('tipo')->getData();
+            $qb = $em->createQueryBuilder();
+            
+            $query = $qb->select('count(d)')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andwhere('d.tipo = :tipo')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            
+            $recibidos = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andwhere('d.tipo = :tipo')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('recibido', FALSE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            
+            $enviados = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andwhere('d.tipo = :tipo')
+                ->andWhere('d.recibido = :recibido')
+                ->andWhere('d.respondido = :respondido')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('recibido', TRUE)
+                ->setParameter('respondido', TRUE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            
+            $respondidos = $query->getSingleScalarResult();
+            
+            $qb = $em->createQueryBuilder('d', 'e');
+            $query = $qb->select('count(d) as cantidad, e.nombre')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->leftJoin('d.emisor', 'e')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andwhere('d.tipo = :tipo')
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('e.id')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            
+            $emisor = $query->getResult();
+            
+            return array(
+                'recibidos' => $recibidos,
+                'respondidos' => $respondidos,
+                'enviados' => $enviados,
+                'emisor' => $emisor,
+                'inicio' => $form->get('inicio')->getData(),
+                'fin' => $form->get('fin')->getData(),
+                'date_form' => $form->createView(),
+                'tipo' => $tipo,
+            );
+        }
+        return $this->redirect($this->generateUrl('documento'));
+    }
+    
+    /**
+    * Permite Efectuar busquedas por fecha
+    *
     * @Route("/fecha", name="oficio_search_fecha")
     * @Method("GET")
     * @Template()
@@ -349,18 +432,22 @@ class DocumentoController extends Controller
             $tipo = $form->get('tipo')->getData();
             $qb = $em->createQueryBuilder();
             $query = $qb->select('d')
-            ->from('UNAH\SGOBundle\Entity\Documento', 'd')
-            ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
-            ->setParameter('inicio', $form->get('inicio')->getData())
-            ->setParameter('fin', $form->get('fin')->getData())
-            ->getQuery();
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andwhere('d.tipo = :tipo')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
             
             $documentos = $query->getResult();
             $query = $qb->select('count(d)')
-            ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
-            ->setParameter('inicio', $form->get('inicio')->getData())
-            ->setParameter('fin', $form->get('fin')->getData())
-            ->getQuery();
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andwhere('d.tipo = :tipo')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
             $count = $query->getSingleScalarResult();
             
             return array(
@@ -392,18 +479,22 @@ class DocumentoController extends Controller
             $tipo = $form->get('tipo')->getData();
             $qb = $em->createQueryBuilder();
             $query = $qb->select('d')
-            ->from('UNAH\SGOBundle\Entity\Documento', 'd')
-            ->where($qb->expr()->between('d.fechaDeEmision', ':inicio', ':fin'))
-            ->setParameter('inicio', $form->get('inicio_emision')->getData())
-            ->setParameter('fin', $form->get('fin_emision')->getData())
-            ->getQuery();
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeEmision', ':inicio', ':fin'))
+                ->andwhere('d.tipo = :tipo')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('inicio', $form->get('inicio_emision')->getData())
+                ->setParameter('fin', $form->get('fin_emision')->getData())
+                ->getQuery();
             
             $documentos = $query->getResult();
             $query = $qb->select('count(d)')
-            ->where($qb->expr()->between('d.fechaDeEmision', ':inicio', ':fin'))
-                            ->setParameter('inicio', $form->get('inicio_emision')->getData())
-                            ->setParameter('fin', $form->get('fin_emision')->getData())
-            ->getQuery();
+                ->where($qb->expr()->between('d.fechaDeEmision', ':inicio', ':fin'))
+                ->andwhere('d.tipo = :tipo')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('inicio', $form->get('inicio_emision')->getData())
+                ->setParameter('fin', $form->get('fin_emision')->getData())
+                ->getQuery();
             $count = $query->getSingleScalarResult();
             
             return array(
