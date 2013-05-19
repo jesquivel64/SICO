@@ -1,0 +1,96 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<div class="row-fluid">
+  <section class="span12">
+    <hgroup class="page-header">
+      <h1>Sistema Integrado de Correspondencia <small>B&uacute;squeda</small></h1>
+    </hgroup>
+  </section>
+</div>
+<div class="row-fluid">
+  <section class="span6">
+    <form action="{{ path('documento_search_date') }}" method="get" {{ form_enctype(date_form) }}>
+      <fieldset>
+        <legend>
+          Buscar por Fecha de Recibido
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(date_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </section>
+  <section class="span6">
+    <form action="{{ path('documento_search_emision') }}" method="get" {{ form_enctype(emision_form) }}>
+      <fieldset>
+        <legend>
+          Buscar por Fecha de Emision
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(emision_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+<div class="row-fluid">
+  <section class="span6">
+    <form action="{{ path('documento_search_depto') }}" method="get" {{ form_enctype(depto_form) }}>
+      <fieldset>
+        <legend>
+          Buscar por Dependencia
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(depto_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </section>
+  <section class="span6">
+    <form action="{{ path('documento_search_numero') }}" method="get" {{ form_enctype(numero_form) }}>
+      <fieldset>
+        <legend>
+          Buscar por N&uacute;mero
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(numero_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+<div class="row-fluid">
+  <section class="span6">
+    <form action="{{ path('documento_search_depto_comentario') }}" method="get" {{ form_enctype(depto_form) }}>
+      <fieldset>
+        <legend>
+          Buscar por Dependencia y Descripci&oacute;n
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(comentario_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+{% endblock %}

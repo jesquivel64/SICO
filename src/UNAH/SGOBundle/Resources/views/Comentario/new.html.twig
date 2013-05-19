@@ -4,18 +4,18 @@
   <nav class="well sidebar-nav">
     <ul class="nav nav-list">
       <li>
-        <a href="{{ path('oficio') }}">Regresar a Oficios</a>
+        <a href="{{ path('documento') }}">Regresar a Documentos</a>
       <li>
-        <a href="{{ path('oficio_show', { 'id': entity.oficio.id }) }}">Regresar a {{ entity.oficio.numero }} {{ entity.oficio.emisor }}</a>
+        <a href="{{ path('documento_show', { 'id': entity.documento.id }) }}">Regresar a {{ entity.documento.numero }} {{ entity.documento.emisor }}</a>
       </li>
     </ul>
   </nav>
 </aside>
 <section class="span6">
-  <form action="{{ path('comentario_create', { 'oficio': oficio.id }) }}" method="post" {{ form_enctype(form) }}>
+  <form action="{{ path('comentario_create', { 'documento': documento.id }) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
       <legend>
-        Registrar Seguimiento a Oficio {{ entity.oficio.numero }} - {{ entity.oficio.emisor }}
+        Registrar Seguimiento a {{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}
       </legend>
       {{ form_widget(form) }}
       <div class="form-actions">

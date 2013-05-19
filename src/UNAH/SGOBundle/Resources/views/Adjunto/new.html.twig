@@ -16,7 +16,7 @@
   <form action="{{ path('adjunto_create', { 'documento': documento.id }) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
       <legend>
-        Agregar un Adjunto a a {{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}
+        Agregar un Adjunto a {{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}
       </legend>
       {{ form_widget(form) }}
       <div class="form-actions">

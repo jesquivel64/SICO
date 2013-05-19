@@ -1,0 +1,33 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row-fluid">
+<aside class="span3">
+  <nav class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li>
+        <a href="{{ path('documento') }}">Regresar a Envios de Documentos</a>
+        <a href="{{ path('documento_show', { 'id': documento.id }) }}">
+          Regresar a {{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+<section class="span6">
+  <form action="{{ path('documento_respuesta', { 'documento': documento.id }) }}" method="post" {{ form_enctype(form) }}>
+    <fieldset>
+      <legend>
+        Registrar Envio de un Documento como Respuesta a 
+        {{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}
+      </legend>
+      {{ form_widget(form) }}
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          Guardar
+        </button>
+      </div>
+    </fieldset>
+  </form>
+</section>
+</section>
+{% endblock %}

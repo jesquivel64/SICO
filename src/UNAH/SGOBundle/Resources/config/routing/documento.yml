@@ -46,3 +46,36 @@ documento_enviar:
     pattern:  /enviar/{tipo}
     defaults: { _controller: "UNAHSGOBundle:Documento:enviar" }
     requirements: { _method: post }
+
+documento_responder:
+    pattern:  /responder/{documento}
+    defaults: { _controller: "UNAHSGOBundle:Documento:responder" }
+
+documento_respuesta:
+    pattern:  /respuesta/{documento}
+    defaults: { _controller: "UNAHSGOBundle:Documento:respuesta" }
+    requirements: { _method: post }
+
+documento_search_date:
+    pattern: /fecha
+    defaults: { _controller: "UNAHSGOBundle:Documento:searchDate" }
+
+documento_search:
+    pattern: /buscar
+    defaults: { _controller: "UNAHSGOBundle:Documento:search" }
+
+documento_search_emision:
+    pattern: /emision
+    defaults: { _controller: "UNAHSGOBundle:Documento:searchEmision" }
+
+documento_search_numero:
+    pattern: /numero
+    defaults: { _controller: "UNAHSGOBundle:Documento:searchNumero" }
+
+documento_search_depto:
+    pattern: /dependencia
+    defaults: { _controller: "UNAHSGOBundle:Documento:searchDepartamento" }
+    
+documento_search_depto_comentario:
+    pattern: /dependencia/descripcion
+    defaults: { _controller: "UNAHSGOBundle:Documento:searchDepartamentoComentario" }

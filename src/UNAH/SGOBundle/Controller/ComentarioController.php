@@ -70,8 +70,8 @@ class ComentarioController extends Controller
 		
         $documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
 		
-        if (!$oficio) {
-            throw $this->createNotFoundException('Unable to find Oficio entity.');
+        if (!$documento) {
+            throw $this->createNotFoundException('Unable to find Documento entity.');
         }
 		$entity->setDocumento($documento);
 		

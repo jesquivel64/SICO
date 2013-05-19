@@ -131,16 +131,14 @@ class Documento
      * @ORM\Column(name="recibido", type="boolean")
      */
     protected $recibido = FALSE;
-    
     /**
-     * Constructor
+     * @ORM\ManyToMany(targetEntity="Documento", inversedBy="respuestas")
+     * @ORM\JoinTable(name="documento_respuesta",
+     *      joinColumns={@ORM\JoinColumn(name="documento_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="respuesta_id", referencedColumnName="id")}
+     *      )
      */
-    public function __construct()
-    {
-        $this->adjuntos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->receptores = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    private $respuestas;
 
     /**
      * Get id
@@ -571,5 +569,47 @@ class Documento
     public function getReceptores()
     {
         return $this->receptores;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->adjuntos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->receptores = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->respuestas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add respuestas
+     *
+     * @param \UNAH\SGOBundle\Entity\Documento $respuestas
+     * @return Documento
+     */
+    public function addRespuesta(\UNAH\SGOBundle\Entity\Documento $respuesta)
+    {
+        $this->respuestas[] = $respuesta;
+        return $this;
+    }
+
+    /**
+     * Remove respuestas
+     *
+     * @param \UNAH\SGOBundle\Entity\Documento $respuestas
+     */
+    public function removeRespuesta(\UNAH\SGOBundle\Entity\Documento $respuesta)
+    {
+        $this->respuestas->removeElement($respuesta);
+    }
+
+    /**
+     * Get respuestas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRespuestas()
+    {
+        return $this->respuestas;
     }
 }
