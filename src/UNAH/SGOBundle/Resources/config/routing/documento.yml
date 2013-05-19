@@ -80,6 +80,10 @@ documento_search_depto_comentario:
     pattern: /dependencia/descripcion
     defaults: { _controller: "UNAHSGOBundle:Documento:searchDepartamentoComentario" }
 
-documento_estadistica_periodo_tipo:
+documento_estadistica_periodo:
     pattern: /estadistica/periodo
     defaults: { _controller: "UNAHSGOBundle:Documento:estadisticaPeriodo" }
+
+documento_estadistica_periodo_tipo:
+    pattern: /estadistica/periodo/tipo
+    defaults: { _controller: "UNAHSGOBundle:Documento:estadisticaPeriodoTipo" }

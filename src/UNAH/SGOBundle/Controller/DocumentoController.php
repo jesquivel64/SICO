@@ -27,8 +27,10 @@ class DocumentoController extends Controller
     public function indexAction()
     {
         $periodo_tipo_form = $this->createDateSearchForm();
+        $periodo_form = $this->createPeriodoSearchForm();
         return $this->render('UNAHSGOBundle:Documento:index.html.twig', array(
             'periodo_tipo_form' => $periodo_tipo_form->createView(),
+            'periodo_form' => $periodo_form->createView(),
         ));
     }
     
@@ -337,6 +339,82 @@ class DocumentoController extends Controller
     * @Template()
     */
     public function estadisticaPeriodoAction(Request $request)
+    {
+        $form = $this->createPeriodoSearchForm();
+        $form->bind($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $qb = $em->createQueryBuilder();
+            
+            $query = $qb->select('count(d)')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            
+            $recibidos = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', FALSE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            
+            $enviados = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andWhere('d.respondido = :respondido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('respondido', TRUE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            
+            $respondidos = $query->getSingleScalarResult();
+            
+            $qb = $em->createQueryBuilder('d', 'e');
+            $query = $qb->select('count(d) as cantidad, e.nombre')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->leftJoin('d.emisor', 'e')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('e.id')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            
+            $emisor = $query->getResult();
+            
+            return array(
+                'recibidos' => $recibidos,
+                'respondidos' => $respondidos,
+                'enviados' => $enviados,
+                'emisor' => $emisor,
+                'inicio' => $form->get('inicio')->getData(),
+                'fin' => $form->get('fin')->getData(),
+                'date_form' => $form->createView(),
+            );
+        }
+        return $this->redirect($this->generateUrl('documento'));
+    }
+    
+    /**
+    * Permite Efectuar busquedas por fecha
+    *
+    * @Route("/estadistica/fecha", name="documento_estadistica_fecha")
+    * @Method("GET")
+    * @Template()
+    */
+    public function estadisticaPeriodoTipoAction(Request $request)
     {
         $form = $this->createDateSearchForm();
         $form->bind($request);
@@ -700,6 +778,20 @@ class DocumentoController extends Controller
             )
         )
         ->getForm();
+    }
+    
+    private function createPeriodoSearchForm()
+    {
+        return $this->createFormBuilder()
+       ->add('inicio', 'date', array(
+               'widget' => 'single_text',
+               'format' => 'dd/MM/yyyy',
+               'attr' => array('class' => 'datepicker')))
+       ->add('fin', 'date', array(
+               'widget' => 'single_text',
+               'format' => 'dd/MM/yyyy',
+               'attr' => array('class' => 'datepicker')))
+       ->getForm();
     }
     
     private function createEmisionSearchForm()
