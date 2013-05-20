@@ -13,24 +13,15 @@ class DocumentoEnviadoType extends AbstractType
         $builder
             ->add('numero')
             ->add('descripcion', 'textarea')
-            ->add('autor')
             ->add('entregado')
-            ->add('destinatario')
-            ->add('recibio')
-            ->add('fecha_de_emision', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker')))
+            ->add('destinatario', null, array('required' => false))
+            ->add('recibio', null, array('required' => false))
             ->add('fecha_de_envio', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('fecha_de_recibido', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker')))
-            ->add('estado')
-            ->add('receptores')
+            ->add('estado', null, array('required' => false))
+            ->add('receptores', null, array('required' => false))
         ;
     }
 

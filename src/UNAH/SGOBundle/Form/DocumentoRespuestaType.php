@@ -11,22 +11,12 @@ class DocumentoRespuestaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tipo')
             ->add('numero')
             ->add('descripcion', 'textarea')
-            ->add('autor')
             ->add('entregado')
-            ->add('destinatario')
-            ->add('recibio')
-            ->add('fecha_de_emision', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker')))
+            ->add('destinatario', null, array('required' => false))
+            ->add('recibio', null, array('required' => false))
             ->add('fecha_de_envio', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker')))
-            ->add('fecha_de_recibido', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))

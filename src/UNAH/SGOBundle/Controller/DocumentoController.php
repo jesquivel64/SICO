@@ -73,6 +73,7 @@ class DocumentoController extends Controller
     public function recibiendoAction($tipo)
     {
         $entity = new Documento();
+        $entity->setRecibio($this->getUser()->getUsername());
         $em = $this->getDoctrine()->getManager();
         $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
         
@@ -121,6 +122,7 @@ class DocumentoController extends Controller
     public function enviandoAction($tipo)
     {
         $entity = new Documento();
+        $entity->setEntregado($this->getUser()->getUsername());
         $em = $this->getDoctrine()->getManager();
         $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
         
@@ -285,7 +287,10 @@ class DocumentoController extends Controller
     public function responderAction($documento)
     {
         $em = $this->getDoctrine()->getManager();
+        $entity->setEntregado($this->getUser()->getUsername());
         $documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
+        $documento->setRespondido(TRUE);
+        $em->persist($documento);
         
         $entity = new Documento();
         $form = $this->createForm(new DocumentoRespuestaType(), $entity);
