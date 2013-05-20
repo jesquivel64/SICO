@@ -11,8 +11,8 @@ class ComentarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('estado', null, array('label' => 'Bitacora'))
             ->add('comentario', 'textarea')
-			->add('estado')
             /*->add('oficio', 'entity', array(
 				'class' => 'UNAHSGOBundle:Oficio',
 			))*/

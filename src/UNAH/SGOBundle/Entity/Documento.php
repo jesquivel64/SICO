@@ -36,56 +36,56 @@ class Documento
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=255)
+     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
      */
     protected $descripcion;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="autor", type="string", length=255)
+     * @ORM\Column(name="autor", type="string", length=255, nullable=true)
      */
     protected $autor;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="entregado", type="string", length=255)
+     * @ORM\Column(name="entregado", type="string", length=255, nullable=TRUE)
      */
     protected $entregado;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="destinatario", type="string", length=255)
+     * @ORM\Column(name="destinatario", type="string", length=255, nullable=true)
      */
     protected $destinatario;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="recibio", type="string", length=255)
+     * @ORM\Column(name="recibio", type="string", length=255, nullable=true)
      */
     protected $recibio;
     
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_de_emision", type="datetime")
+     * @ORM\Column(name="fecha_de_emision", type="datetime", nullable=true)
      */
     protected $fechaDeEmision;
     
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_de_envio", type="datetime")
+     * @ORM\Column(name="fecha_de_envio", type="datetime", nullable=true)
      */
     protected $fechaDeEnvio;
     
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_de_recibido", type="datetime")
+     * @ORM\Column(name="fecha_de_recibido", type="datetime", nullable=true)
      */
     protected $fechaDeRecibido;
     

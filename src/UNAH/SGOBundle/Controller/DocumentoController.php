@@ -116,6 +116,7 @@ class DocumentoController extends Controller
         return $this->render('UNAHSGOBundle:Documento:recibir.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'tipo'   => $tipo,
         ));
     }
     
@@ -276,12 +277,19 @@ class DocumentoController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Documento entity.');
             }
-
+            foreach($entity->getComentarios() as $comentario) {
+                $em->remove($comentario);
+            }
+            
+            foreach($entity->getAdjuntos() as $adjunto) {
+                $em->remove($adjunto);
+            }
+            $tipo = $entity->getTipo();
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('documento'));
+        return $this->redirect($this->generateUrl('documento_documento', array('tipo' => $tipo->getId())));
     }
     
     public function responderAction($documento)

@@ -23,9 +23,6 @@
           <a href="{{ path('adjunto_new', { 'documento': entity.id }) }}"> Agregar Adjunto </a>
         </li>
         <li>
-          <a href="{{ path('comentario_new', { 'documento': entity.id }) }}">Registrar Seguimiento</a>
-        </li>
-        <li>
           <a href="{{ path('documento_responder', { 'documento': entity.id }) }}">Responder</a>
         </li>
       </ul>
@@ -33,7 +30,10 @@
   </section>
   <section class="span9 ">
     <hgroup class="page-header hero-unit">
-      <h1>{{ entity.numero }} <small>{{ entity.tipo }} {% if not entity.recibido %}Enviado{% endif %}</small></h1>
+      <h1>{{ entity.numero }} <small>{{ entity.tipo }}
+      {% if entity.recibido %}
+        {{ entity.emisor }}
+      {% endif %}{% if not entity.recibido %}Enviado{% endif %}</small></h1>
     </hgroup>
   </section>
 </div>
@@ -41,39 +41,43 @@
   <section class="span9 offset3">
     <ul>
       <li>
-        N&uacute;mero: {{ entity.numero }}
-      </li>
-      <li>
         Descripci&oacute;n: {{ entity.descripcion }}
       </li>
       <li>
-        Autor: {{ entity.autor }}
-      </li>
-      <li>
-        Entregado: {{ entity.entregado }}
+        Remitente: {{ entity.autor }}
       </li>
       <li>
         Destinatario: {{ entity.destinatario }}
       </li>
-      <li>
-        Recibio: {{ entity.recibio }}
-      </li>
+      
+      {% if not entity.recibido %}
       <li>
         Fecha de Emisi&oacute;n: {{ entity.fechaDeEmision|date('d/m/Y H:i:s') }}
       </li>
-      <li>
-        Fecha de Envio: {{ entity.fechaDeEnvio|date('d/m/Y H:i:s') }}
-      </li>
+      {% endif %}
+      {% if entity.recibido %}
       <li>
         Fecha de Recibido: {{ entity.fechaDeRecibido|date('d/m/Y H:i:s') }}
       </li>
+      {% endif %}
       <li>
-        Estado: {{ entity.estado }}
+        Bit&aacute;cora: {{ entity.estado }}
       </li>
       {% if entity.recibido %}
       <li>
         Emisor: {{ entity.emisor }}
       </li>
+      {% endif %}
+      {% if not entity.recibido %}
+      <li>
+        Entregado: {{ entity.entregado }}
+      </li>
+      {% endif %}
+      {% if entity.recibido %}
+      <li>
+        Recibio: {{ entity.recibio }}
+      </li>
+      
       {% endif %}
     </ul>
   </section>
@@ -86,7 +90,7 @@
       </caption>
       <thead>
         <tr>
-          <th>Comentario</th>
+          <th>Nombre</th>
           <th>Archivo</th>
           <th>Acciones</th>
         </tr>
@@ -126,6 +130,7 @@
         {% endfor %}
       </tbody>
     </table>
+    <a class="btn btn-primary" href="{{ path('comentario_new', { 'documento': entity.id }) }}">Registrar Seguimiento</a>
   </section>
 </section>
 <section class="row-fluid">

@@ -12,10 +12,10 @@ class DocumentoRecibidoType extends AbstractType
     {
         $builder
             ->add('numero')
-            ->add('descripcion', 'textarea')
-            ->add('entregado')
+            ->add('autor', null, array('label' => 'Remitente'))
             ->add('destinatario')
-            ->add('recibio')
+            ->add('descripcion', 'textarea')
+            ->add('estado', null, array('label' => 'Bitacora'))
             ->add('fecha_de_emision', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
@@ -24,8 +24,9 @@ class DocumentoRecibidoType extends AbstractType
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('estado')
             ->add('emisor', null, array('label' => 'Dependencia'))
+            ->add('recibio')
+            
         ;
     }
 

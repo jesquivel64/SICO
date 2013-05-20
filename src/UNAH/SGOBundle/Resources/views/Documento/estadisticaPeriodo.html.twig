@@ -13,17 +13,16 @@
       <h2>Estad&iacute;sticas Generales de Documentos</h2>
     </hgroup>
     <canvas id="flujo" width="400" height="400"></canvas>
-    <p>Recibidos: {{ recibidos }}</p>
-    <p>Respondidos: {{ respondidos }}</p>
-    <p>Enviados: {{ enviados }}</p>
+    <p>{{ recibidos }} Documentos han sido Recibidos</p>
+    <p>{{ enviados }} Documentos han sido Enviados</p>
   </article>
   <article class="span6">
     <hgroup class="page-header">
       <h2>Relaci&oacute;n entre Recibidos y Respondidos</h2>
     </hgroup>
     <canvas id="eficiencia" width="400" height="400"></canvas>
-    <p>Respondidos: {{ respondidos }}</p>
-    <p>No Respondidos: {{ noRespondidos }}</p>
+    <p>{{ respondidos }} Documentos han obtenido Respuesta</p>
+    <p>{{ noRespondidos }} Documentos Recibidos sin Respuesta</p>
   </article>
 </div>
 <div class="row-fluid">
@@ -44,7 +43,7 @@
     </hgroup>
     <canvas id="tipo" width="400" height="400"></canvas>
     {% for dato in tipo %}
-    <p>{{ dato.nombre }}: {{ dato.cantidad }}</p>
+    <p>{{ dato.cantidad }} {{ dato.nombre }}(s)</p>
     {% endfor %}
   </article>
   <article class="span6">
@@ -53,7 +52,7 @@
     </hgroup>
     <canvas id="tipo-recibido" width="400" height="400"></canvas>
     {% for dato in tipo_recibido %}
-    <p>{{ dato.nombre }}: {{ dato.cantidad }}</p>
+    <p>{{ dato.cantidad }} {{ dato.nombre }}(s)</p>
     {% endfor %}
   </article>
 </div>

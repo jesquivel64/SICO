@@ -4,7 +4,7 @@
   <nav class="well sidebar-nav">
     <ul class="nav nav-list">
       <li>
-        <a href="{{ path('documento') }}">Regresar a Oficios</a>
+        <a href="{{ path('documento') }}">Regresar a {{ documento.tipo }}</a>
       <li>
         <a href="{{ path('documento_show', { 'id': documento.id }) }}">Regresar a {{ documento.numero }} {{ documento.emisor }}</a>
       </li>
