@@ -139,24 +139,20 @@
   var emisor = new Chart(ctx).Pie(data);
   
   var ctx = document.getElementById("tipo").getContext("2d");
-  var data = {
-    labels : [{% for dato in tipo %} "{{ dato.nombre }}", {% endfor %}],
-    datasets : [
-      {
-        fillColor : "rgba(220,220,220,0.5)",
-        strokeColor : "rgba(220,220,220,1)",
-        pointColor : "rgba(220,220,220,1)",
-        pointStrokeColor : "#fff",
-        data : [{% for dato in tipo %} {{ dato.cantidad }}, {% endfor %}]
-      },
+  data = [
+    {% for dato in tipo %}
+    {
+      value: {{ dato.cantidad }},
+      label: '{{ dato.nombre }}',
+      labelColor : 'white',
+      color: '#'+Math.floor(Math.random()*16777215).toString(16)
+    },
+    {% endfor %}
+    {
+      value: 0
+    }
     ]
-  };
-  var tipo = new Chart(ctx).Bar(data, {
-    scaleOverride : true,
-    scaleSteps : Math.max({% for dato in tipo %} {{ dato.cantidad }}, {% endfor %} 1) + 1,
-    scaleStepWidth : 1,
-    scaleStartValue : 0
-  });
+  var tipo = new Chart(ctx).Pie(data);
   
   var ctx = document.getElementById("tipo-recibido").getContext("2d");
   var data = {

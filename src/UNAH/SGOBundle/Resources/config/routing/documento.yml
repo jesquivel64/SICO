@@ -87,3 +87,7 @@ documento_estadistica_periodo:
 documento_estadistica_periodo_tipo:
     pattern: /estadistica/periodo/tipo
     defaults: { _controller: "UNAHSGOBundle:Documento:estadisticaPeriodoTipo" }
+
+documento_documento:
+    pattern: /documento/{tipo}
+    defaults: { _controller: "UNAHSGOBundle:Documento:Tipo" }

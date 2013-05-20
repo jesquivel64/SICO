@@ -23,14 +23,9 @@
           <td>{{ entity.id }}</td>
           <td><a href="{{ path('tipodocumento_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
           <td>
-          <ul>
-            <li>
               <a class="btn btn-success" href="{{ path('tipodocumento_show', { 'id': entity.id }) }}">mostrar</a>
-            </li>
-            <li>
               <a class="btn btn-info" href="{{ path('tipodocumento_edit', { 'id': entity.id }) }}">editar</a>
-            </li>
-          </ul></td>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

@@ -60,7 +60,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="brand" href="{{ path('UNAHSGOBundle_homepage') }}">ViceRectoria Acad&eacute;mica</a>
+        <a class="brand" href="{{ path('UNAHSGOBundle_homepage') }}">Vicerrectoria Acad&eacute;mica</a>
         <div class="nav-collapse collapse">
           <p class="navbar-text pull-right">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -78,10 +78,7 @@
               <a href="{{ path('tipodocumento') }}">Tipos de Documentos</a>
             <li>
             <li>
-              <a href="{{ path('documento') }}">Estad&iacute;sticas</a>
-            </li>
-            <li>
-              <a href="{{ path('documento') }}">Estad&iacute;sticas</a>
+              <a href="{{ path('documento_search') }}">Buscar Documentos</a>
             </li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -93,15 +90,20 @@
 <div class="container">
 <div class="row">
   <hgroup class="span12 page-header">
-    <h1>Sistema Integrado de Correspondencia</h1>
+    <h1>{{ tipo }}s <small> Sistema Integrado de Correspondencia</small></h1>
   </hgroup>
 </div>
 <div class="row action-nav-normal">
-  {% for tipo in tipos %}
-  <section class="span4 action-nav-button">
-    <a title="{{ tipo.nombre }}" href="{{ path('documento_documento', { 'tipo': tipo.id }) }}"><i class="icon-envelope"></i><span>{{ tipo.nombre }}</span></a>
+  <section class="span3 action-nav-button">
+    <a title="Enviar un {{ tipo.nombre }}" href="{{ path('documento_enviando', { 'tipo': tipo.id }) }}">
+      <i class="icon-envelope"></i><span>Enviar un {{ tipo.nombre }}</span>
+    </a>
   </section>
-  {% endfor %}
+  <section class="span3 action-nav-button">
+    <a title="Recibir un {{ tipo.nombre }}" href="{{ path('documento_recibiendo', { 'tipo': tipo.id }) }}">
+      <i class="icon-inbox"></i><span>Recibir un {{ tipo.nombre }}</span>
+    </a>
+  </section>
 </div>
   <hr>
   <footer class="row">

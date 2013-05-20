@@ -34,6 +34,16 @@ class DocumentoController extends Controller
         ));
     }
     
+    public function tipoAction($tipo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
+        
+        return $this->render('UNAHSGOBundle:Documento:tipo.html.twig', array(
+            'tipo' => $tipo,
+        ));
+    }
+    
     /**
      * Creates a new Documento entity.
      *
