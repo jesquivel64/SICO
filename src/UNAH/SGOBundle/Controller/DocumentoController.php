@@ -39,8 +39,36 @@ class DocumentoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
         
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        
+        $query = $qb->select('d')
+            ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+            ->where('d.tipo = :tipo')
+            ->andWhere('d.recibido = :recibido')
+            ->setParameter('tipo', $tipo)
+            ->setParameter('recibido', TRUE)
+            ->setMaxResults(10)
+            ->orderBy('d.id', 'DESC')
+            ->getQuery();
+        
+        $recibidos = $query->getResult();
+        
+        $query = $qb->select('d')
+            ->where('d.tipo = :tipo')
+            ->andWhere('d.recibido = :recibido')
+            ->setParameter('tipo', $tipo)
+            ->setParameter('recibido', FALSE)
+            ->setMaxResults(10)
+            ->orderBy('d.id', 'DESC')
+            ->getQuery();
+        
+        $enviados = $query->getResult();
+        
         return $this->render('UNAHSGOBundle:Documento:tipo.html.twig', array(
             'tipo' => $tipo,
+            'recibidos' => $recibidos,
+            'enviados' => $enviados,
         ));
     }
     
@@ -155,7 +183,6 @@ class DocumentoController extends Controller
         if ($form->isValid()) {
             
             $entity->setTipo($tipo);
-            
             $em->persist($entity);
             $em->flush();
             
@@ -381,7 +408,7 @@ class DocumentoController extends Controller
             $recibidos = $query->getSingleScalarResult();
             
             $query = $qb->select('count(d)')
-                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->where($qb->expr()->between('d.fechaDeEnvio', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
                 ->setParameter('recibido', FALSE)
                 ->setParameter('inicio', $form->get('inicio_periodo')->getData())
@@ -415,7 +442,7 @@ class DocumentoController extends Controller
             $query = $qb->select('count(d) as cantidad, t.nombre')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
                 ->leftJoin('d.tipo', 't')
-                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->where($qb->expr()->between('d.fechaDeEnvio', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
                 ->groupBy('t.id')
                 ->setParameter('recibido', FALSE)
@@ -573,6 +600,8 @@ class DocumentoController extends Controller
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andwhere('d.tipo = :tipo')
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
                 ->setParameter('tipo', $tipo)
                 ->setParameter('inicio', $form->get('inicio')->getData())
                 ->setParameter('fin', $form->get('fin')->getData())
@@ -582,6 +611,8 @@ class DocumentoController extends Controller
             $query = $qb->select('count(d)')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andwhere('d.tipo = :tipo')
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
                 ->setParameter('tipo', $tipo)
                 ->setParameter('inicio', $form->get('inicio')->getData())
                 ->setParameter('fin', $form->get('fin')->getData())
@@ -603,7 +634,7 @@ class DocumentoController extends Controller
     /**
     * Permite Efectuar busquedas por fecha
     *
-    * @Route("/emitido", name="oficio_search_emitido")
+    * @Route("/emitido", name="documento_search_emitido")
     * @Method("GET")
     * @Template()
     */
@@ -621,6 +652,8 @@ class DocumentoController extends Controller
                 ->where($qb->expr()->between('d.fechaDeEmision', ':inicio', ':fin'))
                 ->andwhere('d.tipo = :tipo')
                 ->setParameter('tipo', $tipo)
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', FALSE)
                 ->setParameter('inicio', $form->get('inicio_emision')->getData())
                 ->setParameter('fin', $form->get('fin_emision')->getData())
                 ->getQuery();
@@ -629,6 +662,8 @@ class DocumentoController extends Controller
             $query = $qb->select('count(d)')
                 ->where($qb->expr()->between('d.fechaDeEmision', ':inicio', ':fin'))
                 ->andwhere('d.tipo = :tipo')
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', FALSE)
                 ->setParameter('tipo', $tipo)
                 ->setParameter('inicio', $form->get('inicio_emision')->getData())
                 ->setParameter('fin', $form->get('fin_emision')->getData())
@@ -650,7 +685,7 @@ class DocumentoController extends Controller
     /**
     * Permite Efectuar busquedas por fecha
     *
-    * @Route("/fecha", name="oficio_search_numero")
+    * @Route("/fecha", name="documento_search_numero")
     * @Method("GET")
     * @Template()
     */
@@ -672,6 +707,7 @@ class DocumentoController extends Controller
                 ->getQuery();
             
             $documentos = $query->getResult();
+            
             $query = $qb->select('count(d)')
                 ->where('d.numero = :numero')
                 ->andwhere('d.tipo = :tipo')
@@ -694,7 +730,7 @@ class DocumentoController extends Controller
     /**
     * Permite Efectuar busquedas por fecha
     *
-    * @Route("/fecha", name="oficio_search_numero")
+    * @Route("/fecha", name="documento_search_departamento")
     * @Method("GET")
     * @Template()
     */
@@ -711,6 +747,8 @@ class DocumentoController extends Controller
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
                 ->where('d.emisor = :emisor')
                 ->andwhere('d.tipo = :tipo')
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
                 ->setParameter('tipo', $tipo)
                 ->setParameter('emisor', $form->get('emisor')->getData())
                 ->getQuery();
@@ -719,13 +757,15 @@ class DocumentoController extends Controller
             $query = $qb->select('count(d)')
                 ->where('d.emisor = :emisor')
                 ->andwhere('d.tipo = :tipo')
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
                 ->setParameter('tipo', $tipo)
                 ->setParameter('emisor', $form->get('emisor')->getData())
                 ->getQuery();
             $count = $query->getSingleScalarResult();
             
             return array(
-                'documento' => $documentos,
+                'documentos' => $documentos,
                 'departamento' => $form->get('emisor')->getData(),
                 'depto_form' => $form->createView(),
                 'count' => $count,
@@ -750,17 +790,20 @@ class DocumentoController extends Controller
             $em = $this->getDoctrine()->getManager();
             
             $tipo = $form->get('tipo')->getData();
+            $emisor = $form->get('emisor')->getData();
             $qb = $em->createQueryBuilder();
             $query = $qb->select('d')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
-                ->where('d.emisor = :emisor')
-                ->andwhere('d.descripcion LIKE :descripcion')
+                ->where('d.descripcion LIKE :descripcion')
+                ->andWhere('d.emisor = :emisor')
                 ->andwhere('d.tipo = :tipo')
                 ->setParameter('tipo', $tipo)
-                ->setParameter('emisor', $form->get('emisor')->getData())
+                ->setParameter('emisor', $emisor)
                 ->setParameter('descripcion', "%".$form->get('descripcion')->getData()."%")
                 ->getQuery();
+            
             $documentos = $query->getResult();
+            
             $query = $qb->select('count(d)')
                 ->where('d.emisor = :emisor')
                 ->andwhere('d.descripcion LIKE :descripcion')

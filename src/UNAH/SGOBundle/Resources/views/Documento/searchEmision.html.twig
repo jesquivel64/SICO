@@ -3,7 +3,7 @@
 <div class="row-fluid">
 <section class="span12">
     <hgroup class="page-header">
-      <h1>{{ tipo }} Del {{ inicio|date("d/m/Y") }} al {{ fin|date("d/m/Y") }} <small>Resultados de la B&uacute;squeda</small></h1>
+      <h1>{{ tipo }} Enviados Del {{ inicio|date("d/m/Y") }} al {{ fin|date("d/m/Y") }} <small>Resultados de la B&uacute;squeda</small></h1>
     </hgroup>
   </section>
 </div>
@@ -14,35 +14,31 @@
     </p>
     <table class="table table-striped">
       <thead>
-        <tr>
-          <th class="no-print">Id</th>
-          <th>Numero</th>
-          <th>Descripcion</th>
-          <th>Recibio</th>
-          <th>Estado</th>
-          <th>Correspondencia</th>
-          <th>Recepci&oacute;n</th>
-          <th>Emisi&oacute;n</th>
-          <th class="no-print">Acciones</th>
-        </tr>
+          <tr>
+            <th class="no-print">Id</th>
+            <th>Numero</th>
+            <th>Descripcion</th>
+            <th>Remitente</th>
+            <th>Destinatario</th>
+            <th>Emisi&oacute;n</th>
+            <th class="no-print">Acciones</th>
+          </tr>
       </thead>
       <tbody>
-        {% for entity in documentos %}
-        <tr>
-          <td class="no-print"><a href="{{ path('documento_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-          <td>{{ entity.numero }}</td>
-          <td>{{ entity.descripcion }}</td>
-          <td>{{ entity.recibio }}</td>
-          <td>{{ entity.estado }}</td>
-          <td>{% if entity.recibido %}Recibido{% else %}Enviado{% endif %}</td>
-          <td>{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
-          <td>{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
-          <td class="no-print">
-            <a class="btn btn-primary" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
-            <a class="btn btn-success" href="{{ path('documento_edit', { 'id': entity.id }) }}">Editar</a>
-          </td>
-        </tr>
-        {% endfor %}
+          {% for entity in enviados %}
+          <tr>
+            <td class="no-print"><a href="{{ path('documento_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.numero }}</td>
+            <td>{{ entity.descripcion }}</td>
+            <td>{{ entity.autor }}</td>
+            <td>{{ entity.destinatario }}</td>
+            <td>{{ entity.getFechaDeEnvio|date("d/m/Y") }}</td>
+            <td class="no-print">
+              <a class="btn btn-primary" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
+              <a class="btn btn-success" href="{{ path('documento_edit', { 'id': entity.id }) }}">Editar</a>
+            </td>
+          </tr>
+          {% endfor %}
       </tbody>
     </table>
   </section>
