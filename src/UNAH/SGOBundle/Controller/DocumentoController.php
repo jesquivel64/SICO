@@ -547,7 +547,7 @@ class DocumentoController extends Controller
             $recibidos = $query->getSingleScalarResult();
             
             $query = $qb->select('count(d)')
-                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->where($qb->expr()->between('d.fechaDeEnvio', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
                 ->andwhere('d.tipo = :tipo')
                 ->setParameter('tipo', $tipo)
@@ -557,6 +557,19 @@ class DocumentoController extends Controller
                 ->getQuery();
             
             $enviados = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andWhere('d.respondido = :respondido')
+                ->andwhere('d.tipo = :tipo')
+                ->setParameter('tipo', $tipo)
+                ->setParameter('recibido', TRUE)
+                ->setParameter('respondido', FALSE)
+                ->setParameter('inicio', $form->get('inicio')->getData())
+                ->setParameter('fin', $form->get('fin')->getData())
+                ->getQuery();
+            $noRespondidos = $query->getSingleScalarResult();
             
             $query = $qb->select('count(d)')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
@@ -591,6 +604,7 @@ class DocumentoController extends Controller
             return array(
                 'recibidos' => $recibidos,
                 'respondidos' => $respondidos,
+                'noRespondidos' => $noRespondidos,
                 'enviados' => $enviados,
                 'emisor' => $emisor,
                 'inicio' => $form->get('inicio')->getData(),
