@@ -183,6 +183,28 @@ class DocumentoController extends Controller
         if ($form->isValid()) {
             
             $entity->setTipo($tipo);
+            
+            if($form->get('respuesta')->getData()) {
+                
+                $em = $this->getDoctrine()->getManager();
+                
+                $qb = $em->createQueryBuilder();
+                $query = $qb->select('d')
+                    ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                    ->where('d.numero = :numero')
+                    ->setParameter('numero', $form->get('respuesta')->getData())
+                    ->getQuery();
+                
+                $documento = $query->getOneOrNullResult();
+                if($documento) {
+                    $em->persist($entity);
+                    $entity->addRespuesta($documento);
+                    $documento->addRespuesta($entity);
+                    $documento->setRespondido(TRUE);
+                    $em->persist($documento);
+                }
+            }
+            
             $em->persist($entity);
             $em->flush();
             
