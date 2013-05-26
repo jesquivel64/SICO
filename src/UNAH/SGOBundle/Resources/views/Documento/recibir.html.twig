@@ -14,21 +14,19 @@
       </ul>
     </nav>
   </aside>
-  <section class="span9 ">
+  <section class="span9">
+    <form action="{{ path('documento_recibir', {'tipo' : tipo.id}) }}" method="post" {{ form_enctype(form) }}>
+      <fieldset>
     <hgroup class="page-header">
       <h1>{{ tipo.nombre}} <small>Recepci&oacute;n de Documentos</small></h1>
     </hgroup>
-  </section>
-</section>
-<section class="row">
-  <section class="span9 offset3">
-    <form action="{{ path('documento_recibir', {'tipo' : tipo.id}) }}" method="post" {{ form_enctype(form) }}>
       {{ form_widget(form) }}
       <div class="form-actions">
         <button class="btn btn-primary" type="submit">
           Guardar {{ tipo }}
         </button>
       </div>
+      </fieldset>
     </form>
   </section>
 </section>
