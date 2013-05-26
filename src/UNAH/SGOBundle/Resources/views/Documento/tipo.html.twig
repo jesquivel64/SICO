@@ -1,5 +1,4 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
-
 {% block content %}
 <section class="row">
   <aside class="span3">
@@ -31,7 +30,7 @@
 </div>
 <div class="row">
   <section class="span12">
-    <table class="table table-striped table-bordered">
+    <table class="no-more-tables table table-striped table-bordered">
       <caption>
         &Uacute;ltimos {{ tipo }}s Recibidos
       </caption>
@@ -50,16 +49,16 @@
       <tbody>
         {% for entity in recibidos %}
         <tr>
-          <td>{{ entity.numero }}</td>
-          <td>{{ entity.descripcion }}</td>
-          <td>{{ entity.recibio }}</td>
-          <td>{{ entity.estado }}</td>
-          <td>{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
-          <td>{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
-          <td>{{ entity.emisor }}</td>
+          <td data-title="Número">{{ entity.numero }}</td>
+          <td data-title="Descripción">{{ entity.descripcion }}</td>
+          <td data-title="Recibio">{{ entity.recibio }}</td>
+          <td data-title="Estado">{{ entity.estado }}</td>
+          <td data-title="Fecha de Recibido">{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
+          <td data-title="Fecha de Emisión">{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
+          <td data-title="Emisor">{{ entity.emisor }}</td>
           <td class="no-print">
             <a class="btn btn-primary" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
-            <a class="btn btn-success" href="{{ path('documento_edit', { 'id': entity.id }) }}">Editar</a>
+            <a class="btn btn-success" href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}">Editar</a>
           </td>
         </tr>
         {% endfor %}
@@ -69,7 +68,7 @@
 </div>
 <div class="row">
   <section class="span12">
-    <table class="table table-striped table-bordered">
+    <table class="no-more-tables table table-striped table-bordered">
       <caption>
         &Uacute;ltimos {{ tipo }}s Enviados
       </caption>
@@ -86,14 +85,14 @@
       <tbody>
         {% for entity in enviados %}
         <tr>
-          <td>{{ entity.numero }}</td>
-          <td>{{ entity.descripcion }}</td>
-          <td>{{ entity.autor }}</td>
-          <td>{{ entity.destinatario }}</td>
-          <td>{{ entity.getFechaDeEnvio|date("d/m/Y") }}</td>
-          <td class="no-print">
+          <td data-title="Número">{{ entity.numero }}</td>
+          <td data-title="Descripción">{{ entity.descripcion }}</td>
+          <td data-title="Autor">{{ entity.autor }}</td>
+          <td data-title="Número">{{ entity.destinatario }}</td>
+          <td data-title="Fecha de Envio">{{ entity.getFechaDeEnvio|date("d/m/Y") }}</td>
+          <td data-title="Acciones" class="no-print">
             <a class="btn btn-primary" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
-            <a class="btn btn-success" href="{{ path('documento_edit', { 'id': entity.id }) }}">Editar</a>
+            <a class="btn btn-success" href="{{ path('documento_edit_enviado', { 'id': entity.id }) }}">Editar</a>
           </td>
         </tr>
         {% endfor %}

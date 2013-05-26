@@ -88,7 +88,7 @@
 </div>
 <section class="row">
   <section class="span9 offset3">
-    <table class="table table-striped table-bordered">
+    <table class="no-more-tables table table-striped table-bordered">
       <caption>
         Adjuntos
       </caption>
@@ -102,9 +102,9 @@
       <tbody>
         {% for adjunto in entity.adjuntos %}
         <tr>
-          <td>{{ adjunto.nombre }}</td>
-          <td><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
-          <td><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
+          <td data-title="Nombre">{{ adjunto.nombre }}</td>
+          <td data-title="Archivo"><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
+          <td data-title="Acciones"><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -113,7 +113,7 @@
 </section>
 <section class="row">
   <section class="span9 offset3">
-    <table class="table table-striped table-bordered">
+    <table class="no-more-tables table table-striped table-bordered">
       <caption>
         Seguimiento
       </caption>
@@ -127,9 +127,9 @@
       <tbody>
         {% for seguimiento in entity.comentarios %}
         <tr>
-          <td>{{ seguimiento.comentario }}</td>
-          <td>{{ seguimiento.fecha|date("d/m/Y") }}</td>
-          <td><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a></td>
+          <td data-title="Acciones">{{ seguimiento.comentario }}</td>
+          <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y") }}</td>
+          <td data-title="Acciones"><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -139,7 +139,7 @@
 </section>
 <section class="row">
   <section class="span9 offset3">
-    <table class="table table-striped table-bordered">
+    <table class="no-more-tables table table-striped table-bordered">
       <caption>
         Documentos Relacionados
       </caption>

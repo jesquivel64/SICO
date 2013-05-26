@@ -1,58 +1,84 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
 <div class="row">
-<section class="span12">
+  <section class="span12">
     <hgroup class="page-header">
       <h1>Estad&iacute;sticas <small> del {{ inicio|date("d/m/Y") }} al {{ fin|date("d/m/Y") }}</small></h1>
     </hgroup>
   </section>
 </div>
 <div class="row">
-  <article class="span4">
-    <hgroup class="page-header">
-      <h2>Estad&iacute;sticas Generales de Documentos</h2>
-    </hgroup>
-    <canvas id="flujo" width="400" height="400"></canvas>
-    <p>{{ recibidos }} Documentos han sido Recibidos</p>
-    <p>{{ enviados }} Documentos han sido Enviados</p>
-  </article>
-  <article class="span4">
-    <hgroup class="page-header">
-      <h2>Relaci&oacute;n entre Recibidos y Respondidos</h2>
-    </hgroup>
-    <canvas id="eficiencia" width="400" height="400"></canvas>
-    <p>{{ respondidos }} Documentos han obtenido Respuesta</p>
-    <p>{{ noRespondidos }} Documentos Recibidos sin Respuesta</p>
-  </article>
-  <article class="span4">
-    <hgroup class="page-header">
-      <h2>Documentos Recibidos por Dependencia</h2>
-    </hgroup>
-    <canvas id="dependencias" width="400" height="400"></canvas>
-    {% for dato in emisor %}
-    <p>{{ dato.nombre }}: {{ dato.cantidad }}</p>
-    {% endfor %}
-  </article>
+  <div class="span6">
+    <article class="graphic">
+      <hgroup class="page-header">
+        <h2>Estad&iacute;sticas Generales</h2>
+      </hgroup>
+      <canvas id="flujo" width="400" height="400"></canvas>
+      <p>
+        {{ recibidos }} Documentos han sido Recibidos
+      </p>
+      <p>
+        {{ enviados }} Documentos han sido Enviados
+      </p>
+    </article>
+  </div>
+  <div class="span6">
+    <article class="graphic">
+      <hgroup class="page-header">
+        <h2>Documentos Recibidos por Tipo</h2>
+      </hgroup>
+      <canvas id="tipo-recibido" width="400" height="400"></canvas>
+      {% for dato in tipo_recibido %}
+      <p>
+        {{ dato.cantidad }} {{ dato.nombre }}(s)
+      </p>
+      {% endfor %}
+    </article>
+  </div>
 </div>
 <div class="row">
-  <article class="span6">
-    <hgroup class="page-header">
-      <h2>Documentos Enviados por Tipo</h2>
-    </hgroup>
-    <canvas id="tipo" width="400" height="400"></canvas>
-    {% for dato in tipo %}
-    <p>{{ dato.cantidad }} {{ dato.nombre }}(s)</p>
-    {% endfor %}
-  </article>
-  <article class="span6">
-    <hgroup class="page-header">
-      <h2>Documentos Recibidos por Tipo</h2>
-    </hgroup>
-    <canvas id="tipo-recibido" width="400" height="400"></canvas>
-    {% for dato in tipo_recibido %}
-    <p>{{ dato.cantidad }} {{ dato.nombre }}(s)</p>
-    {% endfor %}
-  </article>
+  <div class="span6">
+    <article class="graphic">
+      <hgroup class="page-header">
+        <h2>Relaci&oacute;n entre Recibidos y Respondidos</h2>
+      </hgroup>
+      <canvas id="eficiencia" width="400" height="400"></canvas>
+      <p>
+        {{ respondidos }} Documentos han obtenido Respuesta
+      </p>
+      <p>
+        {{ noRespondidos }} Documentos Recibidos sin Respuesta
+      </p>
+    </article>
+  </div>
+  <div class="span6">
+    <article class="graphic">
+      <hgroup class="page-header">
+        <h2>Documentos Recibidos por Dependencia</h2>
+      </hgroup>
+      <canvas id="dependencias" width="400" height="400"></canvas>
+      {% for dato in emisor %}
+      <p>
+        {{ dato.nombre }}: {{ dato.cantidad }}
+      </p>
+      {% endfor %}
+    </article>
+  </div>
+</div>
+<div class="row">
+  <div class="span6">
+    <article class="graphic">
+      <hgroup class="page-header">
+        <h2>Documentos Enviados por Tipo</h2>
+      </hgroup>
+      <canvas id="tipo" width="400" height="400"></canvas>
+      {% for dato in tipo %}
+      <p>
+        {{ dato.cantidad }} {{ dato.nombre }}(s)
+      </p>
+      {% endfor %}
+    </article>
+  </div>
 </div>
 {% endblock %}
 {% block javascript %}
@@ -84,13 +110,13 @@
       value: {{ respondidos }},
       label: 'Respondidos: ' + {{ respondidos }},
       labelColor : 'white',
-      color: '#'+Math.floor(Math.random()*16777215).toString(16)
+      color: '#3C13AF'
     },
     {
       value: {{ noRespondidos }},
       label: 'No Respondidos: ' + {{ noRespondidos }},
       labelColor : 'white',
-      color: '#'+Math.floor(Math.random()*16777215).toString(16)
+      color: '#FFD600'
     }
   ]
   var eficiencia = new Chart(ctx).Pie(data);
@@ -102,7 +128,7 @@
       value: {{ dato.cantidad }},
       label: '{{ dato.nombre }}',
       labelColor : 'white',
-      color: '#'+Math.floor(Math.random()*16777215).toString(16)
+      color: '{{ dato.color }}'
     },
     {% endfor %}
     {
@@ -118,7 +144,7 @@
       value: {{ dato.cantidad }},
       label: '{{ dato.nombre }}',
       labelColor : 'white',
-      color: '#'+Math.floor(Math.random()*16777215).toString(16)
+      color: '{{ dato.color }}'
     },
     {% endfor %}
     {

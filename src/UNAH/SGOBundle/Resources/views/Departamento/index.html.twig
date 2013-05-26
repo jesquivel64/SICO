@@ -9,10 +9,9 @@
 </section>
 <section class="row">
   <section class="span12">
-    <table class="table table-striped table-bordered">
+    <table class="no-more-tables table table-striped table-bordered">
       <thead>
         <tr>
-          <th>Identificador</th>
           <th>Nombre</th>
           <th>Acciones</th>
         </tr>
@@ -20,14 +19,16 @@
       <tbody>
         {% for entity in entities %}
         <tr>
-          <td>{{ entity.id }}</td>
           <td><a href="{{ path('departamento_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
-          <td><a class="btn btn-success" href="{{ path('departamento_show', { 'id': entity.id }) }}">mostrar</a><a class="btn btn-info" href="{{ path('departamento_edit', { 'id': entity.id }) }}">editar</a></td>
+          <td>
+            <a class="btn btn-success" href="{{ path('departamento_show', { 'id': entity.id }) }}">mostrar</a>
+            <a class="btn btn-info" href="{{ path('departamento_edit', { 'id': entity.id }) }}">editar</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-    <a class="btn btn-large btn-primary" href="{{ path('departamento_new') }}">Registrar una Dependencia</a>
+    <a class="btn btn-primary" href="{{ path('departamento_new') }}">Registrar una Dependencia</a>
   </section>
 </section>
 {% endblock %}
