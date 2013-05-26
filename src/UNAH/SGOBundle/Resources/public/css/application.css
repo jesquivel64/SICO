@@ -14,7 +14,7 @@
 }
 .action-nav-normal .action-nav-button a {
     -moz-box-sizing: border-box;
-    background: -moz-linear-gradient(center top , #FAFAFA, #ECECEC) repeat scroll 0 0 / 100% auto #ECECEC;
+    background: -moz-linear-gradient(center top , #FAFAFA, #ECECEC) repeat scroll 0 0 /100% auto #ECECEC;
     border: 1px solid #D5D5D5;
     border-radius: 4px 4px 4px 4px;
     box-shadow: 0 0 0 1px #FAFAFA inset, 0 1px 1px 0 #DDDDDD;
@@ -23,7 +23,7 @@
     font-weight: 700;
     padding: 10px 0;
     white-space: nowrap;
-	text-decoration: none;
+    text-decoration: none;
 }
 .icon-envelope:before {
     content: "";
@@ -43,4 +43,56 @@
     display: block;
     font-weight: 600;
     padding-top: 4px;
+}
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+/* Login Form */
+
+.form-signin {
+    max-width: 300px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .form-signin-heading, .form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin input[type="text"], .form-signin input[type="password"] {
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+}
+
+/* Body and structure
+ -------------------------------------------------- */
+
+body {
+    padding-top: 40px;
+}
+@media screen and (max-width: 768px) {
+    body {
+        padding-top: 0px;
+    }
+}
+
+ul.nav-tabs {
+    margin-bottom: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+}
+.table-bordered {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+}
+
+table caption {
+    font-weight: bold;
 }

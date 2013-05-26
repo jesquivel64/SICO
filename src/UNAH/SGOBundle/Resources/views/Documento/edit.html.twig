@@ -1,7 +1,7 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 
 {% block content %}
-<section class="row-fluid">
+<section class="row">
   <aside class="span3">
     <nav class="sidebar-nav no-print">
       <ul class="nav nav-tabs nav-stacked no-print">
@@ -17,13 +17,13 @@
       </ul>
     </nav>
   </aside>
-  <section class="span9 ">
+  <section class="span9">
     <hgroup class="page-header">
       <h1>Editar {{ entity.numero }} <small>{{ entity.tipo }} {% if not entity.recibido %}Enviado{% endif %}</small></h1>
     </hgroup>
   </section>
 </section>
-<section class="row-fluid">
+<section class="row">
   <section class="span9 offset3">
     <form action="{{ path('documento_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
       <input type="hidden" name="_method" value="PUT" />

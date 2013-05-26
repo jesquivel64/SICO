@@ -1,7 +1,7 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 
 {% block content %}
-<section class="row-fluid">
+<section class="row">
   <aside class="span3">
     <nav class="sidebar-nav no-print">
       <ul class="nav nav-tabs nav-stacked no-print">
@@ -20,7 +20,7 @@
     </hgroup>
   </section>
 </section>
-<section class="row-fluid">
+<section class="row">
   <section class="span9 offset3">
     <form action="{{ path('documento_recibir', {'tipo' : tipo.id}) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}

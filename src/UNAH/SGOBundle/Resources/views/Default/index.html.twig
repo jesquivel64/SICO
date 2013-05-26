@@ -1,7 +1,6 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 
 {% block content %}
-<div class="container">
 <div class="row">
   <hgroup class="span12 page-header">
     <h1>Sistema Integrado de Correspondencia</h1>
@@ -10,14 +9,12 @@
 <div class="row action-nav-normal">
   {% for tipo in tipos %}
   <section class="span4 action-nav-button">
-    <a title="{{ tipo.nombre }}" href="{{ path('documento_documento', { 'tipo': tipo.id }) }}"><i class="icon-envelope"></i><span>{{ tipo.nombre }}</span></a>
+    <a title="{{ tipo.nombre }}" href="{{ path('documento_documento', { 'tipo': tipo.id }) }}">
+      <i class="icon-envelope"></i>
+      <span>{{ tipo.nombre }}</span>
+    </a>
   </section>
   {% endfor %}
-</div>
-  <hr>
-  <footer class="row">
-  <span class="span12"></span>
-  </footer>
 </div>
 <script src="{{ asset('bundles/unahsgo/js/jquery.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/unahsgo/js/jquery-ui.js') }}" type="text/javascript"></script>
@@ -32,4 +29,3 @@
     }); 
 </script>
 {% endblock %}
-

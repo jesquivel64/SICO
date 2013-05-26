@@ -1,13 +1,13 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
-<section class="row-fluid">
+<section class="row">
   <section class="span12">
-      <hgroup class="page-header">
-        <h1>Dependencias <small>Sistema Integrado de Correspondencia</small></h1>
-      </hgroup>
+    <hgroup class="page-header">
+      <h1>Dependencias <small>Sistema Integrado de Correspondencia</small></h1>
+    </hgroup>
   </section>
 </section>
-<section class="row-fluid">
+<section class="row">
   <section class="span12">
     <table class="table table-striped table-bordered">
       <thead>
@@ -22,15 +22,12 @@
         <tr>
           <td>{{ entity.id }}</td>
           <td><a href="{{ path('departamento_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
-          <td>
-              <a class="btn btn-success" href="{{ path('departamento_show', { 'id': entity.id }) }}">mostrar</a>
-              <a class="btn btn-info" href="{{ path('departamento_edit', { 'id': entity.id }) }}">editar</a>
-          </td>
+          <td><a class="btn btn-success" href="{{ path('departamento_show', { 'id': entity.id }) }}">mostrar</a><a class="btn btn-info" href="{{ path('departamento_edit', { 'id': entity.id }) }}">editar</a></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-  <a class="btn btn-large btn-primary" href="{{ path('departamento_new') }}">Registrar una Dependencia</a>
+    <a class="btn btn-large btn-primary" href="{{ path('departamento_new') }}">Registrar una Dependencia</a>
   </section>
 </section>
 {% endblock %}
