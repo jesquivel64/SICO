@@ -74,6 +74,7 @@ class ComentarioController extends Controller
             throw $this->createNotFoundException('Unable to find Documento entity.');
         }
 		$entity->setDocumento($documento);
+        $entity->setUsuario($this->getUser()->getUsername());
 		
         $form   = $this->createForm(new ComentarioType(), $entity);
 		

@@ -6,15 +6,19 @@
     <h1>Sistema Integrado de Correspondencia</h1>
   </hgroup>
 </div>
-<div class="row action-nav-normal">
-  {% for tipo in tipos %}
-  <section class="span4 action-nav-button">
-    <a title="{{ tipo.nombre }}" href="{{ path('documento_documento', { 'tipo': tipo.id }) }}">
-      <i class="icon-envelope"></i>
-      <span>{{ tipo.nombre }}</span>
-    </a>
-  </section>
-  {% endfor %}
+<div class="row">
+  <div class="span9 offset3">
+    <div class="row action-nav-normal">
+      {% for tipo in tipos %}
+      <section class="span4 action-nav-button">
+        <a title="{{ tipo.nombre }}" href="{{ path('documento_documento', { 'tipo': tipo.id }) }}">
+          <i class="icon-envelope"></i>
+          <span>{{ tipo.nombre }}</span>
+        </a>
+      </section>
+      {% endfor %}
+    </div>
+  </div>
 </div>
 <script src="{{ asset('bundles/unahsgo/js/jquery.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/unahsgo/js/jquery-ui.js') }}" type="text/javascript"></script>

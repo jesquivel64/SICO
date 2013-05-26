@@ -11,15 +11,12 @@ class ComentarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('estado', null, array('label' => 'Bitacora'))
-            ->add('comentario', 'textarea')
+            ->add('estado', null, array('label' => 'Enviado a'))
+            ->add('comentario', 'textarea', array('label' => 'Descripción'))
             /*->add('oficio', 'entity', array(
 				'class' => 'UNAHSGOBundle:Oficio',
 			))*/
-            ->add('fecha', 'date', array(
-				'widget' => 'single_text',
-				'format' => 'dd/MM/yyyy',
-				'attr' => array('class' => 'datepicker')))
+			->add('usuario')
         ;
     }
 

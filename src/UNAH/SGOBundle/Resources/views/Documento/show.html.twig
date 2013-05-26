@@ -119,7 +119,9 @@
       </caption>
       <thead>
         <tr>
-          <th>Comentario</th>
+          <th>Descripci&oacute;n</th>
+          <th>Usuario</th>
+          <th>Estado</th>
           <th>Fecha</th>
           <th>Acciones</th>
         </tr>
@@ -127,8 +129,10 @@
       <tbody>
         {% for seguimiento in entity.comentarios %}
         <tr>
-          <td data-title="Acciones">{{ seguimiento.comentario }}</td>
-          <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y") }}</td>
+          <td data-title="Descripción">{{ seguimiento.comentario }}</td>
+          <td data-title="Usuario">{{ seguimiento.usuario }}</td>
+          <td data-title="Estado">{{ seguimiento.estado }}</td>
+          <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y H:i:s") }}</td>
           <td data-title="Acciones"><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a></td>
         </tr>
         {% endfor %}
@@ -145,7 +149,6 @@
       </caption>
       <thead>
         <tr>
-          <th class="no-print">Id</th>
           <th>Numero</th>
           <th>Tipo</th>
           <th>Descripcion</th>
@@ -159,15 +162,14 @@
       <tbody>
         {% for documento in entity.respuestas %}
         <tr>
-          <td class="no-print"><a href="{{ path('documento_show', { 'id': documento.id }) }}">{{ documento.id }}</a></td>
-          <td>{{ documento.numero }}</td>
-          <td>{{ documento.tipo }}</td>
-          <td>{{ documento.descripcion }}</td>
-          <td>{{ documento.recibio }}</td>
-          <td>{{ documento.getFechaDeEnvio|date("d/m/Y") }}</td>
-          <td>{{ documento.getFechaDeRecibido|date("d/m/Y") }}</td>
-          <td>{{ documento.getFechaDeEmision|date("d/m/Y") }}</td>
-          <td class="no-print">
+          <td data-title="Número">{{ documento.numero }}</td>
+          <td data-title="Tipo de Documento">{{ documento.tipo }}</td>
+          <td data-title="Descripción">{{ documento.descripcion }}</td>
+          <td data-title="Recibio">{{ documento.recibio }}</td>
+          <td  data-title="Fecha de Envio">{{ documento.getFechaDeEnvio|date("d/m/Y") }}</td>
+          <td data-title="Fecha de Recibido">{{ documento.getFechaDeRecibido|date("d/m/Y") }}</td>
+          <td data-title="Fecha de Emisión">{{ documento.getFechaDeEmision|date("d/m/Y") }}</td>
+          <td data-title="Acciones" class="no-print">
             <a class="btn btn-primary" href="{{ path('documento_show', { 'id': documento.id }) }}">Mostrar</a>
             <a class="btn btn-success" href="{{ path('documento_edit', { 'id': documento.id }) }}">Editar</a>
           </td>

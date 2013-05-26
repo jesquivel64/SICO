@@ -47,7 +47,19 @@ class Comentario
      * @ORM\Column(name="estado", type="string", length=255)
      */
 	private $estado;
-	
+    
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="usuario", type="string", length=255, nullable=true)
+     */
+    private $usuario;
+    
+    public function __construct()
+    {
+        $this->fecha = new \DateTime(); 
+    }
+    
     /**
      * Get id
      *
@@ -145,5 +157,28 @@ class Comentario
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param string $usuario
+     * @return Comentario
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return string 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }
