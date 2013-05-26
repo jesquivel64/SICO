@@ -29,6 +29,13 @@ class TipoDocumento
     private $nombre;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=255, nullable=true)
+     */
+    private $color;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Documento", mappedBy="tipo")
      */
     private $documentos;
@@ -109,5 +116,28 @@ class TipoDocumento
     public function __toString()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set color
+     *
+     * @param string $color
+     * @return TipoDocumento
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string 
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 }
