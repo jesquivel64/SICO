@@ -23,6 +23,24 @@ documento_update:
     pattern:  /{id}/update
     defaults: { _controller: "UNAHSGOBundle:Documento:update" }
     requirements: { _method: post|put }
+    
+documento_edit_enviado:
+    pattern:  /{id}/edit/enviado
+    defaults: { _controller: "UNAHSGOBundle:Documento:editEnviado" }
+
+documento_update_enviado:
+    pattern:  /{id}/update/enviado
+    defaults: { _controller: "UNAHSGOBundle:Documento:updateEnviado" }
+    requirements: { _method: post|put }
+
+documento_edit_recibido:
+    pattern:  /{id}/edit/recibido
+    defaults: { _controller: "UNAHSGOBundle:Documento:editRecibido" }
+
+documento_update_recibido:
+    pattern:  /{id}/update/recibido
+    defaults: { _controller: "UNAHSGOBundle:Documento:updateRecibido" }
+    requirements: { _method: post|put }
 
 documento_delete:
     pattern:  /{id}/delete

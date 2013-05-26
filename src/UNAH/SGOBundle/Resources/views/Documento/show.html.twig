@@ -17,7 +17,11 @@
     <nav class="sidebar-nav no-print">
       <ul class="nav nav-tabs nav-stacked no-print">
         <li>
+          {% if entity.recibido %}
+          <a href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}"> Editar este {{ entity.tipo.nombre }}</a>
+          {% else %}
           <a href="{{ path('documento_edit', { 'id': entity.id }) }}"> Editar este {{ entity.tipo.nombre }}</a>
+          {% endif %}
         </li>
         <li>
           <a href="{{ path('adjunto_new', { 'documento': entity.id }) }}"> Agregar Adjunto </a>
@@ -165,7 +169,8 @@
           <td>{{ documento.getFechaDeEmision|date("d/m/Y") }}</td>
           <td class="no-print">
             <a class="btn btn-primary" href="{{ path('documento_show', { 'id': documento.id }) }}">Mostrar</a>
-            <a class="btn btn-success" href="{{ path('documento_edit', { 'id': documento.id }) }}">Editar</a> </ul> </td>
+            <a class="btn btn-success" href="{{ path('documento_edit', { 'id': documento.id }) }}">Editar</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

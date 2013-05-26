@@ -34,6 +34,6 @@ class DocumentoRespuestaType extends AbstractType
 
     public function getName()
     {
-        return 'unah_sgobundle_documentotype';
+        return 'unah_sgobundle_documentorespuestatype';
     }
 }

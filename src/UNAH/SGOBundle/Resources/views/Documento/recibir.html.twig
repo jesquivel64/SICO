@@ -23,10 +23,12 @@
 <section class="row">
   <section class="span9 offset3">
     <form action="{{ path('documento_recibir', {'tipo' : tipo.id}) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Guardar {{ tipo }}</button>
-        </p>
+      {{ form_widget(form) }}
+      <div class="form-actions">
+        <button type="submit">
+          Guardar {{ tipo }}
+        </button>
+      </div>
     </form>
   </section>
 </section>

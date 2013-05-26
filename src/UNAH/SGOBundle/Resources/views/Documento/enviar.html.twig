@@ -24,11 +24,11 @@
   <section class="span9 offset3">
     <form action="{{ path('documento_enviar', {'tipo' : tipo.id}) }}" method="post" {{ form_enctype(form) }}>
       {{ form_widget(form) }}
-      <p>
-        <button type="submit">
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
           Guardar {{ tipo }}
         </button>
-      </p>
+      </div>
     </form>
   </section>
 </section>

@@ -311,6 +311,118 @@ class DocumentoController extends Controller
     }
     
     /**
+     * Displays a form to edit an existing Documento entity.
+     *
+     */
+    public function editRecibidoAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $entity = $em->getRepository('UNAHSGOBundle:Documento')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Documento entity.');
+        }
+        
+        $editForm = $this->createForm(new DocumentoRecibidoType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+        
+        return $this->render('UNAHSGOBundle:Documento:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+    
+    /**
+     * Edits an existing Documento entity.
+     *
+     */
+    public function updateRecibidoAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $entity = $em->getRepository('UNAHSGOBundle:Documento')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Documento entity.');
+        }
+        
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new DocumentoRecibidoType(), $entity);
+        $editForm->bind($request);
+        
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('documento_edit_recibido', array('id' => $id)));
+        }
+        
+        return $this->render('UNAHSGOBundle:Documento:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+    
+    /**
+     * Displays a form to edit an existing Documento entity.
+     *
+     */
+    public function editEnviadoAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $entity = $em->getRepository('UNAHSGOBundle:Documento')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Documento entity.');
+        }
+        
+        $editForm = $this->createForm(new DocumentoEnviadoType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+        
+        return $this->render('UNAHSGOBundle:Documento:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+    
+    /**
+     * Edits an existing Documento entity.
+     *
+     */
+    public function updateEnviadoAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $entity = $em->getRepository('UNAHSGOBundle:Documento')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Documento entity.');
+        }
+        
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new DocumentoEnviadoType(), $entity);
+        $editForm->bind($request);
+        
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('documento_edit_enviado', array('id' => $id)));
+        }
+        
+        return $this->render('UNAHSGOBundle:Documento:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+    
+    /**
      * Deletes a Documento entity.
      *
      */
@@ -461,7 +573,7 @@ class DocumentoController extends Controller
             $noRespondidos = $query->getSingleScalarResult();
             
             $qb = $em->createQueryBuilder('d', 't');
-            $query = $qb->select('count(d) as cantidad, t.nombre')
+            $query = $qb->select('count(d) as cantidad, t.nombre, t.color')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
                 ->leftJoin('d.tipo', 't')
                 ->where($qb->expr()->between('d.fechaDeEnvio', ':inicio', ':fin'))
@@ -487,7 +599,7 @@ class DocumentoController extends Controller
             $tipo_recibido = $query->getResult();
             
             $qb = $em->createQueryBuilder('d', 'e');
-            $query = $qb->select('count(d) as cantidad, e.nombre')
+            $query = $qb->select('count(d) as cantidad, e.nombre, e.color')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
                 ->leftJoin('d.emisor', 'e')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))

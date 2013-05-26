@@ -12,6 +12,7 @@ class TipoDocumentoType extends AbstractType
     {
         $builder
             ->add('nombre')
+            ->add('color', null, array('attr' => array('class' => 'colorpicker')))
         ;
     }
 

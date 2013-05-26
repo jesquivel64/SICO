@@ -21,9 +21,9 @@ class TipoDocumentoController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entities = $em->getRepository('UNAHSGOBundle:TipoDocumento')->findAll();
-
+        
         return $this->render('UNAHSGOBundle:TipoDocumento:index.html.twig', array(
             'entities' => $entities,
         ));
@@ -38,15 +38,15 @@ class TipoDocumentoController extends Controller
         $entity  = new TipoDocumento();
         $form = $this->createForm(new TipoDocumentoType(), $entity);
         $form->bind($request);
-
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            
             return $this->redirect($this->generateUrl('tipodocumento_show', array('id' => $entity->getId())));
         }
-
+        
         return $this->render('UNAHSGOBundle:TipoDocumento:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -61,7 +61,7 @@ class TipoDocumentoController extends Controller
     {
         $entity = new TipoDocumento();
         $form   = $this->createForm(new TipoDocumentoType(), $entity);
-
+        
         return $this->render('UNAHSGOBundle:TipoDocumento:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -75,18 +75,19 @@ class TipoDocumentoController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($id);
-
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
         }
-
+        
         $deleteForm = $this->createDeleteForm($id);
-
+        
         return $this->render('UNAHSGOBundle:TipoDocumento:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -96,16 +97,16 @@ class TipoDocumentoController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($id);
-
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
         }
-
+        
         $editForm = $this->createForm(new TipoDocumentoType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
-
+        
         return $this->render('UNAHSGOBundle:TipoDocumento:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -120,24 +121,24 @@ class TipoDocumentoController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($id);
-
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
         }
-
+        
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new TipoDocumentoType(), $entity);
         $editForm->bind($request);
-
+        
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('tipodocumento_edit', array('id' => $id)));
+            
+            return $this->redirect($this->generateUrl('tipodocumento'));
         }
-
+        
         return $this->render('UNAHSGOBundle:TipoDocumento:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -153,19 +154,19 @@ class TipoDocumentoController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
-
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($id);
-
+            
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
             }
-
+            
             $em->remove($entity);
             $em->flush();
         }
-
+        
         return $this->redirect($this->generateUrl('tipodocumento'));
     }
 
