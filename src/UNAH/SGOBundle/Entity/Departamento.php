@@ -28,6 +28,13 @@ class Departamento
      * @ORM\Column(name="nombre", type="string", length=255)
      */
     private $nombre;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=255, nullable=true)
+     */
+    private $color;
+    
 	
 	/**
      * @ORM\OneToMany(targetEntity="Documento", mappedBy="emisor")
@@ -182,5 +189,28 @@ class Departamento
     public function __toString() 
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set color
+     *
+     * @param string $color
+     * @return Departamento
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string 
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 }
