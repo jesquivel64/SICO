@@ -1,0 +1,30 @@
+tiposolicitud:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:TipoSolicitud:index" }
+
+tiposolicitud_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:TipoSolicitud:show" }
+
+tiposolicitud_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:TipoSolicitud:new" }
+
+tiposolicitud_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:TipoSolicitud:create" }
+    requirements: { _method: post }
+
+tiposolicitud_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:TipoSolicitud:edit" }
+
+tiposolicitud_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:TipoSolicitud:update" }
+    requirements: { _method: post|put }
+
+tiposolicitud_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:TipoSolicitud:delete" }
+    requirements: { _method: post|delete }

@@ -35,7 +35,6 @@ class Departamento
      */
     private $color;
     
-	
 	/**
      * @ORM\OneToMany(targetEntity="Documento", mappedBy="emisor")
      */

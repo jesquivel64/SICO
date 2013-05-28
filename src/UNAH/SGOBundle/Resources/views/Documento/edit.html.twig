@@ -25,7 +25,11 @@
 </section>
 <section class="row">
   <section class="span9 offset3">
-    <form action="{{ path('documento_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {% if entity.recibido %}
+    <form action="{{ path('documento_update_recibido', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {% else %}
+    <form action="{{ path('documento_update_enviado', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {% endif %}
       <input type="hidden" name="_method" value="PUT" />
       {{ form_widget(edit_form) }}
       <div class="form-actions">

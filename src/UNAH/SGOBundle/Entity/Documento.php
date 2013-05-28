@@ -100,13 +100,6 @@ class Documento
     protected $comentarios;
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="estado", type="string", length=255, nullable=true)
-     */
-    protected $estado;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="Departamento", inversedBy="documentosRecibidos")
      * @ORM\JoinColumn(name="emisor_id", referencedColumnName="id")
      */
@@ -121,7 +114,7 @@ class Documento
     /**
      * @var boolean
      *
-     * @ORM\Column(name="respondido", type="boolean")
+     * @ORM\Column(name="respondido", type="boolean", nullable=true)
      */
     protected $respondido = FALSE;
     
@@ -131,6 +124,14 @@ class Documento
      * @ORM\Column(name="recibido", type="boolean")
      */
     protected $recibido = FALSE;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_de_respuesta", type="datetime", nullable=true)
+     */
+    protected $fechaDeRespuesta;
+    
     /**
      * @ORM\ManyToMany(targetEntity="Documento", inversedBy="respuestas")
      * @ORM\JoinTable(name="documento_respuesta",
@@ -139,6 +140,26 @@ class Documento
      *      )
      */
     private $respuestas;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoSolicitud", inversedBy="documentos")
+     * @ORM\JoinColumn(name="tipo_solicitud_id", referencedColumnName="id")
+     */
+    protected $tipoSolicitud;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="responder", type="boolean", nullable=true)
+     */
+    protected $responder = FALSE;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="gca", type="boolean")
+     */
+    protected $gca = FALSE;
 
     /**
      * Get id
@@ -355,29 +376,6 @@ class Documento
     public function getFechaDeRecibido()
     {
         return $this->fechaDeRecibido;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     * @return Documento
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return string 
-     */
-    public function getEstado()
-    {
-        return $this->estado;
     }
 
     /**
@@ -611,5 +609,97 @@ class Documento
     public function getRespuestas()
     {
         return $this->respuestas;
+    }
+
+    /**
+     * Set fechaDeRespuesta
+     *
+     * @param \DateTime $fechaDeRespuesta
+     * @return Documento
+     */
+    public function setFechaDeRespuesta($fechaDeRespuesta)
+    {
+        $this->fechaDeRespuesta = $fechaDeRespuesta;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaDeRespuesta
+     *
+     * @return \DateTime 
+     */
+    public function getFechaDeRespuesta()
+    {
+        return $this->fechaDeRespuesta;
+    }
+
+    /**
+     * Set responder
+     *
+     * @param boolean $responder
+     * @return Documento
+     */
+    public function setResponder($responder)
+    {
+        $this->responder = $responder;
+
+        return $this;
+    }
+
+    /**
+     * Get responder
+     *
+     * @return boolean 
+     */
+    public function getResponder()
+    {
+        return $this->responder;
+    }
+
+    /**
+     * Set gca
+     *
+     * @param boolean $gca
+     * @return Documento
+     */
+    public function setGca($gca)
+    {
+        $this->gca = $gca;
+
+        return $this;
+    }
+
+    /**
+     * Get gca
+     *
+     * @return boolean 
+     */
+    public function getGca()
+    {
+        return $this->gca;
+    }
+
+    /**
+     * Set tipoSolicitud
+     *
+     * @param \UNAH\SGOBundle\Entity\TipoSolicitud $tipoSolicitud
+     * @return Documento
+     */
+    public function setTipoSolicitud(\UNAH\SGOBundle\Entity\TipoSolicitud $tipoSolicitud = null)
+    {
+        $this->tipoSolicitud = $tipoSolicitud;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoSolicitud
+     *
+     * @return \UNAH\SGOBundle\Entity\TipoSolicitud 
+     */
+    public function getTipoSolicitud()
+    {
+        return $this->tipoSolicitud;
     }
 }

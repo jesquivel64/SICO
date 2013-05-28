@@ -40,13 +40,6 @@ class Comentario
      * @ORM\Column(name="timestamp", type="datetimetz")
      */
     private $fecha;
-	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="estado", type="string", length=255)
-     */
-	private $estado;
     
 	/**
      * @var string
@@ -54,10 +47,17 @@ class Comentario
      * @ORM\Column(name="usuario", type="string", length=255, nullable=true)
      */
     private $usuario;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="finalizado", type="datetimetz", nullable=true)
+     */
+    private $finalizado;
     
     public function __construct()
     {
-        $this->fecha = new \DateTime(); 
+        $this->fecha = new \DateTime();
     }
     
     /**
@@ -138,28 +138,6 @@ class Comentario
     }
 
     /**
-     * Set estado
-     *
-     * @param string $estado
-     * @return Comentario
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return string 
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
-    /**
      * Set usuario
      *
      * @param string $usuario
@@ -180,5 +158,28 @@ class Comentario
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Set finalizado
+     *
+     * @param \DateTime $finalizado
+     * @return Comentario
+     */
+    public function setFinalizado($finalizado)
+    {
+        $this->finalizado = $finalizado;
+
+        return $this;
+    }
+
+    /**
+     * Get finalizado
+     *
+     * @return \DateTime 
+     */
+    public function getFinalizado()
+    {
+        return $this->finalizado;
     }
 }

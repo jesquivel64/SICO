@@ -15,7 +15,6 @@ class DocumentoRecibidoType extends AbstractType
             ->add('autor', null, array('label' => 'Remitente'))
             ->add('destinatario')
             ->add('descripcion', 'textarea')
-            ->add('estado', null, array('label' => 'Bitacora'))
             ->add('fecha_de_emision', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
@@ -26,7 +25,8 @@ class DocumentoRecibidoType extends AbstractType
                     'attr' => array('class' => 'datepicker')))
             ->add('emisor', null, array('label' => 'Dependencia'))
             ->add('recibio')
-            
+            ->add('responder', null, array('label' => 'Requiere Respuesta'))
+            ->add('tipoSolicitud', null, array('label' => 'Tipo de Solicitud'))
         ;
     }
 

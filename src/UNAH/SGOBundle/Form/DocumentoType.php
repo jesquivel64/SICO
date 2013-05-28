@@ -29,7 +29,6 @@ class DocumentoType extends AbstractType
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('estado')
             ->add('tipo')
             ->add('emisor')
             ->add('receptores')

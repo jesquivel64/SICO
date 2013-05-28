@@ -53,7 +53,6 @@
       <li>
         Destinatario: {{ entity.destinatario }}
       </li>
-      
       {% if not entity.recibido %}
       <li>
         Fecha de Emisi&oacute;n: {{ entity.fechaDeEmision|date('d/m/Y H:i:s') }}
@@ -64,9 +63,6 @@
         Fecha de Recibido: {{ entity.fechaDeRecibido|date('d/m/Y H:i:s') }}
       </li>
       {% endif %}
-      <li>
-        Bit&aacute;cora: {{ entity.estado }}
-      </li>
       {% if entity.recibido %}
       <li>
         Emisor: {{ entity.emisor }}
@@ -81,8 +77,10 @@
       <li>
         Recibio: {{ entity.recibio }}
       </li>
-      
       {% endif %}
+      <li>
+        Requiere Respuesta: {% if entity.responder %}S&iacute;{% else %}No{% endif %}
+      </li>
     </ul>
   </section>
 </div>
@@ -121,7 +119,6 @@
         <tr>
           <th>Descripci&oacute;n</th>
           <th>Usuario</th>
-          <th>Estado</th>
           <th>Fecha</th>
           <th>Acciones</th>
         </tr>
@@ -131,7 +128,6 @@
         <tr>
           <td data-title="Descripción">{{ seguimiento.comentario }}</td>
           <td data-title="Usuario">{{ seguimiento.usuario }}</td>
-          <td data-title="Estado">{{ seguimiento.estado }}</td>
           <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y H:i:s") }}</td>
           <td data-title="Acciones"><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a></td>
         </tr>

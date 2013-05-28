@@ -5,16 +5,16 @@
     <nav class="sidebar-nav">
       <ul class="nav nav-stacked nav-tabs">
         <li>
-          <a href="{{ path('tipodocumento') }}">Regresar a Tipos de Documentos</a>
+          <a href="{{ path('tiposolicitud') }}">Regresar a Tipos de Solicitudes</a>
         </li>
       </ul>
     </nav>
   </aside>
   <section class="span6">
-    <form action="{{ path('tipodocumento_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('tiposolicitud_create') }}" method="post" {{ form_enctype(form) }}>
       <fieldset>
         <legend>
-          Agregar una Tipo de Documento
+          Agregar una Tipo de Solicitud
         </legend>
         {{ form_widget(form) }}
         <div class="form-actions">

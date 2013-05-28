@@ -139,7 +139,7 @@ article.graphic {
 }
 
 div.container {
-    background: white url('../img/corner.png') no-repeat left bottom;
+    background: white url('../img/lucem.png') no-repeat right top;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;

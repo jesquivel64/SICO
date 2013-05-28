@@ -355,8 +355,8 @@ class DocumentoController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('documento_edit_recibido', array('id' => $id)));
+            
+            return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getId())));
         }
         
         return $this->render('UNAHSGOBundle:Documento:edit.html.twig', array(
@@ -411,8 +411,8 @@ class DocumentoController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('documento_edit_enviado', array('id' => $id)));
+            
+            return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getId())));
         }
         
         return $this->render('UNAHSGOBundle:Documento:edit.html.twig', array(
@@ -555,22 +555,24 @@ class DocumentoController extends Controller
                 ->andWhere('d.recibido = :recibido')
                 ->andWhere('d.respondido = :respondido')
                 ->setParameter('recibido', TRUE)
-                ->setParameter('respondido', TRUE)
-                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
-                ->setParameter('fin', $form->get('fin_periodo')->getData())
-                ->getQuery();
-            $respondidos = $query->getSingleScalarResult();
-            
-            $query = $qb->select('count(d)')
-                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
-                ->andWhere('d.recibido = :recibido')
-                ->andWhere('d.respondido = :respondido')
-                ->setParameter('recibido', TRUE)
                 ->setParameter('respondido', FALSE)
                 ->setParameter('inicio', $form->get('inicio_periodo')->getData())
                 ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             $noRespondidos = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andWhere('d.respondido = :respondido')
+                ->andWhere('d.responder = :responder')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('respondido', TRUE)
+                ->setParameter('responder', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            $respondidos = $query->getSingleScalarResult();
             
             $qb = $em->createQueryBuilder('d', 't');
             $query = $qb->select('count(d) as cantidad, t.nombre, t.color')
@@ -612,6 +614,20 @@ class DocumentoController extends Controller
             
             $emisor = $query->getResult();
             
+            $qb = $em->createQueryBuilder('d', 't');
+            $query = $qb->select('count(d) as cantidad, t.nombre, t.color')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->leftJoin('d.tipoSolicitud', 't')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('t.id')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            
+            $tipificacion = $query->getResult();
+            
             return array(
                 'recibidos' => $recibidos,
                 'respondidos' => $respondidos,
@@ -620,6 +636,7 @@ class DocumentoController extends Controller
                 'emisor' => $emisor,
                 'tipo' => $tipo,
                 'tipo_recibido' => $tipo_recibido,
+                'tipificacion' => $tipificacion,
                 'inicio' => $form->get('inicio_periodo')->getData(),
                 'fin' => $form->get('fin_periodo')->getData(),
                 'date_form' => $form->createView(),

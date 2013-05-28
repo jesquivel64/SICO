@@ -1,0 +1,36 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row">
+  <section class="span12">
+    <hgroup class="page-header">
+      <h1>Tipos de Solicitud <small>Sistema Integrado de Correspondencia</small></h1>
+    </hgroup>
+  </section>
+</section>
+<section class="row">
+  <section class="span12">
+    <a class="btn btn-primary" href="{{ path('tiposolicitud_new') }}">Nuevo Tipo de Solicitud</a>
+    <table class="no-more-tables table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Color</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entity in entities %}
+        <tr>
+          <td><a href="{{ path('tiposolicitud_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
+          <td>{{ entity.color }}</td>
+          <td>
+              <a class="btn btn-success" href="{{ path('tiposolicitud_show', { 'id': entity.id }) }}">mostrar</a>
+              <a class="btn btn-info" href="{{ path('tiposolicitud_edit', { 'id': entity.id }) }}">editar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</section>
+{% endblock %}

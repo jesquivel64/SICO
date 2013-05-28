@@ -20,7 +20,6 @@ class DocumentoRespuestaType extends AbstractType
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('estado')
             ->add('receptores')
         ;
     }

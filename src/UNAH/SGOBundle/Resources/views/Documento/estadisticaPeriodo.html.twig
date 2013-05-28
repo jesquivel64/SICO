@@ -79,6 +79,19 @@
       {% endfor %}
     </article>
   </div>
+  <div class="span6">
+    <article class="graphic">
+      <hgroup class="page-header">
+        <h2>Documentos Recibidos por Tipo de Solicitud</h2>
+      </hgroup>
+      <canvas id="tipificacion" width="400" height="400"></canvas>
+      {% for dato in tipificacion %}
+      <p>
+        {{ dato.cantidad }} {{ dato.nombre }}(s)
+      </p>
+      {% endfor %}
+    </article>
+  </div>
 </div>
 {% endblock %}
 {% block javascript %}
@@ -140,6 +153,22 @@
   var ctx = document.getElementById("tipo").getContext("2d");
   data = [
     {% for dato in tipo %}
+    {
+      value: {{ dato.cantidad }},
+      label: '{{ dato.nombre }}',
+      labelColor : 'white',
+      color: '{{ dato.color }}'
+    },
+    {% endfor %}
+    {
+      value: 0
+    }
+    ]
+  var tipo = new Chart(ctx).Pie(data);
+  
+  var ctx = document.getElementById("tipificacion").getContext("2d");
+  data = [
+    {% for dato in tipificacion %}
     {
       value: {{ dato.cantidad }},
       label: '{{ dato.nombre }}',

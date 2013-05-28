@@ -44,7 +44,14 @@ class ComentarioController extends Controller
 		    
 			$documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
 			$entity->setDocumento($documento);
-			$documento->setEstado($entity->getEstado());
+            
+            // Actualizar Comentario anterior
+            $old = $documento->getComentarios()->last();
+            if($old){
+                $old->setFinalizado($entity->getFecha());
+                $em->persist($old);
+            }
+            
             $em->persist($documento);
 			$em->persist($entity);
             $em->flush();
@@ -152,7 +159,7 @@ class ComentarioController extends Controller
             $em->persist($entity);
             $em->flush();
 		
-            return $this->redirect($this->generateUrl('comentario_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getDocumento()->getId())));
         }
 		
         return $this->render('UNAHSGOBundle:Comentario:edit.html.twig', array(

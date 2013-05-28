@@ -1,0 +1,38 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row">
+  <aside class="span3">
+    <nav class="sidebar-nav no-print">
+      <ul class="nav nav-tabs nav-stacked">
+        <li>
+          <a href="{{ path('tiposolicitud') }}">Regresar a Tipos de Solicitudes</a>
+        </li>
+        <li>
+          <a href="{{ path('tiposolicitud_edit', { 'id': entity.id }) }}">Editar este Tipo de Solicitud</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <section class="span6">
+    <hgroup class="page-header">
+      <h1>{{ entity.nombre }} <small>Tipo de Solicitud</small></h1>
+    </hgroup>
+  </section>
+</section>
+<section class="row">
+  <section class="span12">
+    <table class="no-more-tables table table-striped table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+  </section>
+</section>
+{% endblock %}
