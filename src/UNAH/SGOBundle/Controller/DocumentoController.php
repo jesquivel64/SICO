@@ -28,9 +28,11 @@ class DocumentoController extends Controller
     {
         $periodo_tipo_form = $this->createDateSearchForm();
         $periodo_form = $this->createPeriodoSearchForm();
+        $resumen_form = $this->createResumenSearchForm();
         return $this->render('UNAHSGOBundle:Documento:index.html.twig', array(
             'periodo_tipo_form' => $periodo_tipo_form->createView(),
             'periodo_form' => $periodo_form->createView(),
+            'resumen_form' => $resumen_form->createView(),
         ));
     }
     
@@ -248,6 +250,27 @@ class DocumentoController extends Controller
         }
         
         $deleteForm = $this->createDeleteForm($id);
+        
+        return $this->render('UNAHSGOBundle:Documento:show.html.twig', array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),        ));
+    }
+    
+    public function enviarCGAAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $entity = $em->getRepository('UNAHSGOBundle:Documento')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Documento entity.');
+        }
+        
+        $entity->setGca(TRUE);
+        $em->persist($entity);
+        $em->flush();
+        
+        return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getId())));
         
         return $this->render('UNAHSGOBundle:Documento:show.html.twig', array(
             'entity'      => $entity,
@@ -485,6 +508,7 @@ class DocumentoController extends Controller
             $em->persist($entity);
             $documento->addRespuesta($entity);
             $documento->setRespondido(TRUE);
+            $documento->setFechaDeRespuesta($entity->getFechaDeEmision());
             $em->persist($documento);
             $em->flush();
             
@@ -640,6 +664,74 @@ class DocumentoController extends Controller
                 'inicio' => $form->get('inicio_periodo')->getData(),
                 'fin' => $form->get('fin_periodo')->getData(),
                 'date_form' => $form->createView(),
+            );
+        }
+        return $this->redirect($this->generateUrl('documento'));
+    }
+    
+    /**
+    * Permite Efectuar busquedas por fecha
+    *
+    * @Route("/estadistica/resumen", name="documento_estadistica_resumen")
+    * @Method("GET")
+    * @Template()
+    */
+    public function resumenPeriodoAction(Request $request) {
+        $form = $this->createResumenSearchForm();
+        $form->bind($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $qb = $em->createQueryBuilder();
+            
+            $query = $qb->select('count(d)')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo1')->getData())
+                ->setParameter('fin', $form->get('fin_periodo1')->getData())
+                ->getQuery();
+            $recibidos = $query->getSingleScalarResult();
+            
+            $qb = $em->createQueryBuilder('d', 't');
+            $query = $qb->select('count(d) as cantidad, count(d) / :total *100 as porcentaje, t.nombre, t.color')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->leftJoin('d.tipoSolicitud', 't')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('t.id')
+                ->setParameter('total', $recibidos)
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo1')->getData())
+                ->setParameter('fin', $form->get('fin_periodo1')->getData())
+                ->getQuery();
+            
+            $tipificacion = $query->getResult();
+            
+            $qb = $em->createQueryBuilder('d', 't');
+            $query = $qb->select('count(d) as cantidad, count(d) / :total *100 as porcentaje, t.nombre, t.color')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->leftJoin('d.tipoSolicitud', 't')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andWhere('d.gca = :cga')
+                ->groupBy('t.id')
+                ->setParameter('total', $recibidos)
+                ->setParameter('recibido', TRUE)
+                ->setParameter('cga', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo1')->getData())
+                ->setParameter('fin', $form->get('fin_periodo1')->getData())
+                ->getQuery();
+            
+            $cga = $query->getResult();
+            
+            return array(
+                'recibidos' => $recibidos,
+                'tipificacion' => $tipificacion,
+                'cga' => $cga,
+                'inicio' => $form->get('inicio_periodo1')->getData(),
+                'fin' => $form->get('fin_periodo1')->getData(),
             );
         }
         return $this->redirect($this->generateUrl('documento'));
@@ -1034,10 +1126,12 @@ class DocumentoController extends Controller
     {
         return $this->createFormBuilder()
         ->add('inicio', 'date', array(
+                    'label' => 'Fecha Inicial',
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
         ->add('fin', 'date', array(
+                    'label' => 'Fecha Final',
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
@@ -1052,10 +1146,28 @@ class DocumentoController extends Controller
     {
         return $this->createFormBuilder()
        ->add('inicio_periodo', 'date', array(
+               'label' => 'Fecha Inicial',
                'widget' => 'single_text',
                'format' => 'dd/MM/yyyy',
                'attr' => array('class' => 'datepicker')))
        ->add('fin_periodo', 'date', array(
+               'label' => 'Fecha Final',
+               'widget' => 'single_text',
+               'format' => 'dd/MM/yyyy',
+               'attr' => array('class' => 'datepicker')))
+       ->getForm();
+    }
+    
+    private function createResumenSearchForm()
+    {
+        return $this->createFormBuilder()
+       ->add('inicio_periodo1', 'date', array(
+               'label' => 'Fecha Inicial',
+               'widget' => 'single_text',
+               'format' => 'dd/MM/yyyy',
+               'attr' => array('class' => 'datepicker')))
+       ->add('fin_periodo1', 'date', array(
+               'label' => 'Fecha Final',
                'widget' => 'single_text',
                'format' => 'dd/MM/yyyy',
                'attr' => array('class' => 'datepicker')))

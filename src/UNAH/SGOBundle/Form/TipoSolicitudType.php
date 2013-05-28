@@ -12,7 +12,7 @@ class TipoSolicitudType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('color')
+            ->add('color', null, array('attr' => array('class' => 'colorpicker')))
         ;
     }
 

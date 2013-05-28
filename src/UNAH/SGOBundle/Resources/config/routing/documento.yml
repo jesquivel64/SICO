@@ -74,6 +74,11 @@ documento_respuesta:
     defaults: { _controller: "UNAHSGOBundle:Documento:respuesta" }
     requirements: { _method: post }
 
+documento_enviar_cga:
+    pattern:  /cga/{id}
+    defaults: { _controller: "UNAHSGOBundle:Documento:enviarCGA" }
+    requirements: { _method: get }
+
 documento_search_date:
     pattern: /fecha
     defaults: { _controller: "UNAHSGOBundle:Documento:searchDate" }
@@ -101,6 +106,10 @@ documento_search_depto_comentario:
 documento_estadistica_periodo:
     pattern: /estadistica/periodo
     defaults: { _controller: "UNAHSGOBundle:Documento:estadisticaPeriodo" }
+
+documento_estadistica_resumen:
+    pattern: /estadistica/resumen
+    defaults: { _controller: "UNAHSGOBundle:Documento:resumenPeriodo" }
 
 documento_estadistica_periodo_tipo:
     pattern: /estadistica/periodo/tipo

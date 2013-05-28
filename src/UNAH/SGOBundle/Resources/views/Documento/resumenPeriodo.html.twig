@@ -1,0 +1,85 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row">
+  <aside class="span3">
+    <br />
+    <nav class="sidebar-nav no-print">
+      <ul class="nav nav-tabs nav-stacked no-print">
+        <li>
+          <a class="brand" href="{{ path('UNAHSGOBundle_homepage') }}">Inicio</a>
+        </li>
+        <li>
+          <a href="{{ path('documento_search') }}">Buscar Documentos</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <section class="span9">
+    <hgroup class="page-header">
+      <h1>Resumen de Documentos Recibidos <small> Sistema Integrado de Correspondencia</small></h1>
+    </hgroup>
+  </section>
+</section>
+<div class="row">
+  <section class="span9 offset3">
+    <hgroup class="page-header">
+      <h2>Solicitudes Analizadas<small> del {{ inicio|date("d/m/Y") }} al {{ fin|date("d/m/Y") }}</small></h2>
+    </hgroup>
+    <table class="no-more-tables table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Tipo de Solicitud</th>
+          <th>Cantidad</th>
+          <th>Porcentaje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dato in tipificacion %}
+        <tr>
+          <td data-title="Tipo de Solicitud">{{ dato.nombre }}</td>
+          <td data-title="Cantidad">{{ dato.cantidad }}</td>
+          <td data-title="Porcentaje">{{ dato.porcentaje }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total de Solicitudes</th>
+          <th colspan="2">{{ recibidos }}</th>
+        </tr>
+      </tfoot>
+    </table>
+  </section>
+</div>
+<div class="row">
+  <section class="span9 offset3">
+    <hgroup class="page-header">
+      <h2>Solicitudes Enviadas a CGA<small> del {{ inicio|date("d/m/Y") }} al {{ fin|date("d/m/Y") }}</small></h2>
+    </hgroup>
+    <table class="no-more-tables table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Tipo de Solicitud</th>
+          <th>Cantidad</th>
+          <th>Porcentaje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dato in cga %}
+        <tr>
+          <td data-title="Tipo de Solicitud">{{ dato.nombre }}</td>
+          <td data-title="Cantidad">{{ dato.cantidad }}</td>
+          <td data-title="Porcentaje">{{ dato.porcentaje }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total de Solicitudes</th>
+          <th colspan="2">{{ recibidos }}</th>
+        </tr>
+      </tfoot>
+    </table>
+  </section>
+</div>
+{% endblock %}
