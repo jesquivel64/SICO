@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use UNAH\SGOBundle\Entity\Documento;
+use UNAH\SGOBundle\Entity\Comentario;
 use UNAH\SGOBundle\Form\DocumentoType;
 use UNAH\SGOBundle\Form\DocumentoRecibidoType;
 use UNAH\SGOBundle\Form\DocumentoEnviadoType;
@@ -200,9 +201,28 @@ class DocumentoController extends Controller
                 $documento = $query->getOneOrNullResult();
                 if($documento) {
                     $em->persist($entity);
+                    
                     $entity->addRespuesta($documento);
                     $documento->addRespuesta($entity);
                     $documento->setRespondido(TRUE);
+                    
+                    $comentario = new Comentario();
+                    $comentario->setUsuario($this->getUser()->getUsername());
+                    $comentario->setFecha($entity->getFechaDeEmision());
+                    $comentario->setComentario("Documento Respondido");
+                    $comentario->setDocumento($documento);
+                    $entity->addComentario($comentario);
+                    
+                    $em->persist($comentario);
+                    
+                    $comentario = new Comentario();
+                    $comentario->setUsuario($this->getUser()->getUsername());
+                    $comentario->setFecha($entity->getFechaDeEmision());
+                    $comentario->setComentario("Respondiendo Documento");
+                    $comentario->setDocumento($entity);
+                    $entity->addComentario($comentario);
+                    
+                    $em->persist($comentario);
                     $em->persist($documento);
                 }
             }
@@ -267,6 +287,15 @@ class DocumentoController extends Controller
         }
         
         $entity->setGca(TRUE);
+        
+        $comentario = new Comentario();
+        $comentario->setUsuario($this->getUser()->getUsername());
+        $comentario->setFecha($entity->getFechaDeEmision());
+        $comentario->setComentario("Documento enviado a CGA");
+        $comentario->setDocumento($entity);
+        $entity->addComentario($comentario);
+        
+        $em->persist($comentario);
         $em->persist($entity);
         $em->flush();
         
@@ -505,10 +534,28 @@ class DocumentoController extends Controller
         
         if ($form->isValid()) {
             $entity->addRespuesta($documento);
-            $em->persist($entity);
             $documento->addRespuesta($entity);
             $documento->setRespondido(TRUE);
             $documento->setFechaDeRespuesta($entity->getFechaDeEmision());
+            
+            $comentario = new Comentario();
+            $comentario->setUsuario($this->getUser()->getUsername());
+            $comentario->setFecha($entity->getFechaDeEmision());
+            $comentario->setComentario("Documento Respondido");
+            $comentario->setDocumento($documento);
+            $documento->addComentario($comentario);
+            
+            $em->persist($comentario);
+            
+            $comentario = new Comentario();
+            $comentario->setUsuario($this->getUser()->getUsername());
+            $comentario->setFecha($entity->getFechaDeEmision());
+            $comentario->setComentario("Respondiendo Documento");
+            $comentario->setDocumento($entity);
+            $entity->addComentario($comentario);
+            
+            $em->persist($comentario);
+            $em->persist($entity);
             $em->persist($documento);
             $em->flush();
             
