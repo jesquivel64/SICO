@@ -30,10 +30,12 @@ class DocumentoController extends Controller
         $periodo_tipo_form = $this->createDateSearchForm();
         $periodo_form = $this->createPeriodoSearchForm();
         $resumen_form = $this->createResumenSearchForm();
+        $comentario_form = $this->createComentarioEstadisticaForm();
         return $this->render('UNAHSGOBundle:Documento:index.html.twig', array(
             'periodo_tipo_form' => $periodo_tipo_form->createView(),
             'periodo_form' => $periodo_form->createView(),
             'resumen_form' => $resumen_form->createView(),
+            'comentario_form' => $comentario_form->createView(),
         ));
     }
     
@@ -204,6 +206,7 @@ class DocumentoController extends Controller
                     
                     $entity->addRespuesta($documento);
                     $documento->addRespuesta($entity);
+                    $documento->setFechaDeRespuesta($entity->getFechaDeEmision());
                     $documento->setRespondido(TRUE);
                     
                     $comentario = new Comentario();
@@ -212,6 +215,13 @@ class DocumentoController extends Controller
                     $comentario->setComentario("Documento Respondido");
                     $comentario->setDocumento($documento);
                     $entity->addComentario($comentario);
+                    
+                    // Actualizar Comentario anterior
+                    $old = $documento->getComentarios()->last();
+                    if($old){
+                        $old->setFinalizado($comentario->getFecha());
+                        $em->persist($old);
+                    }
                     
                     $em->persist($comentario);
                     
@@ -508,10 +518,7 @@ class DocumentoController extends Controller
     public function responderAction($documento)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity->setEntregado($this->getUser()->getUsername());
         $documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
-        $documento->setRespondido(TRUE);
-        $em->persist($documento);
         
         $entity = new Documento();
         $form = $this->createForm(new DocumentoRespuestaType(), $entity);
@@ -544,6 +551,13 @@ class DocumentoController extends Controller
             $comentario->setComentario("Documento Respondido");
             $comentario->setDocumento($documento);
             $documento->addComentario($comentario);
+            
+            // Actualizar Comentario anterior
+            $old = $documento->getComentarios()->last();
+            if($old){
+                $old->setFinalizado($comentario->getFecha());
+                $em->persist($old);
+            }
             
             $em->persist($comentario);
             
@@ -773,10 +787,47 @@ class DocumentoController extends Controller
             
             $cga = $query->getResult();
             
+            $qb = $em->createQueryBuilder();
+            $query = $qb->select('d')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andWhere('d.responder = :responder')
+                ->andWhere('d.respondido = :respondido')
+                ->setParameter('respondido', TRUE)
+                ->setParameter('responder', TRUE)
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo1')->getData())
+                ->setParameter('fin', $form->get('fin_periodo1')->getData())
+                ->getQuery();
+            
+            $documentos = $query->getResult();
+            
+            $tiempo = 0;
+            foreach($documentos as $documento) {
+                $tiempo += $documento->getTiempoRespuesta();
+            }
+            
+            $query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->andWhere('d.responder = :responder')
+                ->andWhere('d.respondido = :respondido')
+                ->setParameter('respondido', TRUE)
+                ->setParameter('responder', True)
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo1')->getData())
+                ->setParameter('fin', $form->get('fin_periodo1')->getData())
+                ->getQuery();
+            $count = $query->getSingleScalarResult();
+            
+            $tiempo = $tiempo / $count;
+            
             return array(
                 'recibidos' => $recibidos,
                 'tipificacion' => $tipificacion,
                 'cga' => $cga,
+                'tiempo' => $tiempo,
                 'inicio' => $form->get('inicio_periodo1')->getData(),
                 'fin' => $form->get('fin_periodo1')->getData(),
             );
@@ -1252,6 +1303,22 @@ class DocumentoController extends Controller
             'class' => 'UNAH\SGOBundle\Entity\Departamento',
             )
         )
+        ->getForm();
+    }
+    
+    private function createComentarioEstadisticaForm()
+    {
+        return $this->createFormBuilder()
+        ->add('inicio_comentario', 'date', array(
+                    'label' => 'Fecha Inicial',
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker')))
+        ->add('fin_comentario', 'date', array(
+                    'label' => 'Fecha Final',
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker')))
         ->getForm();
     }
 }

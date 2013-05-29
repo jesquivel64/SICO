@@ -54,6 +54,12 @@ class Comentario
      * @ORM\Column(name="finalizado", type="datetimetz", nullable=true)
      */
     private $finalizado;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tiempo", type="integer", nullable=true)
+     */
+    private $tiempo;
     
     public function __construct()
     {
@@ -169,7 +175,7 @@ class Comentario
     public function setFinalizado($finalizado)
     {
         $this->finalizado = $finalizado;
-
+        $this->tiempo = ($this->finalizado->getTimestamp() - $this->fecha->getTimestamp()) / 3600;
         return $this;
     }
 
@@ -181,5 +187,28 @@ class Comentario
     public function getFinalizado()
     {
         return $this->finalizado;
+    }
+
+    /**
+     * Set tiempo
+     *
+     * @param integer $tiempo
+     * @return Comentario
+     */
+    public function setTiempo($tiempo)
+    {
+        $this->tiempo = $tiempo;
+
+        return $this;
+    }
+
+    /**
+     * Get tiempo
+     *
+     * @return integer 
+     */
+    public function getTiempo()
+    {
+        return $this->tiempo;
     }
 }

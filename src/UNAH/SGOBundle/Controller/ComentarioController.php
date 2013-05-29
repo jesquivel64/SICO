@@ -4,6 +4,9 @@ namespace UNAH\SGOBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use UNAH\SGOBundle\Entity\Comentario;
 use UNAH\SGOBundle\Form\ComentarioType;
@@ -197,6 +200,39 @@ class ComentarioController extends Controller
     }
     
     /**
+    * Permite Efectuar busquedas por fecha
+    *
+    * @Route("/estadistica/resumen", name="comentario_estadisticas")
+    * @Method("GET")
+    * @Template()
+    */
+    public function estadisticasAction(Request $request) {
+        $form = $this->createDateSearchForm();
+        $form->bind($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $qb = $em->createQueryBuilder();
+            $query = $qb->select('AVG(c.tiempo) as tiempo, count(c) as cantidad, c.usuario')
+                ->from('UNAH\SGOBundle\Entity\Comentario', 'c')
+                ->where($qb->expr()->between('c.fecha', ':inicio', ':fin'))
+                ->groupBy('c.usuario')
+                ->setParameter('inicio', $form->get('inicio_comentario')->getData())
+                ->setParameter('fin', $form->get('fin_comentario')->getData())
+                ->getQuery();
+            
+            $tiempo = $query->getResult();
+            
+            return array(
+                'tiempo' => $tiempo,
+                'inicio' => $form->get('inicio_comentario')->getData(),
+                'fin' => $form->get('fin_comentario')->getData(),
+            );
+        }
+        return $this->redirect($this->generateUrl('documento'));
+    }
+    
+    /**
      * Creates a form to delete a Comentario entity by id.
      *
      * @param mixed $id The entity id
@@ -209,5 +245,21 @@ class ComentarioController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    private function createDateSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('inicio_comentario', 'date', array(
+                    'label' => 'Fecha Inicial',
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker')))
+        ->add('fin_comentario', 'date', array(
+                    'label' => 'Fecha Final',
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker')))
+        ->getForm();
     }
 }

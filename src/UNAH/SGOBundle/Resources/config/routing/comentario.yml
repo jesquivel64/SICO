@@ -19,6 +19,10 @@ comentario_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "UNAHSGOBundle:Comentario:edit" }
 
+comentario_estadisticas:
+    pattern:  /estadisticas
+    defaults: { _controller: "UNAHSGOBundle:Comentario:estadisticas" }
+
 comentario_update:
     pattern:  /{id}/update
     defaults: { _controller: "UNAHSGOBundle:Comentario:update" }

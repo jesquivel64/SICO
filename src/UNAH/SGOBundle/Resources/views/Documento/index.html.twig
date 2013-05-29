@@ -58,5 +58,21 @@
       </div>
     </form>
   </section>
+  <section class="span6">
+    <form action="{{ path('comentario_estadisticas') }}" method="get" {{ form_enctype(comentario_form) }}>
+      <fieldset>
+        <legend>
+          Estad&iacute;sticas de Seguimiento
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(comentario_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>
 {% endblock %}

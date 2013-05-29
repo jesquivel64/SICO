@@ -702,4 +702,9 @@ class Documento
     {
         return $this->tipoSolicitud;
     }
+    
+    public function getTiempoRespuesta() {
+        $interval = $this->fechaDeRespuesta->getTimestamp() - $this->fechaDeRecibido->getTimestamp();
+        return $interval / 3600;
+    }
 }

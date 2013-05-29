@@ -28,11 +28,17 @@
         <h2>Documentos Recibidos por Tipo</h2>
       </hgroup>
       <canvas id="tipo-recibido" width="400" height="400"></canvas>
-      {% for dato in tipo_recibido %}
-      <p>
-        {{ dato.cantidad }} {{ dato.nombre }}(s)
-      </p>
-      {% endfor %}
+      <table class="table table-bordered table-striped no-more-tables">
+        <caption>Leyenda</caption>
+        <tbody>
+          {% for dato in tipo_recibido %}
+          <tr>
+            <td>{{ dato.cantidad }}</td>
+            <td>{{ dato.nombre }}(s)</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </article>
   </div>
 </div>
@@ -57,11 +63,18 @@
         <h2>Documentos Recibidos por Dependencia</h2>
       </hgroup>
       <canvas id="dependencias" width="400" height="400"></canvas>
-      {% for dato in emisor %}
-      <p>
-        {{ dato.nombre }}: {{ dato.cantidad }}
-      </p>
-      {% endfor %}
+      <table class="table table-bordered table-striped no-more-tables">
+        <caption>Leyenda</caption>
+        <tbody>
+          {% for dato in emisor %}
+          <tr>
+            <td>{{ dato.cantidad }}</td>
+            <td>{{ dato.nombre }}(s)</td>
+            <td style="background-color: {{ dato.color }};"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </article>
   </div>
 </div>
@@ -72,11 +85,18 @@
         <h2>Documentos Enviados por Tipo</h2>
       </hgroup>
       <canvas id="tipo" width="400" height="400"></canvas>
-      {% for dato in tipo %}
-      <p>
-        {{ dato.cantidad }} {{ dato.nombre }}(s)
-      </p>
-      {% endfor %}
+      <table class="table table-bordered table-striped no-more-tables">
+        <caption>Leyenda</caption>
+        <tbody>
+          {% for dato in tipo %}
+          <tr>
+            <td>{{ dato.cantidad }}</td>
+            <td>{{ dato.nombre }}(s)</td>
+            <td style="background-color: {{ dato.color }};"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </article>
   </div>
   <div class="span6">
@@ -85,11 +105,18 @@
         <h2>Documentos Recibidos por Tipo de Solicitud</h2>
       </hgroup>
       <canvas id="tipificacion" width="400" height="400"></canvas>
-      {% for dato in tipificacion %}
-      <p>
-        {{ dato.cantidad }} {{ dato.nombre }}(s)
-      </p>
-      {% endfor %}
+      <table class="table table-bordered table-striped no-more-tables">
+        <caption>Leyenda</caption>
+        <tbody>
+          {% for dato in tipificacion %}
+          <tr>
+            <td>{{ dato.cantidad }}</td>
+            <td>{{ dato.nombre }}(s)</td>
+            <td style="background-color: {{ dato.color }};"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </article>
   </div>
 </div>

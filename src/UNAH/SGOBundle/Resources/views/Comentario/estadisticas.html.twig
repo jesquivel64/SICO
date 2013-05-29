@@ -1,0 +1,41 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row">
+  <aside class="span3">
+    <br />
+    <nav class="sidebar-nav no-print">
+      <ul class="nav nav-tabs nav-stacked no-print">
+        <li>
+          <a class="brand" href="{{ path('UNAHSGOBundle_homepage') }}">Inicio</a>
+        </li>
+        <li>
+          <a href="{{ path('documento_search') }}">Buscar Documentos</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <section class="span9">
+    <hgroup class="page-header">
+      <h1>Estad&iacute;sticas de Seguimiento<small> del {{ inicio|date("d/m/Y") }} al {{ fin|date("d/m/Y") }}</small></h1>
+    </hgroup>
+    <table class="no-more-tables table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Tiempo</th>
+          <th>Cantidad de Seguimientos</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dato in tiempo %}
+        <tr>
+          <td data-title="Usuario">{{ dato.usuario }}</td>
+          <td data-title="Tiempo">{{ dato.tiempo }}</td>
+          <td data-title="Cantidad de Seguimientos">{{ dato.cantidad }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</section>
+{% endblock %}
