@@ -2,31 +2,29 @@
 
 {% block content %}
 <section class="row">
-  <aside class="span3">
-    <nav class="sidebar-nav no-print">
-      <ul class="nav nav-tabs nav-stacked no-print">
-        <li>
-          <a href="{{ path('documento_documento', { 'tipo': tipo.id }) }}">Regresar a  {{ tipo.nombre }}s</a>
-        </li>
-        <li>
-          <a href="{{ path('documento_search') }}">Buscar Documentos</a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-  <section class="span3">
-    <hgroup class="page-header">
-      <h1>Enviar un {{ tipo.nombre}}</h1>
-    </hgroup>
+  <section class="span12 page-header">
+    <h1>Enviar un {{ tipo.nombre}} <small>Sistema Integrado de Correspondencia</small></h1>
   </section>
 </section>
 <section class="row">
-  <section class="span9 offset3">
+  <aside class="span3 no-print action-nav-normal">
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_documento', { 'tipo': tipo.id }) }}"><i class="icon-home"></i><span>Regresar a  {{ tipo.nombre }}s</span></a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a title="Buscar Documentos" href="{{ path('documento_search') }}"> <i class="icon-search"></i> <span>Buscar Documentos</span></a>
+      </section>
+    </div>
+  </aside>
+  <section class="span9">
     <form action="{{ path('documento_enviar', {'tipo' : tipo.id}) }}" method="post" {{ form_enctype(form) }}>
       {{ form_widget(form) }}
       <div class="form-actions">
         <button class="btn btn-primary" type="submit">
-          Guardar {{ tipo }}
+          <i class="icon-save"></i> Guardar {{ tipo }}
         </button>
       </div>
     </form>

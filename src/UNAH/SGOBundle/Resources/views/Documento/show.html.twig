@@ -2,187 +2,199 @@
 
 {% block content %}
 <div class="row">
-  <section class="span3 no-print">
-    <br />
-    <nav class="sidebar-nav no-print">
-      <ul class="nav nav-tabs nav-stacked no-print">
-        <li>
-          <a href="{{ path('documento_documento', { 'tipo': entity.tipo.id }) }}">Regresar a  {{ entity.tipo.nombre }}s</a>
-        </li>
-        <li>
-          <a href="{{ path('documento_search') }}">Buscar Documentos</a>
-        </li>
-      </ul>
-    </nav>
-    <nav class="sidebar-nav no-print">
-      <ul class="nav nav-tabs nav-stacked no-print">
-        <li>
-          {% if entity.recibido %}
-          <a href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}"> Editar este {{ entity.tipo.nombre }}</a>
-          {% else %}
-          <a href="{{ path('documento_edit', { 'id': entity.id }) }}"> Editar este {{ entity.tipo.nombre }}</a>
-          {% endif %}
-        </li>
-        <li>
-          <a href="{{ path('adjunto_new', { 'documento': entity.id }) }}"> Agregar Adjunto </a>
-        </li>
-        <li>
-          <a href="{{ path('documento_enviar_cga', { 'id': entity.id }) }}">Enviar a la CGA</a>
-        </li>
-        <li>
-          <a href="{{ path('documento_responder', { 'documento': entity.id }) }}">Responder</a>
-        </li>
-      </ul>
-    </nav>
-  </section>
-  <section class="span9 ">
-    <hgroup class="page-header hero-unit">
+  <section class="span12">
+    <div class="page-header hero-unit">
       <h1>{{ entity.numero }} <small>{{ entity.tipo }}
-      {% if entity.recibido %}
+        {% if entity.recibido %}
         {{ entity.emisor }}
-      {% endif %}{% if not entity.recibido %}Enviado{% endif %}</small></h1>
-    </hgroup>
+        {% endif %}{% if not entity.recibido %}Enviado{% endif %}</small></h1>
+    </div>
   </section>
 </div>
 <div class="row">
-  <section class="span9 offset3">
-    <ul>
-      <li>
-        Descripci&oacute;n: {{ entity.descripcion }}
-      </li>
-      <li>
-        Remitente: {{ entity.autor }}
-      </li>
-      <li>
-        Destinatario: {{ entity.destinatario }}
-      </li>
-      {% if not entity.recibido %}
-      <li>
-        Fecha de Emisi&oacute;n: {{ entity.fechaDeEmision|date('d/m/Y H:i:s') }}
-      </li>
-      {% endif %}
-      {% if entity.recibido %}
-      <li>
-        Fecha de Recibido: {{ entity.fechaDeRecibido|date('d/m/Y H:i:s') }}
-      </li>
-      {% endif %}
-      {% if entity.recibido %}
-      <li>
-        Emisor: {{ entity.emisor }}
-      </li>
-      {% endif %}
-      {% if not entity.recibido %}
-      <li>
-        Entregado: {{ entity.entregado }}
-      </li>
-      {% endif %}
-      {% if entity.recibido %}
-      <li>
-        Recibio: {{ entity.recibio }}
-      </li>
-      {% endif %}
-      <li>
-        Requiere Respuesta: {% if entity.responder %}S&iacute;{% else %}No{% endif %}
-      </li>
-    </ul>
-  </section>
+  <aside class="span3 no-print action-nav-normal">
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_documento', { 'tipo': entity.tipo.id }) }}"><i class="icon-home"></i> Regresar a  {{ entity.tipo.nombre }}s</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        {% if entity.recibido %}
+          <a href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}"><i class="icon-edit"></i> Editar este {{ entity.tipo.nombre }}</a>
+          {% else %}
+          <a href="{{ path('documento_edit', { 'id': entity.id }) }}"><i class="icon-edit"></i> Editar este {{ entity.tipo.nombre }}</a>
+          {% endif %}
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+          <a href="{{ path('adjunto_new', { 'documento': entity.id }) }}"><i class="icon-cloud-upload"></i> Adjuntar Archivo</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+          <a href="{{ path('documento_enviar_cga', { 'id': entity.id }) }}"><i class="icon-group"></i> Enviar a la CGA</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+          <a href="{{ path('documento_responder', { 'documento': entity.id }) }}"><i class="icon-reply"></i> Responder</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+          <a href="{{ path('comentario_new', { 'documento': entity.id }) }}"><i class="icon-pencil"></i> Registrar Seguimiento</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a title="Buscar Documentos" href="{{ path('documento_search') }}"> <i class="icon-search"></i> Buscar Documentos</a>
+      </section>
+    </div>
+  </aside>
+  <div class="span9">
+    <div class="row">
+      <section class="span9">
+        <ul>
+          <li>
+            Descripci&oacute;n: {{ entity.descripcion }}
+          </li>
+          <li>
+            Remitente: {{ entity.autor }}
+          </li>
+          <li>
+            Destinatario: {{ entity.destinatario }}
+          </li>
+          {% if not entity.recibido %}
+          <li>
+            Fecha de Emisi&oacute;n: {{ entity.fechaDeEmision|date('d/m/Y H:i:s') }}
+          </li>
+          {% endif %}
+          {% if entity.recibido %}
+          <li>
+            Fecha de Recibido: {{ entity.fechaDeRecibido|date('d/m/Y H:i:s') }}
+          </li>
+          {% endif %}
+          {% if entity.recibido %}
+          <li>
+            Emisor: {{ entity.emisor }}
+          </li>
+          {% endif %}
+          {% if not entity.recibido %}
+          <li>
+            Entregado: {{ entity.entregado }}
+          </li>
+          {% endif %}
+          {% if entity.recibido %}
+          <li>
+            Recibio: {{ entity.recibio }}
+          </li>
+          {% endif %}
+          <li>
+            Requiere Respuesta: {% if entity.responder %}S&iacute;{% else %}No{% endif %}
+          </li>
+        </ul>
+      </section>
+    </div>
+    <section class="row">
+      <section class="span9">
+        <table class="no-more-tables table table-striped table-bordered">
+          <caption>
+            Adjuntos
+          </caption>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Archivo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for adjunto in entity.adjuntos %}
+            <tr>
+              <td data-title="Nombre">{{ adjunto.nombre }}</td>
+              <td data-title="Archivo"><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
+              <td data-title="Acciones"><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </section>
+    <section class="row">
+      <section class="span9">
+        <table class="no-more-tables table table-striped table-bordered">
+          <caption>
+            Seguimiento
+          </caption>
+          <thead>
+            <tr>
+              <th>Descripci&oacute;n</th>
+              <th>Usuario</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for seguimiento in entity.comentarios %}
+            <tr>
+              <td data-title="Descripción">{{ seguimiento.comentario }}</td>
+              <td data-title="Usuario">{{ seguimiento.usuario }}</td>
+              <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y H:i:s") }}</td>
+              <td data-title="Acciones"><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">Editar</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+      </section>
+    </section>
+    <section class="row">
+      <section class="span9">
+        <table class="no-more-tables table table-striped table-bordered">
+          <caption>
+            Documentos Relacionados
+          </caption>
+          <thead>
+            <tr>
+              <th>Numero</th>
+              <th>Tipo</th>
+              <th>Descripcion</th>
+              <th>Recibio</th>
+              <th>Enviado</th>
+              <th>Recepci&oacute;n</th>
+              <th>Emisi&oacute;n</th>
+              <th class="no-print">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for documento in entity.respuestas %}
+            <tr>
+              <td data-title="Número">{{ documento.numero }}</td>
+              <td data-title="Tipo de Documento">{{ documento.tipo }}</td>
+              <td data-title="Descripción">{{ documento.descripcion }}</td>
+              <td data-title="Recibio">{{ documento.recibio }}</td>
+              <td  data-title="Fecha de Envio">{{ documento.getFechaDeEnvio|date("d/m/Y") }}</td>
+              <td data-title="Fecha de Recibido">{{ documento.getFechaDeRecibido|date("d/m/Y") }}</td>
+              <td data-title="Fecha de Emisión">{{ documento.getFechaDeEmision|date("d/m/Y") }}</td>
+              <td data-title="Acciones" class="no-print">
+                <a class="btn btn-primary" href="{{ path('documento_show', { 'id': documento.id }) }}">Mostrar</a>
+                <a class="btn btn-success" href="{{ path('documento_edit', { 'id': documento.id }) }}">Editar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <form action="{{ path('documento_delete', { 'id': entity.id }) }}" method="post">
+          <input type="hidden" name="_method" value="DELETE" />
+          {{ form_widget(delete_form) }}
+          <button class="btn btn-danger" type="submit">
+            <i class="icon-trash"></i> Eliminar {{ entity.tipo.nombre }}
+          </button>
+        </form>
+      </section>
+    </section>
+  </div>
 </div>
-<section class="row">
-  <section class="span9 offset3">
-    <table class="no-more-tables table table-striped table-bordered">
-      <caption>
-        Adjuntos
-      </caption>
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Archivo</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for adjunto in entity.adjuntos %}
-        <tr>
-          <td data-title="Nombre">{{ adjunto.nombre }}</td>
-          <td data-title="Archivo"><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
-          <td data-title="Acciones"><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </section>
-</section>
-<section class="row">
-  <section class="span9 offset3">
-    <table class="no-more-tables table table-striped table-bordered">
-      <caption>
-        Seguimiento
-      </caption>
-      <thead>
-        <tr>
-          <th>Descripci&oacute;n</th>
-          <th>Usuario</th>
-          <th>Fecha</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for seguimiento in entity.comentarios %}
-        <tr>
-          <td data-title="Descripción">{{ seguimiento.comentario }}</td>
-          <td data-title="Usuario">{{ seguimiento.usuario }}</td>
-          <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y H:i:s") }}</td>
-          <td data-title="Acciones"><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">editar</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <a class="btn btn-primary" href="{{ path('comentario_new', { 'documento': entity.id }) }}">Registrar Seguimiento</a>
-  </section>
-</section>
-<section class="row">
-  <section class="span9 offset3">
-    <table class="no-more-tables table table-striped table-bordered">
-      <caption>
-        Documentos Relacionados
-      </caption>
-      <thead>
-        <tr>
-          <th>Numero</th>
-          <th>Tipo</th>
-          <th>Descripcion</th>
-          <th>Recibio</th>
-          <th>Enviado</th>
-          <th>Recepci&oacute;n</th>
-          <th>Emisi&oacute;n</th>
-          <th class="no-print">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for documento in entity.respuestas %}
-        <tr>
-          <td data-title="Número">{{ documento.numero }}</td>
-          <td data-title="Tipo de Documento">{{ documento.tipo }}</td>
-          <td data-title="Descripción">{{ documento.descripcion }}</td>
-          <td data-title="Recibio">{{ documento.recibio }}</td>
-          <td  data-title="Fecha de Envio">{{ documento.getFechaDeEnvio|date("d/m/Y") }}</td>
-          <td data-title="Fecha de Recibido">{{ documento.getFechaDeRecibido|date("d/m/Y") }}</td>
-          <td data-title="Fecha de Emisión">{{ documento.getFechaDeEmision|date("d/m/Y") }}</td>
-          <td data-title="Acciones" class="no-print">
-            <a class="btn btn-primary" href="{{ path('documento_show', { 'id': documento.id }) }}">Mostrar</a>
-            <a class="btn btn-success" href="{{ path('documento_edit', { 'id': documento.id }) }}">Editar</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <form action="{{ path('documento_delete', { 'id': entity.id }) }}" method="post">
-      <input type="hidden" name="_method" value="DELETE" />
-      {{ form_widget(delete_form) }}
-      <button class="btn btn-danger" type="submit">
-        Eliminar {{ entity.tipo.nombre }}
-      </button>
-    </form>
-  </section>
-</section>
 {% endblock %}

@@ -213,7 +213,7 @@ class ComentarioController extends Controller
             $em = $this->getDoctrine()->getManager();
             
             $qb = $em->createQueryBuilder();
-            $query = $qb->select('AVG(c.tiempo) as tiempo, count(c) as cantidad, c.usuario')
+            $query = $qb->select('AVG(c.tiempo) as tiempo, count(c) as cantidad, sum(c.tiempo) as total, c.usuario')
                 ->from('UNAH\SGOBundle\Entity\Comentario', 'c')
                 ->where($qb->expr()->between('c.fecha', ':inicio', ':fin'))
                 ->groupBy('c.usuario')

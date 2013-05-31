@@ -1,15 +1,18 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
 <section class="row">
-  <section class="span12">
-    <hgroup class="page-header">
-      <h1>Tipos de Solicitud <small>Sistema Integrado de Correspondencia</small></h1>
-    </hgroup>
+  <section class="span12 page-header">
+    <h1>Tipos de Solicitud <small>Sistema Integrado de Correspondencia</small></h1>
   </section>
 </section>
 <section class="row">
   <section class="span12">
-    <a class="btn btn-primary" href="{{ path('tiposolicitud_new') }}">Nuevo Tipo de Solicitud</a>
+    <a class="btn btn-primary" href="{{ path('tiposolicitud_new') }}"><i class="icon-file icon-large"></i> Nuevo Tipo de Solicitud</a>
+  </section>
+</section>
+<section class="row">
+  <section class="span12">
+    <br />
     <table class="no-more-tables table table-striped table-bordered">
       <thead>
         <tr>
@@ -22,10 +25,10 @@
         {% for entity in entities %}
         <tr>
           <td><a href="{{ path('tiposolicitud_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
-          <td>{{ entity.color }}</td>
+          <td style="background-color: {{ entity.color }};">&nbsp;</td>
           <td>
-              <a class="btn btn-success" href="{{ path('tiposolicitud_show', { 'id': entity.id }) }}">mostrar</a>
-              <a class="btn btn-info" href="{{ path('tiposolicitud_edit', { 'id': entity.id }) }}">editar</a>
+            <a class="btn btn-success" href="{{ path('tiposolicitud_show', { 'id': entity.id }) }}">Mostrar</a>
+            <a class="btn btn-info" href="{{ path('tiposolicitud_edit', { 'id': entity.id }) }}">Editar</a>
           </td>
         </tr>
         {% endfor %}

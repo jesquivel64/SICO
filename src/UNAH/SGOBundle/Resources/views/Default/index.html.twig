@@ -7,15 +7,12 @@
   </hgroup>
 </div>
 <div class="row">
-  <section class="span3">
-    <img class="center" src="{{ asset('bundles/unahsgo/img/unah.png') }}" />
-  </section>
-  <div class="span9">
+  <div class="span9 offset3">
     <div class="row action-nav-normal">
       {% for tipo in tipos %}
       <section class="span4 action-nav-button">
         <a title="{{ tipo.nombre }}" href="{{ path('documento_documento', { 'tipo': tipo.id }) }}">
-          <i class="icon-envelope"></i>
+          <img src="{{ asset('bundles/unahsgo/img/'~ tipo.nombre ~'.png') }}" />
           <span>{{ tipo.nombre }}</span>
         </a>
       </section>

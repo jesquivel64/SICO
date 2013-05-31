@@ -38,6 +38,7 @@
 }
 .action-nav-normal .action-nav-button {
     text-align: center;
+    vertical-align: middle;
 }
 .action-nav-normal .action-nav-button a > span {
     display: block;
@@ -78,7 +79,9 @@
 body {
     padding-top: 40px;
     min-height: 640px;
-    background: linear-gradient(to bottom, #1a3747 0%,#1592bd 100%) fixed top center;
+    background: url('../img/lucem.png') no-repeat fixed right 40px,
+                url('../img/unah.png') no-repeat fixed 40px 60px,
+                linear-gradient(to bottom, #1a3747 40%,#1592bd 88%,#7CBACC 95%,#1592bd 100%) fixed top center;
 }
 @media screen and (max-width: 768px) {
     body {
@@ -139,13 +142,13 @@ article.graphic {
 }
 
 div.container {
-    background: white url('../img/lucem.png') no-repeat right top;
+    background: white;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    -webkit-box-shadow: 0px 0px 20px 5px;
-    box-shadow: 0px 0px 20px 5px;
+    -webkit-box-shadow: 0px 0px 20px 10px;
+    box-shadow: 0px 0px 20px 10px;
     margin-top: 20px;
     margin-bottom: 30px;
 }
@@ -203,4 +206,7 @@ img.center {
     .no-more-tables td:before {
         content: attr(data-title);
     }
+}
+.table td {
+    vertical-align: middle;
 }

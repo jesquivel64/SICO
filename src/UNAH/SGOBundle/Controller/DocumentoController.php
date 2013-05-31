@@ -213,8 +213,7 @@ class DocumentoController extends Controller
                     $comentario->setUsuario($this->getUser()->getUsername());
                     $comentario->setFecha($entity->getFechaDeEmision());
                     $comentario->setComentario("Documento Respondido");
-                    $comentario->setDocumento($documento);
-                    $entity->addComentario($comentario);
+                    
                     
                     // Actualizar Comentario anterior
                     $old = $documento->getComentarios()->last();
@@ -222,6 +221,9 @@ class DocumentoController extends Controller
                         $old->setFinalizado($comentario->getFecha());
                         $em->persist($old);
                     }
+                    
+                    $comentario->setDocumento($documento);
+                    $documento->addComentario($comentario);
                     
                     $em->persist($comentario);
                     
@@ -814,20 +816,24 @@ class DocumentoController extends Controller
                 ->andWhere('d.responder = :responder')
                 ->andWhere('d.respondido = :respondido')
                 ->setParameter('respondido', TRUE)
-                ->setParameter('responder', True)
+                ->setParameter('responder', TRUE)
                 ->setParameter('recibido', TRUE)
                 ->setParameter('inicio', $form->get('inicio_periodo1')->getData())
                 ->setParameter('fin', $form->get('fin_periodo1')->getData())
                 ->getQuery();
             $count = $query->getSingleScalarResult();
             
-            $tiempo = $tiempo / $count;
+            if($count != 0)
+            {
+                $tiempo = $tiempo / $count;
+            }
             
             return array(
                 'recibidos' => $recibidos,
                 'tipificacion' => $tipificacion,
                 'cga' => $cga,
                 'tiempo' => $tiempo,
+                'count' => $count,
                 'inicio' => $form->get('inicio_periodo1')->getData(),
                 'fin' => $form->get('fin_periodo1')->getData(),
             );

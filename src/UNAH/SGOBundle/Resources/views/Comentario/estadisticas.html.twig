@@ -22,7 +22,8 @@
       <thead>
         <tr>
           <th>Usuario</th>
-          <th>Tiempo</th>
+          <th>Tiempo Promedio</th>
+          <th>Tiempo Total</th>
           <th>Cantidad de Seguimientos</th>
         </tr>
       </thead>
@@ -30,7 +31,8 @@
         {% for dato in tiempo %}
         <tr>
           <td data-title="Usuario">{{ dato.usuario }}</td>
-          <td data-title="Tiempo">{{ dato.tiempo }}</td>
+          <td data-title="Tiempo Promedio">{{ dato.tiempo }} Horas</td>
+          <td data-title="Tiempo Total">{{ dato.total }} Horas</td>
           <td data-title="Cantidad de Seguimientos">{{ dato.cantidad }}</td>
         </tr>
         {% endfor %}
