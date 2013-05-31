@@ -107,7 +107,7 @@
             <tr>
               <th>Nombre</th>
               <th>Archivo</th>
-              <th>Acciones</th>
+              <th class="no-print">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -115,7 +115,7 @@
             <tr>
               <td data-title="Nombre">{{ adjunto.nombre }}</td>
               <td data-title="Archivo"><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
-              <td data-title="Acciones"><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
+              <td data-title="Acciones" class="no-print"><a class="btn btn-success" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">editar</a></td>
             </tr>
             {% endfor %}
           </tbody>
@@ -133,7 +133,7 @@
               <th>Descripci&oacute;n</th>
               <th>Usuario</th>
               <th>Fecha</th>
-              <th>Acciones</th>
+              <th class="no-print">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -142,7 +142,7 @@
               <td data-title="Descripción">{{ seguimiento.comentario }}</td>
               <td data-title="Usuario">{{ seguimiento.usuario }}</td>
               <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y H:i:s") }}</td>
-              <td data-title="Acciones"><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">Editar</a></td>
+              <td data-title="Acciones" class="no-print"><a class="btn btn-success" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">Editar</a></td>
             </tr>
             {% endfor %}
           </tbody>
@@ -160,7 +160,7 @@
             <tr>
               <th>Numero</th>
               <th>Tipo</th>
-              <th>Descripcion</th>
+              <th>Descripci&oacute;n</th>
               <th>Recibio</th>
               <th>Enviado</th>
               <th>Recepci&oacute;n</th>
@@ -186,7 +186,7 @@
             {% endfor %}
           </tbody>
         </table>
-        <form action="{{ path('documento_delete', { 'id': entity.id }) }}" method="post">
+        <form class="no-print" action="{{ path('documento_delete', { 'id': entity.id }) }}" method="post">
           <input type="hidden" name="_method" value="DELETE" />
           {{ form_widget(delete_form) }}
           <button class="btn btn-danger" type="submit">

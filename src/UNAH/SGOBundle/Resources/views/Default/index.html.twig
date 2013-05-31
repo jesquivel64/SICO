@@ -12,7 +12,7 @@
       {% for tipo in tipos %}
       <section class="span4 action-nav-button">
         <a title="{{ tipo.nombre }}" href="{{ path('documento_documento', { 'tipo': tipo.id }) }}">
-          <img src="{{ asset('bundles/unahsgo/img/'~ tipo.nombre ~'.png') }}" />
+          <img src="{{ asset('bundles/unahsgo/img/'~ tipo.nombre ~'.png') }}" alt="{{ tipo.nombre }}" />
           <span>{{ tipo.nombre }}</span>
         </a>
       </section>
