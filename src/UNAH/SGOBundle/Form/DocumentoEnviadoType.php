@@ -11,17 +11,22 @@ class DocumentoEnviadoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numero')
-            ->add('descripcion', 'textarea')
+            ->add('numero', null, array(
+                    'label' => 'Número',
+                    'attr' => array('placeholder' => 'VRA-1234-2013')))
+            ->add('descripcion', 'textarea', array(
+                    'label' => 'Descripción'))
             ->add("autor", null, array('label' => 'Remitente'))
             ->add('destinatario', null, array('required' => false))
             ->add('fecha_de_emision', 'date', array(
+                    'label' => 'Fecha de Emisión',
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
             ->add('receptores', null, array('required' => false))
             ->add("respuesta", null, array( "mapped" => false,
-                    'required' => false, 'label' => 'En Respuesta a'))
+                    'required' => false, 'label' => 'En Respuesta a',
+                    'attr' => array('placeholder' => 'VRA-1234-2013')))
         ;
     }
 
