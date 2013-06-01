@@ -80,7 +80,6 @@ body {
     padding-top: 40px;
     min-height: 640px;
     background: url('../img/lucem.png') no-repeat fixed right 40px,
-                url('../img/unah.png') no-repeat fixed 40px 60px,
                 linear-gradient(to bottom, #1a3747 40%,#1592bd 88%,#7CBACC 95%,#1592bd 100%) fixed top center;
 }
 @media screen and (max-width: 768px) {
@@ -127,11 +126,19 @@ article.graphic {
         padding: 5px 19px;
         width: auto;
     }
+    aside.action-nav-normal {
+        background: white url('../img/corner.png') no-repeat bottom -5px left 30px;
+        min-height: 720px;
+    }
 }
 @media (min-width: 768px) and (max-width: 979px) {
     .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
         width: 724px;
         padding: 10px 14px;
+    }
+    aside.action-nav-normal {
+        background: white url('../img/corner.png') no-repeat bottom -5px left 10px;
+        min-height: 720px;
     }
 }
 @media (min-width: 1200px) {
@@ -139,10 +146,13 @@ article.graphic {
         width: 1170px;
         padding: 10px 14px;
     }
+    aside.action-nav-normal {
+        background: white url('../img/corner.png') no-repeat bottom -5px left 50px;
+        min-height: 720px;
+    }
 }
 
 div.container {
-    background: white;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -206,6 +216,16 @@ img.center {
     .no-more-tables td:before {
         content: attr(data-title);
     }
+}
+.table, .page-header {
+    background: white;
+}
+.hero-unit .page-header {
+    background: transparent;
+}
+.hero-unit {
+    padding: 5px 60px 5px 60px;
+    margin-bottom: 10px;
 }
 .table td {
     vertical-align: middle;

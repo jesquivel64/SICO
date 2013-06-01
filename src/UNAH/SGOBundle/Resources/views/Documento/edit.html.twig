@@ -2,29 +2,31 @@
 
 {% block content %}
 <section class="row">
-  <aside class="span3">
-    <nav class="sidebar-nav no-print">
-      <ul class="nav nav-tabs nav-stacked no-print">
-        <li>
-          <a href="{{ path('documento_documento', { 'tipo': entity.tipo.id }) }}">Regresar a  {{ entity.tipo.nombre }}s</a>
-        </li>
-        <li>
-          <a href="{{ path('documento_show', { 'id': entity.id }) }}">Regresar a {{ entity.tipo }} {% if entity.recibido %} {{ entity.emisor }} {% else %} Enviado {% endif %} {{ entity.numero }}</a>
-        </li>
-        <li>
-          <a href="{{ path('documento_search') }}">Buscar Documentos</a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-  <section class="span9">
+  <section class="span12">
     <hgroup class="page-header">
       <h1>Editar {{ entity.numero }} <small>{{ entity.tipo }} {% if not entity.recibido %}Enviado{% endif %}</small></h1>
     </hgroup>
   </section>
 </section>
 <section class="row">
-  <section class="span9 offset3">
+  <aside class="span3 no-print action-nav-normal">
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_documento', { 'tipo': entity.tipo.id }) }}"><i class="icon-home"></i> Regresar a  {{ entity.tipo.nombre }}s</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_show', { 'id': entity.id }) }}"><i class="icon-arrow-left"></i><span>{{ entity.tipo }} {% if entity.recibido %} {{ entity.emisor }} {% else %} Enviado {% endif %} {{ entity.numero }}</span></a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a title="Buscar Documentos" href="{{ path('documento_search') }}"> <i class="icon-search"></i> Buscar Documentos</a>
+      </section>
+    </div>
+  </aside>
+  <section class="span9 ">
     {% if entity.recibido %}
     <form action="{{ path('documento_update_recibido', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {% else %}
