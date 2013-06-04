@@ -51,7 +51,7 @@
     </div>
     <div class="row">
       <section class="span3 action-nav-button">
-        <a title="Buscar Documentos" href="{{ path('documento_search') }}"> <i class="icon-search"></i> Buscar Documentos</a>
+        <a href="{{ path('accion_new', { 'documento': entity.id }) }}"><i class="icon-code-fork"></i> Indicar Acci&oacute;n</a>
       </section>
     </div>
   </aside>
@@ -103,6 +103,32 @@
       <section class="span9">
         <table class="no-more-tables table table-striped table-bordered">
           <caption>
+            Acciones Tomadas
+          </caption>
+          <thead>
+            <tr>
+              <th>Acci&oacute;n</th>
+              <th>Descripci&oacute;n</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for accion in entity.acciones %}
+            <tr>
+              <td data-title="Accion">{{ accion.tipo.nombre }}</td>
+              <td data-title="Descripción">{{ accion.descripcion }}</td>
+              <td data-title="Fecha">{{ accion.fecha|date('d/m/Y H:i:s') }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <a class="btn btn-info" href="{{ path('documento_clasificar', { 'id': entity.id }) }}"><i class="icon-edit"></i> Requerir Nuevo Curso de Acci&oacute;n</a>
+      </section>
+    </section>
+    <section class="row">
+      <section class="span9">
+        <table class="no-more-tables table table-striped table-bordered">
+          <caption>
             Adjuntos
           </caption>
           <thead>
@@ -149,7 +175,6 @@
             {% endfor %}
           </tbody>
         </table>
-
       </section>
     </section>
     <section class="row">

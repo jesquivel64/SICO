@@ -9,10 +9,12 @@
 </section>
 <section class="row">
   <section class="span12">
+    <a class="btn btn-primary" href="{{ path('departamento_new') }}">Registrar un Emisor o Receptor</a>
     <table class="no-more-tables table table-striped table-bordered">
       <thead>
         <tr>
           <th>Nombre</th>
+          <th>Color</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -20,6 +22,7 @@
         {% for entity in entities %}
         <tr>
           <td><a href="{{ path('departamento_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
+          <td style="background-color: {{ entity.color }};">&nbsp;</td>
           <td>
             <a class="btn btn-success" href="{{ path('departamento_show', { 'id': entity.id }) }}">mostrar</a>
             <a class="btn btn-info" href="{{ path('departamento_edit', { 'id': entity.id }) }}">editar</a>
@@ -28,7 +31,6 @@
         {% endfor %}
       </tbody>
     </table>
-    <a class="btn btn-primary" href="{{ path('departamento_new') }}">Registrar un Emisor o Receptor</a>
   </section>
 </section>
 {% endblock %}

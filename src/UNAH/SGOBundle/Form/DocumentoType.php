@@ -34,14 +34,14 @@ class DocumentoType extends AbstractType
             ->add('receptores')
         ;
     }
-
+    
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'UNAH\SGOBundle\Entity\Documento'
         ));
     }
-
+    
     public function getName()
     {
         return 'unah_sgobundle_documentotype';

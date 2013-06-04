@@ -1,0 +1,30 @@
+accion:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Accion:index" }
+
+accion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Accion:show" }
+
+accion_new:
+    pattern:  /new/{documento}
+    defaults: { _controller: "UNAHSGOBundle:Accion:new" }
+
+accion_create:
+    pattern:  /create/{documento}
+    defaults: { _controller: "UNAHSGOBundle:Accion:create" }
+    requirements: { _method: post }
+
+accion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Accion:edit" }
+
+accion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Accion:update" }
+    requirements: { _method: post|put }
+
+accion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Accion:delete" }
+    requirements: { _method: post|delete }

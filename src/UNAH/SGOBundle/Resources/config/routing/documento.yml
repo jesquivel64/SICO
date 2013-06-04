@@ -19,6 +19,10 @@ documento_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "UNAHSGOBundle:Documento:edit" }
 
+documento_clasificar:
+    pattern:  /{id}/clasificar
+    defaults: { _controller: "UNAHSGOBundle:Documento:clasificar" }
+
 documento_update:
     pattern:  /{id}/update
     defaults: { _controller: "UNAHSGOBundle:Documento:update" }

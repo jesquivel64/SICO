@@ -15,7 +15,8 @@ class DocumentoRecibidoType extends AbstractType
                     'label' => 'Número',
                     'attr' => array('placeholder' => 'VRI-1234-2013')))
             ->add('descripcion', 'textarea', array(
-                    'label' => 'Descripción'))
+                    'label' => 'Descripción',
+                    'attr' => array('rows' => 10)))
             ->add('destinatario')
             ->add('fecha_de_emision', 'date', array(
                     'label' => 'Fecha de Emisión',
@@ -26,7 +27,7 @@ class DocumentoRecibidoType extends AbstractType
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('emisor', null, array('label' => 'Dependencia'))
+            ->add('emisor', null, array('label' => 'Emisor'))
             ->add('recibio')
             ->add('responder', null, array('label' => 'Requiere Respuesta'))
             ->add('tipoSolicitud', null, array('label' => 'Tipo de Solicitud'))

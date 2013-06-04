@@ -141,7 +141,7 @@ class Documento
      *      inverseJoinColumns={@ORM\JoinColumn(name="respuesta_id", referencedColumnName="id")}
      *      )
      */
-    private $respuestas;
+    protected $respuestas;
     
     /**
      * @ORM\ManyToOne(targetEntity="TipoSolicitud", inversedBy="documentos")
@@ -162,6 +162,18 @@ class Documento
      * @ORM\Column(name="gca", type="boolean")
      */
     protected $gca = FALSE;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="clasificar", type="boolean")
+     */
+    protected $clasificar = TRUE;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Accion", mappedBy="documento")
+     */
+    protected $acciones;
     
     /*
     public static function loadValidatorMetadata(ClassMetadata $metatadata)
@@ -581,16 +593,6 @@ class Documento
     {
         return $this->receptores;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->adjuntos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->receptores = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->respuestas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add respuestas
@@ -720,4 +722,72 @@ class Documento
         $interval = $this->fechaDeRespuesta->getTimestamp() - $this->fechaDeRecibido->getTimestamp();
         return $interval / 3600;
     }
+
+    /**
+     * Set clasificar
+     *
+     * @param boolean $clasificar
+     * @return Documento
+     */
+    public function setClasificar($clasificar)
+    {
+        $this->clasificar = $clasificar;
+
+        return $this;
+    }
+
+    /**
+     * Get clasificar
+     *
+     * @return boolean 
+     */
+    public function getClasificar()
+    {
+        return $this->clasificar;
+    }
+
+    /**
+     * Add acciones
+     *
+     * @param \UNAH\SGOBundle\Entity\Accion $acciones
+     * @return Documento
+     */
+    public function addAccione(\UNAH\SGOBundle\Entity\Accion $acciones)
+    {
+        $this->acciones[] = $acciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove acciones
+     *
+     * @param \UNAH\SGOBundle\Entity\Accion $acciones
+     */
+    public function removeAccione(\UNAH\SGOBundle\Entity\Accion $acciones)
+    {
+        $this->acciones->removeElement($acciones);
+    }
+
+    /**
+     * Get acciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAcciones()
+    {
+        return $this->acciones;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->adjuntos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->receptores = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->respuestas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->acciones = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

@@ -5,12 +5,12 @@ namespace UNAH\SGOBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoDepartamento
+ * TipoAccion
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class TipoDepartamento
+class TipoAccion
 {
     /**
      * @var integer
@@ -36,9 +36,14 @@ class TipoDepartamento
     private $color;
     
     /**
-     * @ORM\OneToMany(targetEntity="Departamento", mappedBy="tipoDepartamento")
+     * @ORM\OneToMany(targetEntity="Accion", mappedBy="tipo")
      */
-    protected $departamentos;
+    protected $acciones;
+    
+    public function __toString()
+    {
+        return $this->nombre;
+    }
     
     /**
      * Get id
@@ -54,7 +59,7 @@ class TipoDepartamento
      * Set nombre
      *
      * @param string $nombre
-     * @return TipoDepartamento
+     * @return TipoAccion
      */
     public function setNombre($nombre)
     {
@@ -77,7 +82,7 @@ class TipoDepartamento
      * Set color
      *
      * @param string $color
-     * @return TipoDepartamento
+     * @return TipoAccion
      */
     public function setColor($color)
     {
@@ -100,44 +105,39 @@ class TipoDepartamento
      */
     public function __construct()
     {
-        $this->departamentos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->acciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    public function __toString()
-    {
-        return $this->nombre;
-    }
-    
+
     /**
-     * Add departamentos
+     * Add acciones
      *
-     * @param \UNAH\SGOBundle\Entity\Departamento $departamentos
-     * @return TipoDepartamento
+     * @param \UNAH\SGOBundle\Entity\Accion $acciones
+     * @return TipoAccion
      */
-    public function addDepartamento(\UNAH\SGOBundle\Entity\Departamento $departamentos)
+    public function addAccione(\UNAH\SGOBundle\Entity\Accion $acciones)
     {
-        $this->departamentos[] = $departamentos;
+        $this->acciones[] = $acciones;
 
         return $this;
     }
 
     /**
-     * Remove departamentos
+     * Remove acciones
      *
-     * @param \UNAH\SGOBundle\Entity\Departamento $departamentos
+     * @param \UNAH\SGOBundle\Entity\Accion $acciones
      */
-    public function removeDepartamento(\UNAH\SGOBundle\Entity\Departamento $departamentos)
+    public function removeAccione(\UNAH\SGOBundle\Entity\Accion $acciones)
     {
-        $this->departamentos->removeElement($departamentos);
+        $this->acciones->removeElement($acciones);
     }
 
     /**
-     * Get departamentos
+     * Get acciones
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDepartamentos()
+    public function getAcciones()
     {
-        return $this->departamentos;
+        return $this->acciones;
     }
 }

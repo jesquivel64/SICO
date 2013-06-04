@@ -71,10 +71,23 @@ class DocumentoController extends Controller
         
         $enviados = $query->getResult();
         
+        $query = $qb->select('d')
+            ->where('d.tipo = :tipo')
+            ->andWhere('d.recibido = :recibido')
+            ->andWhere('d.clasificar = :clasificar')
+            ->setParameter('tipo', $tipo)
+            ->setParameter('recibido', TRUE)
+            ->setParameter('clasificar', TRUE)
+            ->orderBy('d.id', 'DESC')
+            ->getQuery();
+        
+        $clasificar = $query->getResult();
+        
         return $this->render('UNAHSGOBundle:Documento:tipo.html.twig', array(
             'tipo' => $tipo,
             'recibidos' => $recibidos,
             'enviados' => $enviados,
+            'clasificar' => $clasificar,
         ));
     }
     
@@ -179,17 +192,21 @@ class DocumentoController extends Controller
     
     public function enviandoAction($tipo)
     {
+        $entity = new Documento();
+        $entity->setEntregado($this->getUser()->getUsername());
         $em = $this->getDoctrine()->getManager();
         $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
-        $tipoDepartamentos = $em->getRepository('UNAHSGOBundle:TipoDepartamento')->findAll();
         
         if (!$tipo) {
             throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
         }
         
-        return $this->render('UNAHSGOBundle:Documento:preenviar.html.twig', array(
-            'tipo'   => $tipo,
-            'tipo_departamentos' => $tipoDepartamentos
+        $form = $this->createForm(new DocumentoEnviadoType(), $entity);
+        
+        return $this->render('UNAHSGOBundle:Documento:enviar.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'tipo' => $tipo,
         ));
     }
     
@@ -336,6 +353,20 @@ class DocumentoController extends Controller
         return $this->render('UNAHSGOBundle:Documento:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
+    }
+
+    public function clasificarAction($id)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $entity = $em->getRepository('UNAHSGOBundle:Documento')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Documento entity.');
+        }
+        $entity->setClasificar(TRUE);
+        return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getId())));
     }
     
     /**

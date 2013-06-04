@@ -19,11 +19,6 @@
         <a href="{{ path('documento_show', { 'id': entity.id }) }}"><i class="icon-arrow-left"></i><span> Regresar al {{ entity.tipo }} {{ entity.numero }}</span></a>
       </section>
     </div>
-    <div class="row">
-      <section class="span3 action-nav-button">
-        <a title="Buscar Documentos" href="{{ path('documento_search') }}"> <i class="icon-search"></i> Buscar Documentos</a>
-      </section>
-    </div>
   </aside>
   <section class="span9 ">
     {% if entity.recibido %}

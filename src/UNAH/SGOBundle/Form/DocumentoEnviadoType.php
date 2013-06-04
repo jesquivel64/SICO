@@ -16,7 +16,7 @@ class DocumentoEnviadoType extends AbstractType
                     'attr' => array('placeholder' => 'VRA-1234-2013')))
             ->add('descripcion', 'textarea', array(
                     'label' => 'Descripción',
-                    'attr' => array('rows' => 5)))
+                    'attr' => array('rows' => 10)))
             ->add("autor", null, array('label' => 'Remitente'))
             ->add('destinatario', null, array('required' => false))
             ->add('fecha_de_emision', 'date', array(
@@ -24,7 +24,9 @@ class DocumentoEnviadoType extends AbstractType
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('receptores', null, array('required' => false))
+            ->add('receptores', null, array(
+                    'required' => false,
+                    'attr' => array('size' => 20)))
             ->add("respuesta", null, array( "mapped" => false,
                     'required' => false, 'label' => 'En Respuesta a',
                     'attr' => array('placeholder' => 'VRI-1234-2013')))

@@ -1,0 +1,36 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row">
+  <section class="span12">
+    <hgroup class="page-header">
+      <h1>Especificar una Acci&oacute;n <small>{{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}</small></h1>
+    </hgroup>
+  </section>
+</section>
+<section class="row">
+  <aside class="span3 action-nav-normal">
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_documento', { 'tipo': documento.tipo.id }) }}"><i class="icon-home"></i> Regresar a  {{ documento.tipo }}s</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_show', { 'id': documento.id }) }}"><i class="icon-arrow-left"></i> Regresar a {{ documento.numero }}</a>
+      </section>
+    </div>
+  </aside>
+  <section class="span3">
+    <form action="{{ path('accion_create', { 'documento': documento.id }) }}" method="post" {{ form_enctype(form) }}>
+      <fieldset>
+        {{ form_widget(form) }}
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <i class="icon-save"></i> Guardar
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </section>
+</section>
+{% endblock %}

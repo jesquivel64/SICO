@@ -15,11 +15,6 @@
         <a href="{{ path('documento_documento', { 'tipo': tipo.id }) }}"><i class="icon-home"></i><span>Regresar a  {{ tipo.nombre }}s</span></a>
       </section>
     </div>
-    <div class="row">
-      <section class="span3 action-nav-button">
-        <a title="Buscar Documentos" href="{{ path('documento_search') }}"> <i class="icon-search"></i> <span>Buscar Documentos</span></a>
-      </section>
-    </div>
   </aside>
   <section class="span9">
     <form action="{{ path('documento_enviar', {'tipo' : tipo.id}) }}" method="post" {{ form_enctype(form) }}>
