@@ -1,5 +1,4 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
-
 {% block content %}
 <section class="row">
   <section class="span12">
@@ -17,7 +16,7 @@
     </div>
     <div class="row">
       <section class="span3 action-nav-button">
-        <a href="{{ path('documento_show', { 'id': entity.id }) }}"><i class="icon-arrow-left"></i><span>{{ entity.tipo }} {% if entity.recibido %} {{ entity.emisor }} {% else %} Enviado {% endif %} {{ entity.numero }}</span></a>
+        <a href="{{ path('documento_show', { 'id': entity.id }) }}"><i class="icon-arrow-left"></i><span> Regresar al {{ entity.tipo }} {{ entity.numero }}</span></a>
       </section>
     </div>
     <div class="row">

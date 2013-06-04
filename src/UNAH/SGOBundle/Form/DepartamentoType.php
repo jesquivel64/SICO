@@ -12,6 +12,7 @@ class DepartamentoType extends AbstractType
     {
         $builder
             ->add('nombre')
+            ->add('tipoDepartamento', null, array('label' => 'Tipo de Emisor o Receptor'))
             ->add('color', null, array('attr' => array('class' => 'colorpicker')))
         ;
     }

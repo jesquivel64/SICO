@@ -44,6 +44,13 @@ class Departamento
      * @ORM\ManyToMany(targetEntity="Documento", inversedBy="receptores")
      */
     private $documentosEnviados;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoDepartamento", inversedBy="departamentos")
+     * @ORM\JoinColumn(name="tipo_departamento_id", referencedColumnName="id")
+     */
+    protected $tipoDepartamento;
+    
     /**
      * Constructor
      */
@@ -211,5 +218,28 @@ class Departamento
     public function getColor()
     {
         return $this->color;
+    }
+
+    /**
+     * Set tipoDepartamento
+     *
+     * @param \UNAH\SGOBundle\Entity\TipoDepartamento $tipoDepartamento
+     * @return Departamento
+     */
+    public function setTipoDepartamento(\UNAH\SGOBundle\Entity\TipoDepartamento $tipoDepartamento = null)
+    {
+        $this->tipoDepartamento = $tipoDepartamento;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoDepartamento
+     *
+     * @return \UNAH\SGOBundle\Entity\TipoDepartamento 
+     */
+    public function getTipoDepartamento()
+    {
+        return $this->tipoDepartamento;
     }
 }

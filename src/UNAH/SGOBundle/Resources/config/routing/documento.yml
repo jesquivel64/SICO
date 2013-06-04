@@ -51,6 +51,10 @@ documento_recibiendo:
     pattern:  /recibiendo/{tipo}
     defaults: { _controller: "UNAHSGOBundle:Documento:recibiendo" }
 
+documento_recibiendo_tipo_departamento:
+    pattern:  /recibiendo/{tipoDocumento}/{tipoDepartamento}
+    defaults: { _controller: "UNAHSGOBundle:Documento:recibiendoDepartamento" }
+
 documento_recibir:
     pattern:  /recibir/{tipo}
     defaults: { _controller: "UNAHSGOBundle:Documento:recibir" }
@@ -59,6 +63,10 @@ documento_recibir:
 documento_enviando:
     pattern:  /enviando/{tipo}
     defaults: { _controller: "UNAHSGOBundle:Documento:enviando" }
+
+documento_enviando_tipo_departamento:
+    pattern:  /enviando/{tipoDocumento}/{tipoDepartamento}
+    defaults: { _controller: "UNAHSGOBundle:Documento:enviandoDepartamento" }
 
 documento_enviar:
     pattern:  /enviar/{tipo}

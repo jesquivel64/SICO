@@ -4,18 +4,17 @@
 <div class="row">
   <section class="span12">
     <div class="page-header">
-      <h1>Sistema Integrado de Correspondencia</h1>
+      <h1>Seleccionar Tipo de Receptor del {{ tipo }}</h1>
     </div>
   </section>
 </div>
 <div class="row">
   <div class="span10 offset2">
     <div class="row action-nav-normal">
-      {% for tipo in tipos %}
+      {% for tipo_departamento in tipo_departamentos %}
       <section class="span4 action-nav-button">
-        <a title="{{ tipo.nombre }}" href="{{ path('documento_documento', { 'tipo': tipo.id }) }}">
-          <img src="{{ asset('bundles/unahsgo/img/'~ tipo.imagen ~'.png') }}" alt="{{ tipo.plural }}" />
-          <span>{{ tipo.nombre }}</span>
+        <a title="{{ tipo.nombre }}" href="{{ path('documento_enviando_tipo_departamento', { 'tipoDocumento': tipo.id, 'tipoDepartamento': tipo_departamento.id }) }}">
+          <span>Enviar {{ tipo.nombre }} a {{ tipo_departamento.nombre }}</span>
         </a>
       </section>
       {% endfor %}

@@ -81,7 +81,7 @@
               <td data-title="Descripción">{{ entity.descripcion }}</td>
               <td data-title="Autor">{{ entity.autor }}</td>
               <td data-title="Número">{{ entity.destinatario }}</td>
-              <td data-title="Fecha de Envio">{{ entity.getFechaDeEnvio|date("d/m/Y") }}</td>
+              <td data-title="Fecha de Envio">{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
               <td data-title="Acciones" class="no-print">
                 <a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
                 <a class="btn btn-success btn-block" href="{{ path('documento_edit_enviado', { 'id': entity.id }) }}">Editar</a></td>

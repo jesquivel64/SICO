@@ -1,36 +1,32 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
-
 {% block content %}
 <section class="row">
-  <aside class="span3">
-    <nav class="sidebar-nav no-print">
-      <ul class="nav nav-tabs nav-stacked no-print">
-        <li>
-          <a href="{{ path('documento_documento', { 'tipo': entity.documento.tipo.id }) }}">Regresar a  {{ entity.documento.tipo.nombre }}s</a>
-        </li>
-        <li>
-          <a href="{{ path('documento_show', { 'id': entity.documento.id }) }}">Regresar a {{ entity.documento.tipo }} {% if entity.documento.recibido %} {{ entity.documento.emisor }} {% else %} Enviado {% endif %} {{ entity.documento.numero }}</a>
-        </li>
-        <li>
-          <a href="{{ path('documento_search') }}">Buscar Documentos</a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-  <section class="span9">
+  <section class="span12">
     <hgroup class="page-header">
-      <h1>Editar Seguimiento <small>{{ entity.documento.tipo }} {% if not entity.documento.recibido %}Enviado{% endif %} {{ entity.documento.numero }}</small></h1>
+      <h1>Editar Adjunto <small>{{ entity.documento.tipo }} {% if not entity.documento.recibido %}Enviado{% endif %} {{ entity.documento.numero }}</small></h1>
     </hgroup>
   </section>
 </section>
 <section class="row">
-  <section class="span9 offset3">
+  <aside class="span3 no-print action-nav-normal">
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_documento', { 'tipo': entity.documento.tipo.id }) }}"><i class="icon-home"></i> Regresar a  {{ entity.documento.tipo }}s</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_show', { 'id': entity.documento.id }) }}"><i class="icon-arrow-left"></i> Regresar a {{ entity.documento.numero }}</a>
+      </section>
+    </div>
+  </aside>
+  <section class="span3">
     <form action="{{ path('comentario_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
       <input type="hidden" name="_method" value="PUT" />
       {{ form_widget(edit_form) }}
       <p>
         <button class="btn btn-primary" type="submit">
-          Actualizar Seguimiento
+          <i class="icon-save"></i> Actualizar Seguimiento
         </button>
       </p>
     </form>
@@ -38,7 +34,7 @@
       <input type="hidden" name="_method" value="DELETE" />
       {{ form_widget(delete_form) }}
       <button class="btn btn-danger" type="submit">
-        Eliminar este Seguimiento
+        <i class="icon-trash"></i> Eliminar este Seguimiento
       </button>
     </form>
   </section>

@@ -1,11 +1,18 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
+<div class="row">
+  <section class="span12">
+    <section class="page-header">
+      <h1>Agregar un Emisor o Receptor</h1>
+    </section>
+  </section>
+</div>
 <section class="row">
   <aside class="span3">
     <nav class="sidebar-nav">
       <ul class="nav nav-tabs nav-stacked">
         <li>
-          <a href="{{ path('departamento') }}">Regresar a Dependencias</a>
+          <a href="{{ path('departamento') }}">Regresar a Emisores y Receptores</a>
         </li>
       </ul>
     </nav>
@@ -13,13 +20,10 @@
   <section class="span6">
     <form action="{{ path('departamento_create') }}" method="post" {{ form_enctype(form) }}>
       <fieldset>
-        <legend>
-          Agregar una Dependencia
-        </legend>
         {{ form_widget(form) }}
         <div class="form-actions">
           <button class="btn btn-primary" type="submit">
-            Create
+            <i class="icon-save"></i> Guardar
           </button>
         </div>
       </fieldset>

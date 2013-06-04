@@ -14,6 +14,7 @@ use UNAH\SGOBundle\Form\DocumentoType;
 use UNAH\SGOBundle\Form\DocumentoRecibidoType;
 use UNAH\SGOBundle\Form\DocumentoEnviadoType;
 use UNAH\SGOBundle\Form\DocumentoRespuestaType;
+use UNAH\SGOBundle\Form\TipoDocumentoEnviadoType;
 
 /**
  * Documento controller.
@@ -153,23 +154,42 @@ class DocumentoController extends Controller
         ));
     }
     
-    public function enviandoAction($tipo)
+    public function enviandoDepartamentoAction($tipoDocumento, $tipoDepartamento)
     {
+        $em = $this->getDoctrine()->getManager();
+        $tipoDocumento = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipoDocumento);
+        $tipoDepartamento = $em->getRepository('UNAHSGOBundle:TipoDepartamento')->find($tipoDepartamento);
+        
         $entity = new Documento();
         $entity->setEntregado($this->getUser()->getUsername());
+        
+        if (!$tipoDocumento) {
+            throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
+        }
+        
+        $form = $this->createForm(new TipoDocumentoEnviadoType($tipoDepartamento), $entity);
+        
+        return $this->render('UNAHSGOBundle:Documento:enviar.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'tipo'   => $tipoDocumento,
+            'tipoDepartamento' => $tipoDepartamento,
+        ));
+    }
+    
+    public function enviandoAction($tipo)
+    {
         $em = $this->getDoctrine()->getManager();
         $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
+        $tipoDepartamentos = $em->getRepository('UNAHSGOBundle:TipoDepartamento')->findAll();
         
         if (!$tipo) {
             throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
         }
         
-        $form = $this->createForm(new DocumentoEnviadoType(), $entity);
-        
-        return $this->render('UNAHSGOBundle:Documento:enviar.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+        return $this->render('UNAHSGOBundle:Documento:preenviar.html.twig', array(
             'tipo'   => $tipo,
+            'tipo_departamentos' => $tipoDepartamentos
         ));
     }
     

@@ -1,6 +1,13 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
 <section class="row">
+  <section class="span12">
+    <hgroup class="page-header">
+      <h1>{{ entity.nombre }} <small>Dependencia</small></h1>
+    </hgroup>
+  </section>
+</section>
+<section class="row">
   <aside class="span3">
     <nav class="sidebar-nav no-print">
       <ul class="nav nav-tabs nav-stacked">
@@ -13,24 +20,15 @@
       </ul>
     </nav>
   </aside>
-  <section class="span6">
-    <hgroup class="page-header">
-      <h1>{{ entity.nombre }} <small>Dependencia</small></h1>
-    </hgroup>
-  </section>
-</section>
-<section class="row">
-  <section class="span12">
+  <section class="span9">
     <table class="no-more-tables table table-striped table-bordered">
       <caption>Documentos Recibidos en la Vicerrectoria</caption>
       <thead>
         <tr>
-          <th class="no-print">Id</th>
           <th>Numero</th>
           <th>Emisor</th>
           <th>Descripcion</th>
           <th>Recibio</th>
-          <th>Estado</th>
           <th>Recepci&oacute;n</th>
           <th>Emisi&oacute;n</th>
           <th class="no-print">Acciones</th>
@@ -39,17 +37,15 @@
       <tbody>
         {% for documento in entity.documentos %}
         <tr>
-          <td class="no-print"><a href="{{ path('documento_show', { 'id': documento.id }) }}">{{ documento.id }}</a></td>
           <td>{{ documento.numero }}</td>
           <td>{{ documento.emisor }}</td>
           <td>{{ documento.descripcion }}</td>
           <td>{{ documento.recibio }}</td>
-          <td>{{ documento.estado }}</td>
           <td>{{ documento.getFechaDeRecibido|date("d/m/Y") }}</td>
           <td>{{ documento.getFechaDeEmision|date("d/m/Y") }}</td>
           <td class="no-print">
-            <a class="btn btn-primary" href="{{ path('documento_show', { 'id': documento.id }) }}">Mostrar</a>
-            <a class="btn btn-success" href="{{ path('documento_edit', { 'id': documento.id }) }}">Editar</a>
+            <a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': documento.id }) }}">Mostrar</a>
+            <a class="btn btn-success btn-block" href="{{ path('documento_edit', { 'id': documento.id }) }}">Editar</a>
           </td>
         </tr>
         {% endfor %}

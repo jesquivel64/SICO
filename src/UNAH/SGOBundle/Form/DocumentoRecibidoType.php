@@ -13,7 +13,7 @@ class DocumentoRecibidoType extends AbstractType
         $builder
             ->add('numero', null, array(
                     'label' => 'Número',
-                    'attr' => array('placeholder' => 'VRA-1234-2013')))
+                    'attr' => array('placeholder' => 'VRI-1234-2013')))
             ->add('descripcion', 'textarea', array(
                     'label' => 'Descripción'))
             ->add('destinatario')
