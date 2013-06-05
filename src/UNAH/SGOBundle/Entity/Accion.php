@@ -52,7 +52,7 @@ class Accion
      *
      * @ORM\Column(name="completada", type="boolean", nullable=true)
      */
-    protected $completada = TRUE;
+    protected $completada = FALSE;
 
     /**
      * Get id

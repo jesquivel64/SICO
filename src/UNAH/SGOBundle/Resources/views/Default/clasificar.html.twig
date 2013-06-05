@@ -1,0 +1,77 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row">
+  <section class="span12 page-header">
+    <h1>Documentos en Espera de Curso de Acci&oacute;n</h1>
+  </section>
+</section>
+{% for entity in documentos %}
+<div class="row">
+  <section class="span12">
+    <section class="page-header">
+      <h3>{{ entity.tipo }} {{ entity.numero }}</h3>
+    </section>
+  </section>
+</div>
+<div class="row">
+  <section class="span4">
+    <h4>Datos Generales</h4>
+    <ul>
+      <li>
+        Descripci&oacute;n: {{ entity.descripcion }}
+      </li>
+      <li>
+        Remitente: {{ entity.autor }}
+      </li>
+      <li>
+        Destinatario: {{ entity.destinatario }}
+      </li>
+      {% if not entity.recibido %}
+      <li>
+        Fecha de Emisi&oacute;n: {{ entity.fechaDeEmision|date('d/m/Y H:i:s') }}
+      </li>
+      {% endif %}
+      {% if entity.recibido %}
+      <li>
+        Fecha de Recibido: {{ entity.fechaDeRecibido|date('d/m/Y H:i:s') }}
+      </li>
+      {% endif %}
+      {% if entity.recibido %}
+      <li>
+        Emisor: {{ entity.emisor }}
+      </li>
+      {% endif %}
+      {% if not entity.recibido %}
+      <li>
+        Entregado: {{ entity.entregado }}
+      </li>
+      {% endif %}
+      {% if entity.recibido %}
+      <li>
+        Recibio: {{ entity.recibio }}
+      </li>
+      {% endif %}
+      <li>
+        Requiere Respuesta: {% if entity.responder %}S&iacute;{% else %}No{% endif %}
+      </li>
+    </ul>
+    {% for adjunto in entity.adjuntos %}
+    <a class="btn btn-info btn-block" href="../../../{{ adjunto.getWebPath() }}">Descargar Archivo Adjunto {{ adjunto.nombre }}</a>
+    <a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
+    <a class="btn btn btn-block" href="{{ path('accion_new', { 'documento': entity.id }) }}">Indicar Acci&oacute;n</a>
+    {% endfor %}
+  </section>
+  <section class="span4">
+    <h4>Bit&aacute;cora de Seguimiento</h4>
+    <ul>
+      {% for seguimiento in entity.comentarios %}
+      <li>
+        {{ seguimiento.comentario }} por {{ seguimiento.usuario }} el {{ seguimiento.fecha|date("d/m/Y H:i:s") }}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section class="span4"></section>
+</div>
+{% endfor %}
+{% endblock %}

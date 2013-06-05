@@ -14,7 +14,7 @@ class Adjunto
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Documento", inversedBy="adjuntos")
@@ -26,17 +26,17 @@ class Adjunto
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
-    public $nombre;
+    protected $nombre;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    public $path;
+    protected $path;
 	
 	/**
      * @Assert\File(maxSize="100M")
      */
-    public $file;
+    protected $file;
 	
     public function getAbsolutePath()
     {

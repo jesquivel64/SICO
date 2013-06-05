@@ -26,6 +26,33 @@ class DefaultController extends Controller
             'tipos' => $tipos,
         );
     }
+    
+    /**
+     * Lists all Oficio entities.
+     *
+     * @Route("/", name="oficio")
+     * @Method("GET")
+     * @Template()
+     */
+     public function clasificarAction()
+     {
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        
+        $query = $qb->select('d')
+            ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+            ->where('d.recibido = :recibido')
+            ->andWhere('d.clasificar = :clasificar')
+            ->setParameter('recibido', TRUE)
+            ->setParameter('clasificar', TRUE)
+            ->orderBy('d.id', 'DESC')
+            ->getQuery();
+         
+         $documentos = $query->getResult();
+         return array(
+            'documentos' => $documentos,
+         );
+     }
 	
 	private function createDateSearchForm()
 	{

@@ -51,6 +51,15 @@
     </div>
   </aside>
   <div class="span9">
+    {% for accion in entity.acciones %}
+      {% if not accion.completada %}
+        <div class="alert alert-block">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>¡Acci&oacute;n a Efectuar!</h4>
+          {{ accion.tipo }}: {{ accion.descripcion }}
+        </div>
+      {% endif %}
+    {% endfor %}
     <div class="row">
       <section class="span9">
         <ul>

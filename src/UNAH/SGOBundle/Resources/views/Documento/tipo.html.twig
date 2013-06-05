@@ -23,6 +23,14 @@
     </div>
   </aside>
   <section class="span9 full-print">
+    {% for entity in acciones %}
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Accion a Efectuar!</h4>
+      {{ entity.tipo }}: {{ entity.descripcion }} al {{ tipo }} {{ entity.documento.numero }} de {{ entity.documento.emisor }}
+      <a class="" href="{{ path('documento_show', { 'id': entity.documento.id }) }}">Mostrar</a>
+    </div>
+    {% endfor %}
     <div class="row">
       <section class="span9">
         <table class="no-more-tables table table-striped table-bordered">

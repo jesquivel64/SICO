@@ -38,6 +38,9 @@
               <a href="{{ path('documento_search') }}">Buscar Documentos</a>
             </li>
             <li>
+              <a href="{{ path('UNAHSGOBundle_clasificar') }}">Indicar Acciones</a>
+            <li>
+            <li>
               <a href="{{ path('departamento') }}">Emisores y Receptores</a>
             <li>
             <li>
@@ -51,6 +54,15 @@
   {% block heading %}{% endblock %}
 </header>
   <div class="container">
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="row">
+      <div class="span12">
+      <div class="alert alert-block">
+          {{ flashMessage }}
+      </div>
+    </div>
+    </div>
+    {% endfor %}
     {% block content %}{% endblock %}
     <footer>
     </footer>

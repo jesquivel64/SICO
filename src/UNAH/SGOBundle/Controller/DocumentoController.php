@@ -83,11 +83,25 @@ class DocumentoController extends Controller
         
         $clasificar = $query->getResult();
         
+        $qb2 = $em->createQueryBuilder();
+        
+        $query2 = $qb2->select('a','d')
+            ->from('UNAH\SGOBundle\Entity\Accion', 'a')
+            ->innerJoin('a.documento', 'd')
+            ->where('d.tipo = :tipo')
+            ->andWhere('a.completada = :completada')
+            ->setParameter('completada', FALSE)
+            ->setParameter('tipo', $tipo)
+            ->orderBy('a.id', 'DESC')
+            ->getQuery();
+        
+        $acciones = $query2->getResult();
+        
         return $this->render('UNAHSGOBundle:Documento:tipo.html.twig', array(
             'tipo' => $tipo,
             'recibidos' => $recibidos,
             'enviados' => $enviados,
-            'clasificar' => $clasificar,
+            'acciones' => $acciones,
         ));
     }
     
@@ -251,7 +265,6 @@ class DocumentoController extends Controller
                     $comentario->setFecha($entity->getFechaDeEmision());
                     $comentario->setComentario("Documento Respondido");
                     
-                    
                     // Actualizar Comentario anterior
                     $old = $documento->getComentarios()->last();
                     if($old){
@@ -273,6 +286,14 @@ class DocumentoController extends Controller
                     
                     $em->persist($comentario);
                     $em->persist($documento);
+                }
+                else {
+                    $this->get('session')->getFlashBag()->add('notice', '¡No se encontró el Documento a responder!');
+                    return $this->render('UNAHSGOBundle:Documento:enviar.html.twig', array(
+                        'entity' => $entity,
+                        'form'   => $form->createView(),
+                        'tipo'   => $tipo,
+                    ));
                 }
             }
             

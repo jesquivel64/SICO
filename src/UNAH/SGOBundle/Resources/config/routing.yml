@@ -6,6 +6,10 @@ UNAHSGOBundle_default:
     pattern:  /home
     defaults: { _controller: UNAHSGOBundle:Default:index }
 
+UNAHSGOBundle_clasificar:
+    pattern:  /clasificar
+    defaults: { _controller: UNAHSGOBundle:Default:clasificar }
+
 UNAHSGOBundle_departamento:
     resource: "@UNAHSGOBundle/Resources/config/routing/departamento.yml"
     prefix:   /departamento
