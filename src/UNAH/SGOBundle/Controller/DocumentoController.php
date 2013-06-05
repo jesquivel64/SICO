@@ -366,6 +366,8 @@ class DocumentoController extends Controller
             throw $this->createNotFoundException('Unable to find Documento entity.');
         }
         $entity->setClasificar(TRUE);
+        $em->persist($entity);
+        $em->flush();
         return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getId())));
     }
     

@@ -3,58 +3,8 @@
 <div class="row">
   <section class="span12">
     <hgroup class="page-header">
-      <h1>Sistema Integrado de Correspondencia <small>B&uacute;squeda</small></h1>
+      <h1>Documentos Recibidos <small>B&uacute;squeda</small></h1>
     </hgroup>
-  </section>
-</div>
-<div class="row">
-  <section class="span4">
-    <form action="{{ path('documento_search_date') }}" method="get" {{ form_enctype(date_form) }}>
-      <fieldset>
-        <legend>
-          Buscar por Fecha de Recibido
-        </legend>
-        <input type="hidden" name="_method" value="GET" />
-        {{ form_widget(date_form) }}
-      </fieldset>
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">
-          <i class="icon-search"></i> Buscar
-        </button>
-      </div>
-    </form>
-  </section>
-  <section class="span4">
-    <form action="{{ path('documento_search_emision') }}" method="get" {{ form_enctype(emision_form) }}>
-      <fieldset>
-        <legend>
-          Buscar por Fecha de Emision
-        </legend>
-        <input type="hidden" name="_method" value="GET" />
-        {{ form_widget(emision_form) }}
-      </fieldset>
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">
-          <i class="icon-search"></i> Buscar
-        </button>
-      </div>
-    </form>
-  </section>
-  <section class="span4">
-    <form action="{{ path('documento_search_depto_comentario') }}" method="get" {{ form_enctype(depto_form) }}>
-      <fieldset>
-        <legend>
-          Buscar por Dependencia y Descripci&oacute;n
-        </legend>
-        <input type="hidden" name="_method" value="GET" />
-        {{ form_widget(comentario_form) }}
-      </fieldset>
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">
-          <i class="icon-search"></i> Buscar
-        </button>
-      </div>
-    </form>
   </section>
 </div>
 <div class="row">
@@ -78,7 +28,7 @@
     <form action="{{ path('documento_search_depto') }}" method="get" {{ form_enctype(depto_form) }}>
       <fieldset>
         <legend>
-          Buscar Recibidos  por Dependencia
+          Buscar por Emisor y Tipo
         </legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(depto_form) }}
@@ -92,5 +42,62 @@
   </section>
 </div>
 <div class="row">
+  <section class="span4">
+    <form action="{{ path('documento_search_date') }}" method="get" {{ form_enctype(date_form) }}>
+      <fieldset>
+        <legend>
+          Buscar por Fecha de Recibido
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(date_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          <i class="icon-search"></i> Buscar
+        </button>
+      </div>
+    </form>
+  </section>
+  <section class="span4">
+    <form action="{{ path('documento_search_depto_comentario') }}" method="get" {{ form_enctype(depto_form) }}>
+      <fieldset>
+        <legend>
+          Buscar por Emisor, Descripci&oacute;n y Tipo
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(comentario_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          <i class="icon-search"></i> Buscar
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+<div class="row">
+  <div class="span12">
+    <section class="page-header">
+      <h1>Documentos Enviados <small>B&uacute;squeda</small></h1>
+    </section>
+  </div>
+</div>
+<div class="row">
+  <section class="span4">
+    <form action="{{ path('documento_search_emision') }}" method="get" {{ form_enctype(emision_form) }}>
+      <fieldset>
+        <legend>
+          Buscar por Fecha de Emision
+        </legend>
+        <input type="hidden" name="_method" value="GET" />
+        {{ form_widget(emision_form) }}
+      </fieldset>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          <i class="icon-search"></i> Buscar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>
 {% endblock %}

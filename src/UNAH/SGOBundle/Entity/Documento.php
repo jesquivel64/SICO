@@ -175,17 +175,6 @@ class Documento
      */
     protected $acciones;
     
-    /*
-    public static function loadValidatorMetadata(ClassMetadata $metatadata)
-    {
-        $metatadata->addPropertyConstraint('numero', new Assert\Regex(array(
-            'pattern' => '((?:[a-z][a-z]+))(-)(\\d+)(-)((?:(?:[1]{1}\\d{1}\\d{1}\\d{1})|(?:[2]{1}\\d{3})))(?![\\d])',
-            'match' => true,
-            'message' => 'El número del Documento no tiene el formato correcto'
-        )));
-    }
-    */
-    
     /**
      * Get id
      *

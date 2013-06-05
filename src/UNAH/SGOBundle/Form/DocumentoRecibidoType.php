@@ -11,13 +11,10 @@ class DocumentoRecibidoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('emisor', null, array('label' => 'Emisor'))
             ->add('numero', null, array(
                     'label' => 'Número',
                     'attr' => array('placeholder' => 'VRI-1234-2013')))
-            ->add('descripcion', 'textarea', array(
-                    'label' => 'Descripción',
-                    'attr' => array('rows' => 10)))
-            ->add('destinatario')
             ->add('fecha_de_emision', 'date', array(
                     'label' => 'Fecha de Emisión',
                     'widget' => 'single_text',
@@ -27,8 +24,12 @@ class DocumentoRecibidoType extends AbstractType
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
-            ->add('emisor', null, array('label' => 'Emisor'))
-            ->add('recibio')
+            ->add('recibio', null, array('label' => 'Recibido por'))
+            ->add('destinatario')
+            ->add('descripcion', 'textarea', array(
+                    'label' => 'Descripción',
+                    'attr' => array('rows' => 10)))
+            ->add("autor", null, array('label' => 'Remitente'))
             ->add('responder', null, array('label' => 'Requiere Respuesta'))
             ->add('tipoSolicitud', null, array('label' => 'Tipo de Solicitud'))
         ;

@@ -36,22 +36,17 @@
     </div>
     <div class="row">
       <section class="span3 action-nav-button">
-        <a href="{{ path('documento_enviar_cga', { 'id': entity.id }) }}"><i class="icon-group"></i> Enviar a la CGA</a>
-      </section>
-    </div>
-    <div class="row">
-      <section class="span3 action-nav-button">
-        <a href="{{ path('documento_responder', { 'documento': entity.id }) }}"><i class="icon-reply"></i> Responder</a>
-      </section>
-    </div>
-    <div class="row">
-      <section class="span3 action-nav-button">
         <a href="{{ path('comentario_new', { 'documento': entity.id }) }}"><i class="icon-pencil"></i> Registrar Seguimiento</a>
       </section>
     </div>
     <div class="row">
       <section class="span3 action-nav-button">
         <a href="{{ path('accion_new', { 'documento': entity.id }) }}"><i class="icon-code-fork"></i> Indicar Acci&oacute;n</a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_responder', { 'documento': entity.id }) }}"><i class="icon-reply"></i> Responder</a>
       </section>
     </div>
   </aside>
@@ -97,59 +92,11 @@
             Requiere Respuesta: {% if entity.responder %}S&iacute;{% else %}No{% endif %}
           </li>
         </ul>
+          {% for adjunto in entity.adjuntos %}
+            <a class="btn btn-info" href="../../../{{ adjunto.getWebPath() }}">Descargar Archivo Adjunto {{ adjunto.nombre }}</a>
+          {% endfor %}
       </section>
     </div>
-    <section class="row">
-      <section class="span9">
-        <table class="no-more-tables table table-striped table-bordered">
-          <caption>
-            Acciones Tomadas
-          </caption>
-          <thead>
-            <tr>
-              <th>Acci&oacute;n</th>
-              <th>Descripci&oacute;n</th>
-              <th>Fecha</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for accion in entity.acciones %}
-            <tr>
-              <td data-title="Accion">{{ accion.tipo.nombre }}</td>
-              <td data-title="Descripción">{{ accion.descripcion }}</td>
-              <td data-title="Fecha">{{ accion.fecha|date('d/m/Y H:i:s') }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <a class="btn btn-info" href="{{ path('documento_clasificar', { 'id': entity.id }) }}"><i class="icon-edit"></i> Requerir Nuevo Curso de Acci&oacute;n</a>
-      </section>
-    </section>
-    <section class="row">
-      <section class="span9">
-        <table class="no-more-tables table table-striped table-bordered">
-          <caption>
-            Adjuntos
-          </caption>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Archivo</th>
-              <th class="no-print">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for adjunto in entity.adjuntos %}
-            <tr>
-              <td data-title="Nombre">{{ adjunto.nombre }}</td>
-              <td data-title="Archivo"><a href="../../../{{ adjunto.getWebPath() }}">{{ adjunto.path }}</a></td>
-              <td data-title="Acciones" class="no-print"><a class="btn btn-success btn-block" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}">Editar</a></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </section>
-    </section>
     <section class="row">
       <section class="span9">
         <table class="no-more-tables table table-striped table-bordered">
@@ -170,7 +117,11 @@
               <td data-title="Descripción">{{ seguimiento.comentario }}</td>
               <td data-title="Usuario">{{ seguimiento.usuario }}</td>
               <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y H:i:s") }}</td>
-              <td data-title="Acciones" class="no-print"><a class="btn btn-success btn-block" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">Editar</a></td>
+              <td data-title="Acciones" class="no-print">
+                {% if seguimiento.editable %}
+                <a class="btn btn-success btn-block" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">Editar</a>
+                {% endif %}
+                </td>
             </tr>
             {% endfor %}
           </tbody>

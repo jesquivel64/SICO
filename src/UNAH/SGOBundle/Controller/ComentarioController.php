@@ -54,6 +54,11 @@ class ComentarioController extends Controller
                 $old->setFinalizado($entity->getFecha());
                 $em->persist($old);
             }
+            $curso = $form->getData('curso');
+            
+            if($curso){
+                $documento->setClasificar(TRUE);
+            }
             
             $em->persist($documento);
 			$em->persist($entity);
@@ -86,7 +91,7 @@ class ComentarioController extends Controller
 		$entity->setDocumento($documento);
         $entity->setUsuario($this->getUser()->getUsername());
 		
-        $form   = $this->createForm(new ComentarioType(), $entity);
+        $form = $this->createForm(new ComentarioType(), $entity);
 		
         return $this->render('UNAHSGOBundle:Comentario:new.html.twig', array(
             'entity' => $entity,

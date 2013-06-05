@@ -46,6 +46,13 @@ class Accion
      * @ORM\Column(name="fecha", type="datetimetz")
      */
     private $fecha;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="completada", type="boolean", nullable=true)
+     */
+    protected $completada = TRUE;
 
     /**
      * Get id
@@ -147,5 +154,28 @@ class Accion
     public function getDocumento()
     {
         return $this->documento;
+    }
+
+    /**
+     * Set completada
+     *
+     * @param boolean $completada
+     * @return Accion
+     */
+    public function setCompletada($completada)
+    {
+        $this->completada = $completada;
+
+        return $this;
+    }
+
+    /**
+     * Get completada
+     *
+     * @return boolean 
+     */
+    public function getCompletada()
+    {
+        return $this->completada;
     }
 }

@@ -19,6 +19,12 @@
         <a href="{{ path('documento_show', { 'id': documento.id }) }}"><i class="icon-arrow-left"></i> Regresar a {{ documento.numero }}</a>
       </section>
     </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <!-- <a href="{{ path('documento_enviar_cga', { 'id': entity.documento.id }) }}">-->
+        <a href=#"" onclick="alert('En Construcción')"><i class="icon-group"></i> Enviar a la CGA</a>
+      </section>
+    </div>
   </aside>
   <section class="span3">
     <form action="{{ path('comentario_create', { 'documento': documento.id }) }}" method="post" {{ form_enctype(form) }}>

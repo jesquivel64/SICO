@@ -15,6 +15,11 @@ class ComentarioType extends AbstractType
                     'label' => 'Descripción',
                     'attr' => array('rows' => 10)))
 			->add('usuario')
+            ->add('curso', 'checkbox', array(
+                    'property_path' => false,
+                    'label' => 'Se requiere nuevo curso de accion',
+                    'required'  => false
+                    ))
         ;
     }
 

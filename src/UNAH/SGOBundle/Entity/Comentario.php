@@ -61,6 +61,13 @@ class Comentario
      */
     private $tiempo;
     
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="editable", type="boolean", nullable=true)
+     */
+    protected $editable = TRUE;
+    
     public function __construct()
     {
         $this->fecha = new \DateTime();
@@ -210,5 +217,28 @@ class Comentario
     public function getTiempo()
     {
         return $this->tiempo;
+    }
+
+    /**
+     * Set editable
+     *
+     * @param boolean $editable
+     * @return Comentario
+     */
+    public function setEditable($editable)
+    {
+        $this->editable = $editable;
+
+        return $this;
+    }
+
+    /**
+     * Get editable
+     *
+     * @return boolean 
+     */
+    public function getEditable()
+    {
+        return $this->editable;
     }
 }

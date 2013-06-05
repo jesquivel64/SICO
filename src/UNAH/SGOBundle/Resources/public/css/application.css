@@ -14,7 +14,14 @@
 }
 .action-nav-normal .action-nav-button a {
     -moz-box-sizing: border-box;
-    background: -moz-linear-gradient(center top , #FAFAFA, #ECECEC) repeat scroll 0 0 /100% auto #ECECEC;
+    background: #fafafa; /* Old browsers */
+background: -moz-linear-gradient(top, #fafafa 0%, #ececec 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #fafafa 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #fafafa 0%,#ececec 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #fafafa 0%,#ececec 100%); /* IE10+ */
+background: linear-gradient(to bottom, #fafafa 0%,#ececec 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#ececec',GradientType=0 ); /* IE6-9 */
     border: 1px solid #D5D5D5;
     border-radius: 4px 4px 4px 4px;
     box-shadow: 0 0 0 1px #FAFAFA inset, 0 1px 1px 0 #DDDDDD;
@@ -136,19 +143,11 @@ article.graphic {
         width: 724px;
         padding: 10px 14px;
     }
-    aside.action-nav-normal {
-        background: white url('../img/corner.png') no-repeat bottom -5px left 10px;
-        min-height: 720px;
-    }
 }
 @media (min-width: 1200px) {
     .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
         width: 1170px;
         padding: 10px 14px;
-    }
-    aside.action-nav-normal {
-        background: white url('../img/corner.png') no-repeat bottom -5px left 50px;
-        min-height: 720px;
     }
 }
 

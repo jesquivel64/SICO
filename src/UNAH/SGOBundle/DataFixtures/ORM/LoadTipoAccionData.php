@@ -20,7 +20,7 @@ class LoadTipoAccionData extends AbstractFixture implements OrderedFixtureInterf
         $tipos = array(
             'Archivado',
             'Trasladar a para emitir Dictamen',
-            'Trasladar a para emiitir Resolución',
+            'Trasladar a para emitir Resolución',
             'Programar Reunión, Cita, Taller o Evento',
             'Elaborar Oficio de Respuesta',
         );

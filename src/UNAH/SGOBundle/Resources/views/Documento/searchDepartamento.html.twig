@@ -41,22 +41,4 @@
     </table>
   </section>
 </div>
-<div class="row">
-  <section class="span6">
-    <form class="no-print" action="{{ path('documento_search_emision') }}" method="get" {{ form_enctype(depto_form) }}>
-      <fieldset>
-        <legend>
-          Buscar por Fecha de Recibido
-        </legend>
-        <input type="hidden" name="_method" value="GET" />
-        {{ form_widget(depto_form) }}
-      </fieldset>
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">
-          Buscar
-        </button>
-      </div>
-    </form>
-  </section>
-</div>
 {% endblock %}

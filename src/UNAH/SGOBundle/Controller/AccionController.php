@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use UNAH\SGOBundle\Entity\Accion;
 use UNAH\SGOBundle\Form\AccionType;
+use UNAH\SGOBundle\Entity\Comentario;
 
 /**
  * Accion controller.
@@ -43,11 +44,24 @@ class AccionController extends Controller
         $documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
         
         if ($form->isValid()) {
+            
             $entity->setDocumento($documento);
             $em->persist($entity);
+            
+            $comentario = new Comentario();
+            $comentario->setUsuario($this->getUser()->getUsername());
+            $comentario->setFecha($entity->getFecha());
+            $comentario->setComentario($entity->getTipo()->getNombre().": ".$entity->getDescripcion());
+            $comentario->setDocumento($documento);
+            $comentario->setEditable(FALSE);
+            $em->persist($comentario);
+            
+            $documento->addComentario($comentario);
             $documento->addAccione($entity);
             $documento->setClasificar(FALSE);
+            
             $em->persist($documento);
+            
             $em->flush();
             
             return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getDocumento()->getId())));
