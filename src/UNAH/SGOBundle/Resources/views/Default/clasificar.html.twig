@@ -9,69 +9,137 @@
 <div class="row">
   <section class="span12">
     <section class="page-header">
-      <h3>{{ entity.tipo }} {{ entity.numero }}</h3>
+      <h3>{{ entity.tipo }} {{ entity.numero }} 
+    <a class="btn btn-warning pull-right" href="{{ path('accion_new', { 'documento': entity.id }) }}">Indicar Acci&oacute;n</a></h3>
     </section>
   </section>
 </div>
 <div class="row">
-  <section class="span4">
-    <h4>Datos Generales</h4>
-    <ul>
-      <li>
-        Descripci&oacute;n: {{ entity.descripcion }}
-      </li>
-      <li>
-        Remitente: {{ entity.autor }}
-      </li>
-      <li>
-        Destinatario: {{ entity.destinatario }}
-      </li>
-      {% if not entity.recibido %}
-      <li>
-        Fecha de Emisi&oacute;n: {{ entity.fechaDeEmision|date('d/m/Y H:i:s') }}
-      </li>
-      {% endif %}
-      {% if entity.recibido %}
-      <li>
-        Fecha de Recibido: {{ entity.fechaDeRecibido|date('d/m/Y H:i:s') }}
-      </li>
-      {% endif %}
-      {% if entity.recibido %}
-      <li>
-        Emisor: {{ entity.emisor }}
-      </li>
-      {% endif %}
-      {% if not entity.recibido %}
-      <li>
-        Entregado: {{ entity.entregado }}
-      </li>
-      {% endif %}
-      {% if entity.recibido %}
-      <li>
-        Recibio: {{ entity.recibio }}
-      </li>
-      {% endif %}
-      <li>
-        Requiere Respuesta: {% if entity.responder %}S&iacute;{% else %}No{% endif %}
-      </li>
-    </ul>
-    {% for adjunto in entity.adjuntos %}
-    <a class="btn btn-info btn-block" href="../../../{{ adjunto.getWebPath() }}">Descargar Archivo Adjunto {{ adjunto.nombre }}</a>
-    <a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
-    <a class="btn btn btn-block" href="{{ path('accion_new', { 'documento': entity.id }) }}">Indicar Acci&oacute;n</a>
-    {% endfor %}
+  <section class="span12">
+    <div class="tabbable">
+      <!-- Only required for left/right tabs -->
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#tab1-{{ entity.id }}" data-toggle="tab">Informaci&oacute;n General</a>
+        </li>
+        <li>
+          <a href="#tab2-{{ entity.id }}" data-toggle="tab">Seguimiento</a>
+        </li>
+        <li>
+          <a href="#tab3-{{ entity.id }}" data-toggle="tab">Documentos Relacionados</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab1-{{ entity.id }}">
+          <br />
+          <ul>
+            <li>
+              Descripci&oacute;n: {{ entity.descripcion }}
+            </li>
+            <li>
+              Remitente: {{ entity.autor }}
+            </li>
+            <li>
+              Destinatario: {{ entity.destinatario }}
+            </li>
+            {% if not entity.recibido %}
+            <li>
+              Fecha de Emisi&oacute;n: {{ entity.fechaDeEmision|date('d/m/Y H:i:s') }}
+            </li>
+            {% endif %}
+            {% if entity.recibido %}
+            <li>
+              Fecha de Recibido: {{ entity.fechaDeRecibido|date('d/m/Y H:i:s') }}
+            </li>
+            {% endif %}
+            {% if entity.recibido %}
+            <li>
+              Emisor: {{ entity.emisor }}
+            </li>
+            {% endif %}
+            {% if not entity.recibido %}
+            <li>
+              Entregado: {{ entity.entregado }}
+            </li>
+            {% endif %}
+            {% if entity.recibido %}
+            <li>
+              Recibio: {{ entity.recibio }}
+            </li>
+            {% endif %}
+            <li>
+              Requiere Respuesta: {% if entity.responder %}S&iacute;{% else %}No{% endif %}
+            </li>
+          </ul>
+          <div class="row">
+            {% for adjunto in entity.adjuntos %}
+            <section class="span3">
+              <a  class="btn btn-info btn-block" href="../{{ adjunto.getWebPath() }}">Descargar {{ adjunto.nombre }}</a>
+            </section>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="tab-pane" id="tab2-{{ entity.id }}">
+          <table class="no-more-tables table table-striped table-bordered">
+            <caption>
+              Seguimiento
+            </caption>
+            <thead>
+              <tr>
+                <th>Descripci&oacute;n</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th class="no-print">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for seguimiento in entity.comentarios %}
+              <tr>
+                <td data-title="Descripción">{{ seguimiento.comentario }}</td>
+                <td data-title="Usuario">{{ seguimiento.usuario }}</td>
+                <td data-title="Fecha">{{ seguimiento.fecha|date("d/m/Y H:i:s") }}</td>
+                <td data-title="Acciones" class="no-print"> {% if seguimiento.editable %} <a class="btn btn-success btn-block" href="{{ path('comentario_edit', { 'id': seguimiento.id }) }}">Editar</a> {% endif %} </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane" id="tab3-{{ entity.id }}">
+          <table class="no-more-tables table table-striped table-bordered">
+            <caption>
+              Documentos Relacionados
+            </caption>
+            <thead>
+              <tr>
+                <th>N&uacute;mero</th>
+                <th>Tipo</th>
+                <th>Descripci&oacute;n</th>
+                <th>Recibi&oacute;</th>
+                <th>Enviado</th>
+                <th>Recepci&oacute;n</th>
+                <th>Emisi&oacute;n</th>
+                <th class="no-print">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for documento in entity.respuestas %}
+              <tr>
+                <td data-title="Número">{{ documento.numero }}</td>
+                <td data-title="Tipo de Documento">{{ documento.tipo }}</td>
+                <td data-title="Descripción">{{ documento.descripcion }}</td>
+                <td data-title="Recibio">{{ documento.recibio }}</td>
+                <td  data-title="Fecha de Envio">{{ documento.getFechaDeEnvio|date("d/m/Y") }}</td>
+                <td data-title="Fecha de Recibido">{{ documento.getFechaDeRecibido|date("d/m/Y") }}</td>
+                <td data-title="Fecha de Emisión">{{ documento.getFechaDeEmision|date("d/m/Y") }}</td>
+                <td data-title="Acciones" class="no-print"><a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': documento.id }) }}">Mostrar</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </section>
-  <section class="span4">
-    <h4>Bit&aacute;cora de Seguimiento</h4>
-    <ul>
-      {% for seguimiento in entity.comentarios %}
-      <li>
-        {{ seguimiento.comentario }} por {{ seguimiento.usuario }} el {{ seguimiento.fecha|date("d/m/Y H:i:s") }}
-      </li>
-      {% endfor %}
-    </ul>
-  </section>
-  <section class="span4"></section>
 </div>
 {% endfor %}
 {% endblock %}

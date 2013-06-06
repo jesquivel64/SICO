@@ -148,14 +148,10 @@
   data = [
     {
       value: {{ respondidos }},
-      label: 'Respondidos: ' + {{ respondidos }},
-      labelColor : 'white',
       color: '#3C13AF'
     },
     {
       value: {{ noRespondidos }},
-      label: 'No Respondidos: ' + {{ noRespondidos }},
-      labelColor : 'white',
       color: '#FFD600'
     }
   ]
@@ -166,8 +162,6 @@
     {% for dato in emisor %}
     {
       value: {{ dato.cantidad }},
-      label: '{{ dato.nombre }}',
-      labelColor : 'white',
       color: '{{ dato.color }}'
     },
     {% endfor %}
@@ -182,8 +176,6 @@
     {% for dato in tipo %}
     {
       value: {{ dato.cantidad }},
-      label: '{{ dato.nombre }}',
-      labelColor : 'white',
       color: '{{ dato.color }}'
     },
     {% endfor %}
@@ -198,8 +190,6 @@
     {% for dato in tipificacion %}
     {
       value: {{ dato.cantidad }},
-      label: '{{ dato.nombre }}',
-      labelColor : 'white',
       color: '{{ dato.color }}'
     },
     {% endfor %}

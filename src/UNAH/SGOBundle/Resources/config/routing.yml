@@ -37,3 +37,7 @@ UNAHSGOBundle_tiposolicitud:
 UNAHSGOBundle_accion:
     resource: "@UNAHSGOBundle/Resources/config/routing/accion.yml"
     prefix:   /accion
+
+UNAHSGOBundle_tipoaccion:
+    resource: "@UNAHSGOBundle/Resources/config/routing/tipoaccion.yml"
+    prefix:   /tipoaccion

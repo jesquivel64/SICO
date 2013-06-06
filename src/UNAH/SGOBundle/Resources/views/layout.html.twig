@@ -53,20 +53,19 @@
   </nav>
   {% block heading %}{% endblock %}
 </header>
-  <div class="container">
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-    <div class="row">
-      <div class="span12">
+<div class="container">
+  {% for flashMessage in app.session.flashbag.get('notice') %}
+  <div class="row">
+    <div class="span12">
       <div class="alert alert-block">
-          {{ flashMessage }}
+        {{ flashMessage }}
       </div>
     </div>
-    </div>
-    {% endfor %}
-    {% block content %}{% endblock %}
-    <footer>
-    </footer>
   </div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+  <footer></footer>
+</div>
 <script src="{{ asset('bundles/unahsgo/js/jquery.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/unahsgo/js/jquery-ui.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/unahsgo/js/bootstrap.js') }}" type="text/javascript"></script>
@@ -75,11 +74,34 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('input, textarea').placeholder();
+        var boton = $('<a class="btn" href="#">Nuevo Tipo de Acción</a>');
+        boton.click(function() {
+            $('#dialog-tipo-accion').dialog('open');
+        });
+        $(boton).insertAfter("#unah_sgobundle_acciontype_tipo");
+        
+        var boton2 = $('<a class="btn" href="#">Nuevo Tipo de Solicitud</a>');
+        boton2.click(function() {
+            $('#dialog-tipo-solicitud').dialog('open');
+        });
+        $(boton2).insertAfter("#unah_sgobundle_documentorecibidotype_tipoSolicitud");
+        
+        var boton3 = $('<a class="btn" href="#">Nuevo Emisor o Receptor</a>');
+        boton3.click(function() {
+            $('#dialog-departamento').dialog('open');
+        });
+        
+        $(boton3).insertAfter("#unah_sgobundle_documentorecibidotype_emisor");
+        $(boton3).insertBefore("#unah_sgobundle_documentotype_receptores");
+        
         $('.datepicker').datepicker({
             dateFormat : 'dd/mm/yy'
         });
         $('.colorpicker').colorpicker();
-    });
+        $('.form-dialog').dialog({
+            autoOpen : false
+        });
+    }); 
 </script>
 {% block javascript %}{% endblock %}
 {% endblock %}

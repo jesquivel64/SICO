@@ -14,10 +14,36 @@
       </section>
     </div>
   </aside>
-  <section class="span9">
+  <section class="span3">
     <form action="{{ path('documento_recibir', {'tipo' : tipo.id}) }}" method="post" {{ form_enctype(form) }}>
       <fieldset>
       {{ form_widget(form) }}
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          <i class="icon-save"></i> Guardar {{ tipo }}
+        </button>
+      </div>
+      </fieldset>
+    </form>
+  </section>
+  <section class="span3 form-dialog" id="dialog-departamento">
+    <form class="ajax-form" action="{{ path('departamento_create') }}" method="post" {{ form_enctype(departamento_form) }}>
+      <fieldset>
+        <legend>Agregar Emisor o Receptor</legend>
+      {{ form_widget(departamento_form) }}
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">
+          <i class="icon-save"></i> Guardar {{ tipo }}
+        </button>
+      </div>
+      </fieldset>
+    </form>
+  </section>
+  <section class="span3 form-dialog" id="dialog-tipo-solicitud">
+    <form class="ajax-form" action="{{ path('departamento_create') }}" method="post" {{ form_enctype(tipo_solicitud_form) }}>
+      <fieldset>
+        <legend>Agregar Tipo de Solicitud</legend>
+      {{ form_widget(tipo_solicitud_form) }}
       <div class="form-actions">
         <button class="btn btn-primary" type="submit">
           <i class="icon-save"></i> Guardar {{ tipo }}

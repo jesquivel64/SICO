@@ -6,7 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use UNAH\SGOBundle\Entity\Accion;
+use UNAH\SGOBundle\Entity\TipoAccion;
 use UNAH\SGOBundle\Form\AccionType;
+use UNAH\SGOBundle\Form\TipoAccionType;
 use UNAH\SGOBundle\Entity\Comentario;
 
 /**
@@ -40,6 +42,8 @@ class AccionController extends Controller
         $form = $this->createForm(new AccionType(), $entity);
         $form->bind($request);
         $em = $this->getDoctrine()->getManager();
+        $tipoAccion = new TipoAccion();
+        $tipo_accion_form = $this->createForm(new TipoAccionType(), $tipoAccion);
         
         $documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
         
@@ -64,12 +68,14 @@ class AccionController extends Controller
             
             $em->flush();
             
-            return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getDocumento()->getId())));
+            $this->get('session')->getFlashBag()->add('notice', '¡Se ha indicado una nueva acción!');
+            return $this->redirect($this->generateUrl('UNAHSGOBundle_clasificar'));
         }
         
         return $this->render('UNAHSGOBundle:Accion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'tipo_accion_form'   => $tipo_accion_form->createView(),
             'documento' => $documento,
         ));
     }
@@ -82,6 +88,8 @@ class AccionController extends Controller
     {
         $entity  = new Accion();
         $em = $this->getDoctrine()->getManager();
+        $tipoAccion = new TipoAccion();
+        $tipo_accion_form = $this->createForm(new TipoAccionType(), $tipoAccion);
         
         $documento = $em->getRepository('UNAHSGOBundle:Documento')->find($documento);
         
@@ -95,6 +103,7 @@ class AccionController extends Controller
         return $this->render('UNAHSGOBundle:Accion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'tipo_accion_form'   => $tipo_accion_form->createView(),
             'documento' => $documento,
         ));
     }
@@ -118,6 +127,27 @@ class AccionController extends Controller
         return $this->render('UNAHSGOBundle:Accion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
+    }
+
+    /**
+     * Finds and displays a Accion entity.
+     *
+     */
+    public function completarAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('UNAHSGOBundle:Accion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Accion entity.');
+        }
+        
+        $entity->setCompletada(TRUE);
+        $em->persist($entity);
+        $em->flush();
+        
+        return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getDocumento()->getId())));
     }
 
     /**

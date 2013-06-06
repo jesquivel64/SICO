@@ -10,9 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use UNAH\SGOBundle\Entity\Documento;
 use UNAH\SGOBundle\Entity\Comentario;
+use UNAH\SGOBundle\Entity\TipoSolicitud;
+use UNAH\SGOBundle\Entity\Departamento;
 use UNAH\SGOBundle\Form\DocumentoType;
-use UNAH\SGOBundle\Form\DocumentoRecibidoType;
+use UNAH\SGOBundle\Form\DepartamentoType;
+use UNAH\SGOBundle\Form\TipoSolicitudType;
 use UNAH\SGOBundle\Form\DocumentoEnviadoType;
+use UNAH\SGOBundle\Form\DocumentoRecibidoType;
 use UNAH\SGOBundle\Form\DocumentoRespuestaType;
 use UNAH\SGOBundle\Form\TipoDocumentoEnviadoType;
 
@@ -135,8 +139,8 @@ class DocumentoController extends Controller
     {
         $entity = new Documento();
         $entity->setRecibio($this->getUser()->getUsername());
+        $tipoSolicitud = new TipoSolicitud();
         $em = $this->getDoctrine()->getManager();
-        $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
         
         if (!$tipo) {
             throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
@@ -144,10 +148,17 @@ class DocumentoController extends Controller
         
         $form = $this->createForm(new DocumentoRecibidoType(), $entity);
         
+        $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
+        $tipoSolicitudForm = $this->createForm(new TipoSolicitudType(), $tipoSolicitud);
+        $emisor = new Departamento();
+        $DepartamentoForm = $this->createForm(new DepartamentoType(), $emisor);
+        
         return $this->render('UNAHSGOBundle:Documento:recibir.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'tipo'   => $tipo,
+            'tipo_solicitud_form'   => $tipoSolicitudForm->createView(),
+            'departamento_form'   => $DepartamentoForm->createView(),
         ));
     }
     
@@ -210,6 +221,8 @@ class DocumentoController extends Controller
         $entity->setEntregado($this->getUser()->getUsername());
         $em = $this->getDoctrine()->getManager();
         $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
+        $emisor = new Departamento();
+        $DepartamentoForm = $this->createForm(new DepartamentoType(), $emisor);
         
         if (!$tipo) {
             throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
@@ -221,6 +234,7 @@ class DocumentoController extends Controller
             'entity' => $entity,
             'form' => $form->createView(),
             'tipo' => $tipo,
+            'departamento_form'   => $DepartamentoForm->createView(),
         ));
     }
     
@@ -1278,13 +1292,14 @@ class DocumentoController extends Controller
     
     private function createDepartamentoSearchForm() {
         return $this -> createFormBuilder()
-        ->add('tipo', 'entity', array(
-            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
-            )
-        )
         ->add('emisor', 'entity', array(
                         'class' => 'UNAH\SGOBundle\Entity\Departamento',
                         )
+        )
+        ->add('tipo', 'entity', array(
+            'label' => 'Documento',
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
         )
         ->getForm();
     }
@@ -1294,6 +1309,7 @@ class DocumentoController extends Controller
         return $this->createFormBuilder()
         ->add('numero')
         ->add('tipo', 'entity', array(
+            'label' => 'Documento',
             'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
             )
         )
@@ -1314,6 +1330,7 @@ class DocumentoController extends Controller
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker')))
         ->add('tipo', 'entity', array(
+            'label' => 'Documento',
             'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
             )
         )
@@ -1364,6 +1381,7 @@ class DocumentoController extends Controller
                 'format' => 'dd/MM/yyyy',
                 'attr' => array('class' => 'datepicker')))
         ->add('tipo', 'entity', array(
+            'label' => 'Documento',
             'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
             )
         )
@@ -1373,14 +1391,16 @@ class DocumentoController extends Controller
     private function createDepartamentoComentarioSearchForm()
     {
         return $this->createFormBuilder()
-        ->add('descripcion', 'textarea')
-        ->add('tipo', 'entity', array(
-            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
-            )
-        )
-        ->add('descripcion', 'textarea')
+        ->add('descripcion', 'textarea', array(
+            'label' => 'Descripción'
+        ))
         ->add('emisor', 'entity', array(
             'class' => 'UNAH\SGOBundle\Entity\Departamento',
+            )
+        )
+        ->add('tipo', 'entity', array(
+            'label' => 'Documento',
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
             )
         )
         ->getForm();

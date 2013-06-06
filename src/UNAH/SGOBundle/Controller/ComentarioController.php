@@ -54,6 +54,12 @@ class ComentarioController extends Controller
                 $old->setFinalizado($entity->getFecha());
                 $em->persist($old);
             }
+            $old_action = $documento->getAcciones()->last();
+            
+            if($old_action) {
+                $old_action->setCompletada(TRUE);
+            }
+            
             $curso = $form->getData('curso');
             
             if($curso){

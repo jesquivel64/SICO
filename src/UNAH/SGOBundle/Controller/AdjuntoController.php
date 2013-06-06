@@ -46,6 +46,7 @@ class AdjuntoController extends Controller
 			$entity->setDocumento($documento);
 			
 			$entity->upload();
+            $entity->setNombre($documento->getNumero());
             $em->persist($entity);
             $em->flush();
 

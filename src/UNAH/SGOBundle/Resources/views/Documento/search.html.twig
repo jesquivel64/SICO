@@ -12,7 +12,7 @@
     <form action="{{ path('documento_search_numero') }}" method="get" {{ form_enctype(numero_form) }}>
       <fieldset>
         <legend>
-          Buscar por N&uacute;mero
+          Buscar por N&uacute;mero y Documento
         </legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(numero_form) }}
@@ -28,7 +28,7 @@
     <form action="{{ path('documento_search_depto') }}" method="get" {{ form_enctype(depto_form) }}>
       <fieldset>
         <legend>
-          Buscar por Emisor y Tipo
+          Buscar por Emisor y Documento
         </legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(depto_form) }}
@@ -46,7 +46,7 @@
     <form action="{{ path('documento_search_date') }}" method="get" {{ form_enctype(date_form) }}>
       <fieldset>
         <legend>
-          Buscar por Fecha de Recibido
+          Buscar por Fecha de Recibido y Documento
         </legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(date_form) }}
@@ -62,7 +62,7 @@
     <form action="{{ path('documento_search_depto_comentario') }}" method="get" {{ form_enctype(depto_form) }}>
       <fieldset>
         <legend>
-          Buscar por Emisor, Descripci&oacute;n y Tipo
+          Buscar por Emisor, Descripci&oacute;n y Documento
         </legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(comentario_form) }}
@@ -87,7 +87,7 @@
     <form action="{{ path('documento_search_emision') }}" method="get" {{ form_enctype(emision_form) }}>
       <fieldset>
         <legend>
-          Buscar por Fecha de Emision
+          Buscar por Fecha de Emisi&oacute;n y Documento
         </legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(emision_form) }}

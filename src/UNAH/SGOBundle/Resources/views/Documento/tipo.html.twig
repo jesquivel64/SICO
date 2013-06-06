@@ -23,81 +23,94 @@
     </div>
   </aside>
   <section class="span9 full-print">
-    {% for entity in acciones %}
-    <div class="alert alert-block">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <h4>Accion a Efectuar!</h4>
-      {{ entity.tipo }}: {{ entity.descripcion }} al {{ tipo }} {{ entity.documento.numero }} de {{ entity.documento.emisor }}
-      <a class="" href="{{ path('documento_show', { 'id': entity.documento.id }) }}">Mostrar</a>
-    </div>
-    {% endfor %}
-    <div class="row">
-      <section class="span9">
-        <table class="no-more-tables table table-striped table-bordered">
-          <caption>
-            &Uacute;ltimos {{ tipo.plural }} Recibidos
-          </caption>
-          <thead>
-            <tr>
-              <th>N&uacute;mero</th>
-              <th>Descripci&oacute;n</th>
-              <th>Recibi&oacute;</th>
-              <th>Recepci&oacute;n</th>
-              <th>Emisi&oacute;n</th>
-              <th>Emisor</th>
-              <th class="no-print">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for entity in recibidos %}
-            <tr>
-              <td data-title="Número">{{ entity.numero }}</td>
-              <td data-title="Descripción">{{ entity.descripcion }}</td>
-              <td data-title="Recibio">{{ entity.recibio }}</td>
-              <td data-title="Fecha de Recibido">{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
-              <td data-title="Fecha de Emisión">{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
-              <td data-title="Emisor">{{ entity.emisor }}</td>
-              <td class="no-print">
-                <a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
-                <a class="btn btn-success btn-block" href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}">Editar</a></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </section>
-    </div>
-    <div class="row">
-      <section class="span9">
-        <table class="no-more-tables table table-striped table-bordered">
-          <caption>
-            &Uacute;ltimos {{ tipo.plural }} Enviados
-          </caption>
-          <thead>
-            <tr>
-              <th>N&uacute;mero</th>
-              <th>Descripci&oacute;n</th>
-              <th>Remitente</th>
-              <th>Destinatario</th>
-              <th>Emisi&oacute;n</th>
-              <th class="no-print">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for entity in enviados %}
-            <tr>
-              <td data-title="Número">{{ entity.numero }}</td>
-              <td data-title="Descripción">{{ entity.descripcion }}</td>
-              <td data-title="Autor">{{ entity.autor }}</td>
-              <td data-title="Número">{{ entity.destinatario }}</td>
-              <td data-title="Fecha de Envio">{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
-              <td data-title="Acciones" class="no-print">
-                <a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a>
-                <a class="btn btn-success btn-block" href="{{ path('documento_edit_enviado', { 'id': entity.id }) }}">Editar</a></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </section>
+    <div class="tabbable">
+      <!-- Only required for left/right tabs -->
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#tab1" data-toggle="tab">Acciones</a>
+        </li>
+        <li>
+          <a href="#tab2" data-toggle="tab">Recibidos</a>
+        </li>
+        <li>
+          <a href="#tab3" data-toggle="tab">Enviados</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+          <h3>Estas Acciones Requieren Seguimiento</h3>
+          {% for entity in acciones %}
+          <div class="alert alert-block">
+            <button type="button" class="close" data-dismiss="alert">
+              &times;
+            </button>
+            <h4>¡Acci&oacute;n a Efectuar!</h4>
+            {{ entity.tipo }}: {{ entity.descripcion }} al {{ tipo }} {{ entity.documento.numero }} de {{ entity.documento.emisor }}
+            <a class="" href="{{ path('documento_show', { 'id': entity.documento.id }) }}">Mostrar</a>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="tab-pane" id="tab2">
+          <table class="no-more-tables table table-striped table-bordered">
+            <caption>
+              &Uacute;ltimos {{ tipo.plural }} Recibidos
+            </caption>
+            <thead>
+              <tr>
+                <th>N&uacute;mero</th>
+                <th>Descripci&oacute;n</th>
+                <th>Recibi&oacute;</th>
+                <th>Recepci&oacute;n</th>
+                <th>Emisi&oacute;n</th>
+                <th>Emisor</th>
+                <th class="no-print">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entity in recibidos %}
+              <tr>
+                <td data-title="Número">{{ entity.numero }}</td>
+                <td data-title="Descripción">{{ entity.descripcion }}</td>
+                <td data-title="Recibio">{{ entity.recibio }}</td>
+                <td data-title="Fecha de Recibido">{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
+                <td data-title="Fecha de Emisión">{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
+                <td data-title="Emisor">{{ entity.emisor }}</td>
+                <td class="no-print"><a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a><a class="btn btn-success btn-block" href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}">Editar</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane" id="tab3">
+          <table class="no-more-tables table table-striped table-bordered">
+            <caption>
+              &Uacute;ltimos {{ tipo.plural }} Enviados
+            </caption>
+            <thead>
+              <tr>
+                <th>N&uacute;mero</th>
+                <th>Descripci&oacute;n</th>
+                <th>Remitente</th>
+                <th>Destinatario</th>
+                <th>Emisi&oacute;n</th>
+                <th class="no-print">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entity in enviados %}
+              <tr>
+                <td data-title="Número">{{ entity.numero }}</td>
+                <td data-title="Descripción">{{ entity.descripcion }}</td>
+                <td data-title="Autor">{{ entity.autor }}</td>
+                <td data-title="Número">{{ entity.destinatario }}</td>
+                <td data-title="Fecha de Envio">{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
+                <td data-title="Acciones" class="no-print"><a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a><a class="btn btn-success btn-block" href="{{ path('documento_edit_enviado', { 'id': entity.id }) }}">Editar</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 </section>

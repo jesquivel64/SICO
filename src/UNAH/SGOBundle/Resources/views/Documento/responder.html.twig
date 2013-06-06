@@ -1,18 +1,20 @@
 {% extends "UNAHSGOBundle::layout.html.twig" %}
 {% block content %}
 <section class="row">
-<aside class="span3">
-  <nav class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li>
-        <a href="{{ path('documento') }}">Regresar a Envios de Documentos</a>
+  <aside class="span3 no-print action-nav-normal">
+    <div class="row">
+      <section class="span3 action-nav-button">
+        <a href="{{ path('documento_documento', { 'tipo': documento.tipo.id }) }}"><i class="icon-home"></i><span>Regresar a {{ documento.tipo.nombre }}s</span></a>
+      </section>
+    </div>
+    <div class="row">
+      <section class="span3 action-nav-button">
         <a href="{{ path('documento_show', { 'id': documento.id }) }}">
-          Regresar a {{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}
+          Regresar a  {{ documento.numero }}
         </a>
-      </li>
-    </ul>
-  </nav>
-</aside>
+      </section>
+    </div>
+  </aside>
 <section class="span6">
   <form action="{{ path('documento_respuesta', { 'documento': documento.id }) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
