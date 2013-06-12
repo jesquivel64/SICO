@@ -3,6 +3,7 @@
 namespace UNAH\SGOBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use UNAH\SGOBundle\Entity\Departamento;
@@ -28,7 +29,18 @@ class DepartamentoController extends Controller
             'entities' => $entities,
         ));
     }
+    
+    public function tipoAction()
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $entities = $em->getRepository('UNAHSGOBundle:TipoDepartamento')->findAll();
+        
+        $serializer = $this->container->get('jms_serializer');
+        #$serializer->serialize($entities, $format);
+        return new Response($serializer->serialize($entities, 'json'));
+    }
+    
     /**
      * Creates a new Departamento entity.
      *

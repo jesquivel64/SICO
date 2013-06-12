@@ -139,8 +139,8 @@ class DocumentoController extends Controller
     {
         $entity = new Documento();
         $entity->setRecibio($this->getUser()->getUsername());
-        $tipoSolicitud = new TipoSolicitud();
         $em = $this->getDoctrine()->getManager();
+        $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
         
         if (!$tipo) {
             throw $this->createNotFoundException('Unable to find TipoDocumento entity.');
@@ -148,7 +148,7 @@ class DocumentoController extends Controller
         
         $form = $this->createForm(new DocumentoRecibidoType(), $entity);
         
-        $tipo = $em->getRepository('UNAHSGOBundle:TipoDocumento')->find($tipo);
+        $tipoSolicitud = new TipoSolicitud();
         $tipoSolicitudForm = $this->createForm(new TipoSolicitudType(), $tipoSolicitud);
         $emisor = new Departamento();
         $DepartamentoForm = $this->createForm(new DepartamentoType(), $emisor);
@@ -185,10 +185,17 @@ class DocumentoController extends Controller
             return $this->redirect($this->generateUrl('documento_show', array('id' => $entity->getId())));
         }
         
+        $tipoSolicitud = new TipoSolicitud();
+        $tipoSolicitudForm = $this->createForm(new TipoSolicitudType(), $tipoSolicitud);
+        $emisor = new Departamento();
+        $DepartamentoForm = $this->createForm(new DepartamentoType(), $emisor);
+        
         return $this->render('UNAHSGOBundle:Documento:recibir.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'tipo'   => $tipo,
+            'tipo_solicitud_form'   => $tipoSolicitudForm->createView(),
+            'departamento_form'   => $DepartamentoForm->createView(),
         ));
     }
     
@@ -250,6 +257,9 @@ class DocumentoController extends Controller
         $form = $this->createForm(new DocumentoEnviadoType(), $entity);
         $form->bind($request);
         
+        $emisor = new Departamento();
+        $DepartamentoForm = $this->createForm(new DepartamentoType(), $emisor);
+        
         if ($form->isValid()) {
             
             $entity->setTipo($tipo);
@@ -286,6 +296,13 @@ class DocumentoController extends Controller
                         $em->persist($old);
                     }
                     
+                    $old_action = $documento->getAcciones()->last();
+                    
+                    if($old_action) {
+                        $old_action->setCompletada(TRUE);
+                        $em->persist($old_action);
+                    }
+                    
                     $comentario->setDocumento($documento);
                     $documento->addComentario($comentario);
                     
@@ -307,6 +324,7 @@ class DocumentoController extends Controller
                         'entity' => $entity,
                         'form'   => $form->createView(),
                         'tipo'   => $tipo,
+                        'departamento_form'   => $DepartamentoForm->createView(),
                     ));
                 }
             }
@@ -321,6 +339,7 @@ class DocumentoController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'tipo'   => $tipo,
+            'departamento_form'   => $DepartamentoForm->createView(),
         ));
     }
     
@@ -649,6 +668,13 @@ class DocumentoController extends Controller
                 $em->persist($old);
             }
             
+            $old_action = $documento->getAcciones()->last();
+            
+            if($old_action) {
+                $old_action->setCompletada(TRUE);
+                $em->persist($old_action);
+            }
+            
             $em->persist($comentario);
             
             $comentario = new Comentario();
@@ -673,6 +699,35 @@ class DocumentoController extends Controller
         ));
     }
     
+    
+    /**
+     * Lists all Oficio entities.
+     *
+     * @Route("/", name="oficio")
+     * @Method("GET")
+     * @Template()
+     */
+    public function sinRespuestaAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $qb = $em->createQueryBuilder();
+        $query = $qb->select('d')
+            ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+            ->andWhere('d.recibido = :recibido')
+            ->andWhere('d.respondido = :respondido')
+            ->andWhere('d.responder = :responder')
+            ->setParameter('recibido', TRUE)
+            ->setParameter('respondido', FALSE)
+            ->setParameter('responder', TRUE)
+            ->getQuery(); 
+        $documentos = $query->getResult();
+        
+        return array(
+        'documentos' => $documentos,
+        );
+    } 
+    
     public function searchAction()
     {
         $dateForm = $this->createDateSearchForm();
@@ -680,6 +735,7 @@ class DocumentoController extends Controller
         $deptoForm = $this->createDepartamentoSearchForm();
         $emisionForm = $this->createEmisionSearchForm();
         $comentarioForm = $this->createDepartamentoComentarioSearchForm();
+		$solicitudForm = $this->createSolicitudSearchForm();
         
         return $this->render('UNAHSGOBundle:Documento:search.html.twig', array(
             'date_form' => $dateForm->createView(),
@@ -687,7 +743,60 @@ class DocumentoController extends Controller
             'numero_form' => $numeroForm->createView(),
             'depto_form' => $deptoForm->createView(),
             'comentario_form' => $comentarioForm->createView(),
+			'solicitud_form' => $solicitudForm->createView(),
         ));
+    }
+	
+    /**
+     * Lists all Oficio entities.
+     *
+     * @Route("/", name="oficio")
+     * @Method("GET")
+     * @Template()
+     */
+    public function tipoSearchAction(Request $request)
+    {
+		$form = $this->createSolicitudSearchForm();
+        $form->bind($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $qb = $em->createQueryBuilder();
+            $tipo = $form->get('tipo')->getData();
+			$tipo = $em->getRepository('UNAHSGOBundle:TipoSolicitud')->find($tipo);
+			$query = $qb->select('d')
+				->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+				->andWhere('d.tipoSolicitud = :tipo')
+				->andWhere('d.recibido = :recibido')
+				->setParameter('tipo', $tipo)
+				->setParameter('recibido', TRUE)
+				->setParameter('inicio', $form->get('inicio_emisions')->getData())
+                ->setParameter('fin', $form->get('fin_emisions')->getData())
+				->getQuery();
+			
+			$documentos = $query->getResult();
+			$query = $qb->select('count(d)')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+				->andWhere('d.tipoSolicitud = :tipo')
+				->andWhere('d.recibido = :recibido')
+				->setParameter('tipo', $tipo)
+				->setParameter('recibido', TRUE)
+				->setParameter('inicio', $form->get('inicio_emisions')->getData())
+                ->setParameter('fin', $form->get('fin_emisions')->getData())
+				->getQuery();
+			
+            $count = $query->getSingleScalarResult();
+            
+            return array(
+                'documentos' => $documentos,
+                'inicio' => $form->get('inicio_emisions')->getData(),
+                'fin' => $form->get('fin_emisions')->getData(),
+                'date_form' => $form->createView(),
+                'count' => $count,
+                'tipo' => $tipo,
+            );
+		}
+		return $this->redirect($this->generateUrl('documento'));
     }
     
     /**
@@ -729,8 +838,10 @@ class DocumentoController extends Controller
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
                 ->andWhere('d.respondido = :respondido')
+                ->andWhere('d.responder = :responder')
                 ->setParameter('recibido', TRUE)
                 ->setParameter('respondido', FALSE)
+                ->setParameter('responder', TRUE)
                 ->setParameter('inicio', $form->get('inicio_periodo')->getData())
                 ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
@@ -750,8 +861,17 @@ class DocumentoController extends Controller
             $respondidos = $query->getSingleScalarResult();
             
             $qb = $em->createQueryBuilder('d', 't');
-            $query = $qb->select('count(d) as cantidad, t.nombre, t.color')
+            $query = $qb->select('count(d) as cantidad')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeEnvio', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', FALSE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            $tipoTotal = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d) as cantidad, t.nombre, t.color')
                 ->leftJoin('d.tipo', 't')
                 ->where($qb->expr()->between('d.fechaDeEnvio', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
@@ -763,8 +883,17 @@ class DocumentoController extends Controller
             $tipo = $query->getResult();
             
             $qb = $em->createQueryBuilder('d', 't');
-            $query = $qb->select('count(d) as cantidad, t.nombre')
+            $query = $qb->select('count(d) as cantidad')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            $tipo_recibidoTotal = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d) as cantidad, t.plural as nombre')
                 ->leftJoin('d.tipo', 't')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
@@ -776,8 +905,18 @@ class DocumentoController extends Controller
             $tipo_recibido = $query->getResult();
             
             $qb = $em->createQueryBuilder('d', 'e');
-            $query = $qb->select('count(d) as cantidad, e.nombre, e.color')
+            
+            $query = $qb->select('count(d) as cantidad')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            $emisorTotal = $query->getSingleScalarResult();
+                
+            $query = $qb->select('count(d) as cantidad, e.nombre, e.color')
                 ->leftJoin('d.emisor', 'e')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
@@ -790,8 +929,19 @@ class DocumentoController extends Controller
             $emisor = $query->getResult();
             
             $qb = $em->createQueryBuilder('d', 't');
-            $query = $qb->select('count(d) as cantidad, t.nombre, t.color')
+            
+            $query = $qb->select('count(d) as cantidad')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            
+            $total_tipificacion = $query->getSingleScalarResult();
+            
+            $query = $qb->select('count(d) as cantidad, t.nombre, t.color')
                 ->leftJoin('d.tipoSolicitud', 't')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
@@ -809,9 +959,13 @@ class DocumentoController extends Controller
                 'noRespondidos' => $noRespondidos,
                 'enviados' => $enviados,
                 'emisor' => $emisor,
+                'emisor_total' => $emisorTotal,
                 'tipo' => $tipo,
+                'tipo_total' => $tipoTotal,
                 'tipo_recibido' => $tipo_recibido,
+                'tipo_recibido_total' => $tipo_recibidoTotal,
                 'tipificacion' => $tipificacion,
+                'tipificacion_total' => $total_tipificacion,
                 'inicio' => $form->get('inicio_periodo')->getData(),
                 'fin' => $form->get('fin_periodo')->getData(),
                 'date_form' => $form->createView(),
@@ -846,7 +1000,7 @@ class DocumentoController extends Controller
             $recibidos = $query->getSingleScalarResult();
             
             $qb = $em->createQueryBuilder('d', 't');
-            $query = $qb->select('count(d) as cantidad, count(d) / :total *100 as porcentaje, t.nombre, t.color')
+            $query = $qb->select('count(d) as cantidad, count(d) / :total *100 as porcentaje, avg(d.tiempo) as tiempo, t.nombre, t.color')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
                 ->leftJoin('d.tipoSolicitud', 't')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
@@ -859,6 +1013,22 @@ class DocumentoController extends Controller
                 ->getQuery();
             
             $tipificacion = $query->getResult();
+            
+            #TODO: volver esto eficiente en memoria
+            $tipos = array();
+            foreach($tipificacion as $tipo) {
+                
+                $d1 = new \DateTime();
+                $d2 = new \DateTime();
+                $tiempo = floor($tipo['tiempo']);
+                $interval = new \DateInterval("PT".$tiempo.'M');
+                $d2->add($interval);
+                $iv = $d2->diff($d1);
+                
+                $tipo['tiempo'] = $iv->format("%m meses %d dias %h horas %i minutos");
+                $tipos[] = $tipo;
+            }
+            $tipificacion = $tipos;
             
             $qb = $em->createQueryBuilder('d', 't');
             $query = $qb->select('count(d) as cantidad, count(d) / :total *100 as porcentaje, t.nombre, t.color')
@@ -1299,6 +1469,25 @@ class DocumentoController extends Controller
         ->add('tipo', 'entity', array(
             'label' => 'Documento',
             'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
+    
+    private function createSolicitudSearchForm()
+    {
+        return $this->createFormBuilder()
+        ->add('inicio_emisions', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->add('fin_emisions', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'attr' => array('class' => 'datepicker')))
+        ->add('tipo', 'entity', array(
+            'label' => 'Documento',
+            'class' => 'UNAH\SGOBundle\Entity\TipoSolicitud',
             )
         )
         ->getForm();

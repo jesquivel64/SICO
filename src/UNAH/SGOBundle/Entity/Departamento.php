@@ -5,12 +5,17 @@ namespace UNAH\SGOBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+
 /**
  * Departamento
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ExclusionPolicy("all")
  */
+ 
 class Departamento
 {
     /**
@@ -19,6 +24,7 @@ class Departamento
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -26,12 +32,14 @@ class Departamento
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
+     * @Expose
      */
     private $nombre;
     /**
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=255, nullable=true)
+     * @Expose
      */
     private $color;
     

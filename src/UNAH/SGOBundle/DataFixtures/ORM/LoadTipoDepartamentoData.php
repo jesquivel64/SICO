@@ -15,7 +15,7 @@ class LoadTipoDepartamentoData extends AbstractFixture implements OrderedFixture
      */
     public function load(ObjectManager $manager)
     {
-        $colores = ColorGenerator::generateUniqueHexColors(3);
+        $colores = ColorGenerator::generateUniqueHexColors(4);
         
         $carrera = new TipoDepartamento();
         $carrera->setNombre("Carrera");
@@ -32,11 +32,17 @@ class LoadTipoDepartamentoData extends AbstractFixture implements OrderedFixture
         $instancia->setColor($colores[2]);
         $manager->persist($instancia);
         
+        $centro = new TipoDepartamento();
+        $centro->setNombre("Centro de Estudios");
+        $centro->setColor($colores[3]);
+        $manager->persist($centro);
+        
         $manager->flush();
         
         $this->addReference('carrera', $carrera);
         $this->addReference('facultad', $facultad);
         $this->addReference('instancia', $instancia);
+        $this->addReference('centro', $centro);
     }
 
     /**

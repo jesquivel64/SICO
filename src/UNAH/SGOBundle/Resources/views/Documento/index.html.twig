@@ -26,7 +26,7 @@
     <form action="{{ path('documento_estadistica_resumen') }}" method="get" {{ form_enctype(resumen_form) }}>
       <fieldset>
         <legend>
-          Resumen De Documentos Recibidos
+          Estad&iacute;stica por Tipo de Solicitud y Tiempo de Respuesta
         </legend>
         <input type="hidden" name="_method" value="GET" />
         {{ form_widget(resumen_form) }}
@@ -39,22 +39,5 @@
     </form>
   </section>
 </div>
-<div class="row">
-  <section class="span6">
-    <form action="{{ path('documento_estadistica_periodo_tipo') }}" method="get" {{ form_enctype(periodo_tipo_form) }}>
-      <fieldset>
-        <legend>
-          Estad&iacute;sticas Por Tipo de Documento y Fecha
-        </legend>
-        <input type="hidden" name="_method" value="GET" />
-        {{ form_widget(periodo_tipo_form) }}
-      </fieldset>
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">
-          <i class="icon-search"></i> Buscar
-        </button>
-      </div>
-    </form>
-  </section>
-</div>
+
 {% endblock %}

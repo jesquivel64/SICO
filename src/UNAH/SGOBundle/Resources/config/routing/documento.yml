@@ -2,6 +2,10 @@ documento:
     pattern:  /
     defaults: { _controller: "UNAHSGOBundle:Documento:index" }
 
+documento_sin_respuesta:
+    pattern:  /respuesta/pendiente
+    defaults: { _controller: "UNAHSGOBundle:Documento:sinRespuesta" }
+
 documento_show:
     pattern:  /{id}/show
     defaults: { _controller: "UNAHSGOBundle:Documento:show" }
@@ -98,6 +102,10 @@ documento_search_date:
 documento_search:
     pattern: /buscar
     defaults: { _controller: "UNAHSGOBundle:Documento:search" }
+
+documento_search_solicitud:
+    pattern: /buscar/solicitud
+    defaults: { _controller: "UNAHSGOBundle:Documento:tipoSearch" }
 
 documento_search_emision:
     pattern: /emision

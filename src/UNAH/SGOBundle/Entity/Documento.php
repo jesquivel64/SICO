@@ -166,14 +166,46 @@ class Documento
     /**
      * @var boolean
      *
-     * @ORM\Column(name="clasificar", type="boolean")
+     * @ORM\Column(name="clasificar", type="boolean", nullable=true)
      */
-    protected $clasificar = TRUE;
+    protected $clasificar = FALSE;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="copia", type="boolean", nullable=true)
+     */
+    protected $copia = FALSE;
     
     /**
      * @ORM\OneToMany(targetEntity="Accion", mappedBy="documento")
      */
     protected $acciones;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tiempo", type="integer")
+     */
+    protected $tiempo;
+    
+    /**
+     * @Assert\True(message = "La Fecha de Recepción no puede ser mayor que el día de hoy")
+     */
+    public function isFechaDeRecibidoValid()
+    {
+        $now = new \DateTime();
+        return ($this->fechaDeRecibido <= $now);
+    }
+    
+    /**
+     * @Assert\True(message = "La Fecha de Emisión no puede ser mayor que el día de hoy")
+     */
+    public function isFechaDeEmisionValid()
+    {
+        $now = new \DateTime();
+        return ($this->fechaDeEmision <= $now);
+    }
     
     /**
      * Get id
@@ -490,7 +522,7 @@ class Documento
     public function setRespondido($respondido)
     {
         $this->respondido = $respondido;
-
+        
         return $this;
     }
 
@@ -624,7 +656,11 @@ class Documento
     public function setFechaDeRespuesta($fechaDeRespuesta)
     {
         $this->fechaDeRespuesta = $fechaDeRespuesta;
-
+        $delta = $this->fechaDeRespuesta->diff($this->fechaDeRecibido);
+        $this->tiempo = $delta->i + ($delta->h * 60 * 60)
+                                  + ($delta->d * 60 * 60 * 24)
+                                  + ($delta->m * 60 * 60 * 24 * 30)
+                                  + ($delta->y * 60 * 60 * 24 * 365);
         return $this;
     }
 
@@ -708,8 +744,15 @@ class Documento
     }
     
     public function getTiempoRespuesta() {
-        $interval = $this->fechaDeRespuesta->getTimestamp() - $this->fechaDeRecibido->getTimestamp();
-        return $interval / 3600;
+        $interval = $this->fechaDeRespuesta->diff($this->fechaDeRecibido);
+        return $interval->format("%m meses %d dias %h horas %i minutos");
+    }
+    
+    public function getTiempoIngreso()
+    {
+        $now = new \DateTime();
+        $interval = $now->diff($this->fechaDeRecibido);
+        return $interval->format("%m meses %d dias %h horas %i minutos");
     }
 
     /**
@@ -777,6 +820,56 @@ class Documento
         $this->receptores = new \Doctrine\Common\Collections\ArrayCollection();
         $this->respuestas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->acciones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fechaDeRecibido = new \DateTime();
+        $this->fechaDeEmision = new \DateTime();
+        $this->fechaDeEnvio = new \DateTime();
+        $this->tiempo = 0;
     }
 
+
+    /**
+     * Set copia
+     *
+     * @param boolean $copia
+     * @return Documento
+     */
+    public function setCopia($copia)
+    {
+        $this->copia = $copia;
+
+        return $this;
+    }
+
+    /**
+     * Get copia
+     *
+     * @return boolean 
+     */
+    public function getCopia()
+    {
+        return $this->copia;
+    }
+
+    /**
+     * Set tiempo
+     *
+     * @param integer $tiempo
+     * @return Documento
+     */
+    public function setTiempo($tiempo)
+    {
+        $this->tiempo = $tiempo;
+
+        return $this;
+    }
+
+    /**
+     * Get tiempo
+     *
+     * @return integer 
+     */
+    public function getTiempo()
+    {
+        return $this->tiempo;
+    }
 }

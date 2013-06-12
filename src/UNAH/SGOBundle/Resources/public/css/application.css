@@ -3,6 +3,8 @@
     margin-bottom: 15px;
     position: relative;
     text-align: center;
+    text-shadow: 0px 0px 4px #acacac;
+    filter: dropshadow(color=#acacac, offx=0, offy=0);
 }
 .span4 {
     width: 370px;
@@ -15,16 +17,16 @@
 .action-nav-normal .action-nav-button a {
     -moz-box-sizing: border-box;
     background: #fafafa; /* Old browsers */
-background: -moz-linear-gradient(top, #fafafa 0%, #ececec 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #fafafa 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #fafafa 0%,#ececec 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #fafafa 0%,#ececec 100%); /* IE10+ */
-background: linear-gradient(to bottom, #fafafa 0%,#ececec 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#ececec',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top, #fafafa 0%, #ececec 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fafafa 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fafafa 0%,#ececec 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #fafafa 0%,#ececec 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #fafafa 0%,#ececec 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#ececec',GradientType=0 ); /* IE6-9 */
     border: 1px solid #D5D5D5;
     border-radius: 4px 4px 4px 4px;
-    box-shadow: 0 0 0 1px #FAFAFA inset, 0 1px 1px 0 #DDDDDD;
+    box-shadow: 0 0 0 1px #fafafa inset, 0 1px 1px 0 #DDDDDD;
     color: #626262;
     display: block;
     font-weight: 700;
@@ -82,11 +84,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', end
 
 /* Body and structure
  -------------------------------------------------- */
-
 body {
     padding-top: 40px;
     min-height: 640px;
-    background: url('../img/lucem.png') no-repeat fixed right 40px,
+    text-shadow: 0px 0px 5px #e0e0e0;
+    filter: dropshadow(color=#e0e0e0, offx=0, offy=0);
+    background: url('../img/corner.png') no-repeat fixed 40px 80px,
+                url('../img/lucem.png') no-repeat fixed right 40px,
                 linear-gradient(to bottom, #1a3747 40%,#1592bd 88%,#7CBACC 95%,#1592bd 100%) fixed top center;
 }
 @media screen and (max-width: 768px) {
@@ -94,7 +98,7 @@ body {
         padding-top: 0px;
     }
 }
-ul.nav-tabs {
+.sidebar-nav ul.nav-tabs {
     margin-bottom: 0;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
 }
@@ -133,10 +137,6 @@ article.graphic {
         padding: 5px 19px;
         width: auto;
     }
-    aside.action-nav-normal {
-        background: white url('../img/corner.png') no-repeat bottom -5px left 30px;
-        min-height: 720px;
-    }
 }
 @media (min-width: 768px) and (max-width: 979px) {
     .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
@@ -150,7 +150,6 @@ article.graphic {
         padding: 10px 14px;
     }
 }
-
 div.container {
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
@@ -174,7 +173,6 @@ img.center {
     .no-more-tables td, .no-more-tables tr {
         display: block;
     }
-
     /* Hide table headers (but not display: none;, for accessibility) */
     .no-more-tables thead tr {
         position: absolute;
@@ -228,4 +226,22 @@ img.center {
 }
 .table td {
     vertical-align: middle;
+}
+canvas {
+    margin: auto;
+    display: block;
+    width: 300px;
+    height: 300px;
+}
+.page-header {
+    text-shadow: 0px 0px 4px #bcbcbc;
+    filter: dropshadow(color=#bcbcbc, offx=0, offy=0);
+}
+.page-header small {
+    text-shadow: 0px 0px 4px #e0e0e0;
+    filter: dropshadow(color=#e0e0e0, offx=0, offy=0);
+}
+.hero-unit .page-header, .hero-unit .page-header small {
+    text-shadow: 0px 0px 4px #9c9c9c;
+    filter: dropshadow(color=#9c9c9c, offx=0, offy=0);
 }

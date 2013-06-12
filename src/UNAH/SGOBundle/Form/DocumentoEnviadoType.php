@@ -22,8 +22,8 @@ class DocumentoEnviadoType extends AbstractType
             ->add('fecha_de_emision', 'date', array(
                     'label' => 'Fecha de Emisión',
                     'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker')))
+                    'format' => 'dd/MM/yyyy HH:mm',
+                    'attr' => array('class' => 'datetimepicker')))
             ->add('receptores', null, array(
                     'required' => false,
                     'attr' => array('size' => 20)))

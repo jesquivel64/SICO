@@ -6,6 +6,10 @@ departamento_show:
     pattern:  /{id}/show
     defaults: { _controller: "UNAHSGOBundle:Departamento:show" }
 
+departamento_tipo:
+    pattern:  /tipo
+    defaults: { _controller: "UNAHSGOBundle:Departamento:tipo" }
+
 departamento_new:
     pattern:  /new
     defaults: { _controller: "UNAHSGOBundle:Departamento:new" }

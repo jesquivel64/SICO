@@ -58,11 +58,12 @@ class ComentarioController extends Controller
             
             if($old_action) {
                 $old_action->setCompletada(TRUE);
+                $em->persist($old_action);
             }
             
             $curso = $form->getData('curso');
             
-            if($curso){
+            if($entity->getCurso()){
                 $documento->setClasificar(TRUE);
             }
             

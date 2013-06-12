@@ -13,7 +13,7 @@
       <hgroup class="page-header">
         <h2>Estad&iacute;sticas Generales</h2>
       </hgroup>
-      <canvas id="flujo" width="400" height="400"></canvas>
+      <canvas id="flujo" width="300" height="300"></canvas>
       <p>
         {{ recibidos }} Documentos han sido Recibidos
       </p>
@@ -25,19 +25,28 @@
   <div class="span6">
     <article class="graphic">
       <hgroup class="page-header">
-        <h2>Documentos Recibidos por Tipo</h2>
+        <h2>Documentos Recibidos por Tipo de Solicitud</h2>
       </hgroup>
-      <canvas id="tipo-recibido" width="400" height="400"></canvas>
+      <canvas id="tipificacion" width="300" height="300"></canvas>
       <table class="table table-bordered table-striped no-more-tables">
         <caption>Leyenda</caption>
         <tbody>
-          {% for dato in tipo_recibido %}
+          {% for dato in tipificacion %}
           <tr>
+            <td>{{ dato.nombre }}</td>
             <td>{{ dato.cantidad }}</td>
-            <td>{{ dato.nombre }}(s)</td>
+            <td>{{ (dato.cantidad / tipificacion_total * 100) // 1}}%</td>
+            <td style="background-color: {{ dato.color }};"></td>
           </tr>
           {% endfor %}
         </tbody>
+        <tfoot>
+          <tr>
+            <th>Total:</th>
+            <th>{{ tipificacion_total }}</th>
+            <th colspan="2">100%</th>
+          </tr>
+        </tfoot>
       </table>
     </article>
   </div>
@@ -48,7 +57,7 @@
       <hgroup class="page-header">
         <h2>Relaci&oacute;n entre Recibidos y Respondidos</h2>
       </hgroup>
-      <canvas id="eficiencia" width="400" height="400"></canvas>
+      <canvas id="eficiencia" width="300" height="300"></canvas>
       <p>
         {{ respondidos }} Documentos han obtenido Respuesta
       </p>
@@ -62,18 +71,27 @@
       <hgroup class="page-header">
         <h2>Documentos Recibidos por Emisor</h2>
       </hgroup>
-      <canvas id="dependencias" width="400" height="400"></canvas>
+      <canvas id="dependencias" width="300" height="300"></canvas>
       <table class="table table-bordered table-striped no-more-tables">
         <caption>Leyenda</caption>
         <tbody>
           {% for dato in emisor %}
           <tr>
+            <td>{{ dato.nombre }}</td>
             <td>{{ dato.cantidad }}</td>
-            <td>{{ dato.nombre }}(s)</td>
+            <td>{{ (dato.cantidad / emisor_total * 100) // 1}}%</td>
             <td style="background-color: {{ dato.color }};"></td>
           </tr>
           {% endfor %}
         </tbody>
+        
+        <tfoot>
+          <tr>
+            <th>Total:</th>
+            <th>{{ emisor_total }}</th>
+            <th colspan="2">100%</th>
+          </tr>
+        </tfoot>
       </table>
     </article>
   </div>
@@ -82,37 +100,44 @@
   <div class="span6">
     <article class="graphic">
       <hgroup class="page-header">
-        <h2>Documentos Enviados por Tipo</h2>
+        <h2>Documentos Enviados por Tipo de Correspondencia</h2>
       </hgroup>
-      <canvas id="tipo" width="400" height="400"></canvas>
+      <canvas id="tipo" width="300" height="300"></canvas>
       <table class="table table-bordered table-striped no-more-tables">
         <caption>Leyenda</caption>
         <tbody>
           {% for dato in tipo %}
           <tr>
+            <td>{{ dato.nombre }}</td>
             <td>{{ dato.cantidad }}</td>
-            <td>{{ dato.nombre }}(s)</td>
+            <td>{{ (dato.cantidad / tipo_total * 100) // 1}}%</td>
             <td style="background-color: {{ dato.color }};"></td>
           </tr>
           {% endfor %}
         </tbody>
+        <tfoot>
+          <tr>
+            <th>Total:</th>
+            <th>{{ tipo_total }}</th>
+            <th colspan="2">100%</th>
+          </tr>
+        </tfoot>
       </table>
     </article>
   </div>
   <div class="span6">
     <article class="graphic">
       <hgroup class="page-header">
-        <h2>Documentos Recibidos por Tipo de Solicitud</h2>
+        <h2>Documentos Recibidos por Tipo de Correspondencia</h2>
       </hgroup>
-      <canvas id="tipificacion" width="400" height="400"></canvas>
+      <canvas id="tipo-recibido" width="300" height="300"></canvas>
       <table class="table table-bordered table-striped no-more-tables">
         <caption>Leyenda</caption>
         <tbody>
-          {% for dato in tipificacion %}
+          {% for dato in tipo_recibido %}
           <tr>
             <td>{{ dato.cantidad }}</td>
-            <td>{{ dato.nombre }}(s)</td>
-            <td style="background-color: {{ dato.color }};"></td>
+            <td>{{ dato.nombre }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -148,10 +173,14 @@
   data = [
     {
       value: {{ respondidos }},
+      label: 'Respondidos: ' + {{ respondidos }},
+      labelColor : 'white',
       color: '#3C13AF'
     },
     {
       value: {{ noRespondidos }},
+      label: 'No Respondidos: ' + {{ noRespondidos }},
+      labelColor : 'white',
       color: '#FFD600'
     }
   ]
@@ -162,6 +191,8 @@
     {% for dato in emisor %}
     {
       value: {{ dato.cantidad }},
+      label: '{{ (dato.cantidad / emisor_total * 100) // 1}}%',
+      labelColor : 'white',
       color: '{{ dato.color }}'
     },
     {% endfor %}
@@ -176,6 +207,8 @@
     {% for dato in tipo %}
     {
       value: {{ dato.cantidad }},
+      label: '{{ (dato.cantidad / tipo_total * 100) // 1}}%',
+      labelColor : 'white',
       color: '{{ dato.color }}'
     },
     {% endfor %}
@@ -190,6 +223,8 @@
     {% for dato in tipificacion %}
     {
       value: {{ dato.cantidad }},
+      label: '{{ (dato.cantidad / tipificacion_total * 100) // 1}}%',
+      labelColor : 'white',
       color: '{{ dato.color }}'
     },
     {% endfor %}

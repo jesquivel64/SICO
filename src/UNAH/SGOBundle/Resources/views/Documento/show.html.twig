@@ -124,7 +124,7 @@
               <div class="row">
                 {% for adjunto in entity.adjuntos %}
                 <section class="span3">
-                  <a  class="btn btn-info btn-block" href="../../../{{ adjunto.getWebPath() }}">Descargar {{ adjunto.nombre }}</a>
+                  <a target="_blank" class="btn btn-info btn-block" href="../../../{{ adjunto.getWebPath() }}">Descargar {{ adjunto.nombre }}</a>
                 </section>
                 <section class="span3">
                   <a class="btn btn-success btn-block" href="{{ path('adjunto_edit', { 'id': adjunto.id }) }}"><i class="icon-edit"></i> Editar Adjunto</a>

@@ -155,7 +155,7 @@ class LoadDepartamentoData extends AbstractFixture implements OrderedFixtureInte
             'Facultad de Ingeniería',
             'Facultad de Odontología',
             'Facultad de Quimica y Farmacia',
-            'Facultad Humanidades y Arte',
+            'Facultad Humanidades y Arte'
         );
         
         $instancias = array(
@@ -188,16 +188,32 @@ class LoadDepartamentoData extends AbstractFixture implements OrderedFixtureInte
             'Secretario SEDI',
             'SEDINAFROH',
             'SUED',
-            'VOAE',
+            'VOAE'
+        );
+        
+        $centros = array(
+            'Valle de Sula',
+            'TEC Danlí',
+            'Ciudad Universitaria (CU)',
+            'Litoral Atlántico CURLA',
+            'CUROC',
+            'CURVA',
+            'CURC',
+            'CURLP',
+            'CURNO',
+            'CURN',
+            'CURO'
         );
         
         $carrera = $this->getReference('carrera');
         $facultad = $this->getReference('facultad');
         $instancia = $this->getReference('instancia');
+        $centro = $this->getReference('centro');
         
         $coloresCarreras = ColorGenerator::generateUniqueHexColors(count($carreras));
         $coloresFacultades = ColorGenerator::generateUniqueHexColors(count($facultades));
         $coloresInstancias = ColorGenerator::generateUniqueHexColors(count($instancias));
+        $coloresCentros = ColorGenerator::generateUniqueHexColors(count($centros));
         
         foreach ($carreras as $i => $nombre) {
             $entity = new Departamento();
@@ -220,6 +236,14 @@ class LoadDepartamentoData extends AbstractFixture implements OrderedFixtureInte
             $entity->setNombre($nombre);
             $entity->setColor($coloresInstancias[$i]);
             $entity->setTipoDepartamento($instancia);
+            $manager->persist($entity);
+        }
+        
+        foreach ($centros as $i => $nombre) {
+            $entity = new Departamento();
+            $entity->setNombre($nombre);
+            $entity->setColor($coloresCentros[$i]);
+            $entity->setTipoDepartamento($centro);
             $manager->persist($entity);
         }
         

@@ -61,6 +61,14 @@ class Comentario
      */
     private $tiempo;
     
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="curso", type="boolean", nullable=true)
+     */
+    private $curso;
+    
     /**
      * @var boolean
      *
@@ -240,5 +248,28 @@ class Comentario
     public function getEditable()
     {
         return $this->editable;
+    }
+
+    /**
+     * Set curso
+     *
+     * @param boolean $curso
+     * @return Comentario
+     */
+    public function setCurso($curso)
+    {
+        $this->curso = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Get curso
+     *
+     * @return boolean 
+     */
+    public function getCurso()
+    {
+        return $this->curso;
     }
 }

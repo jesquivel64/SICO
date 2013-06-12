@@ -2,7 +2,7 @@
 {% block content %}
 <section class="row">
   <section class="span12 page-header">
-    <h1>Resumen de Documentos Recibidos <small> Sistema Integrado de Correspondencia</small></h1>
+    <h1>Estad&iacute;stica por Tipo de Solicitud y Tiempo de Respuesta</h1>
   </section>
 </section>
 <div class="row">
@@ -29,6 +29,7 @@
             <tr>
               <th>Tipo de Solicitud</th>
               <th>Cantidad</th>
+              <th>Tiempo Promedio de Respuesta</th>
               <th>Porcentaje</th>
             </tr>
           </thead>
@@ -37,6 +38,7 @@
             <tr>
               <td data-title="Tipo de Solicitud">{{ dato.nombre }}</td>
               <td data-title="Cantidad">{{ dato.cantidad }}</td>
+              <td data-title="Tiempo Promedio de Respuesta">{{ dato.tiempo }}</td>
               <td data-title="Porcentaje">{{ dato.porcentaje }}</td>
             </tr>
             {% endfor %}
@@ -57,37 +59,6 @@
         {% endif %}
       </section>
     </section>
-    <div class="row">
-      <section class="span9">
-        <hgroup class="page-header">
-          <h2>Solicitudes Enviadas a CGA<small> del {{ inicio|date("d/m/Y") }} al {{ fin|date("d/m/Y") }}</small></h2>
-        </hgroup>
-        <table class="no-more-tables table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>Tipo de Solicitud</th>
-              <th>Cantidad</th>
-              <th>Porcentaje</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for dato in cga %}
-            <tr>
-              <td data-title="Tipo de Solicitud">{{ dato.nombre }}</td>
-              <td data-title="Cantidad">{{ dato.cantidad }}</td>
-              <td data-title="Porcentaje">{{ dato.porcentaje }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>Total de Solicitudes</th>
-              <th colspan="2">{{ recibidos }}</th>
-            </tr>
-          </tfoot>
-        </table>
-      </section>
-    </div>
   </section>
 </div>
 {% endblock %}
