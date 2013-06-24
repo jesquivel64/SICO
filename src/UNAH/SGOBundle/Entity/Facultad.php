@@ -5,12 +5,12 @@ namespace UNAH\SGOBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoSolicitud
+ * Facultad
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class TipoSolicitud
+class Facultad
 {
     /**
      * @var integer
@@ -24,26 +24,37 @@ class TipoSolicitud
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $nombre;
-
+    
     /**
      * @var string
      *
-     * @ORM\Column(name="color", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $color;
     
     /**
-     * @ORM\OneToMany(targetEntity="Documento", mappedBy="tipoSolicitud")
+     * @ORM\OneToMany(targetEntity="Carrera", mappedBy="facultad")
+     * @ORM\OrderBy({"nombre" = "ASC"})
+     */
+    protected $carreras;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Documento", mappedBy="facultad")
      */
     protected $documentos;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Coordinacion", inversedBy="solicitudes")
+     * @ORM\ManyToMany(targetEntity="Centro", inversedBy="facultades")
      */
-    protected $coordinacion;
+    protected $centros;
+    
+    public function __toString()
+    {
+        return $this->nombre;
+    }
     
     /**
      * Get id
@@ -59,7 +70,7 @@ class TipoSolicitud
      * Set nombre
      *
      * @param string $nombre
-     * @return TipoSolicitud
+     * @return Facultad
      */
     public function setNombre($nombre)
     {
@@ -82,7 +93,7 @@ class TipoSolicitud
      * Set color
      *
      * @param string $color
-     * @return TipoSolicitud
+     * @return Facultad
      */
     public function setColor($color)
     {
@@ -105,14 +116,49 @@ class TipoSolicitud
      */
     public function __construct()
     {
+        $this->carreras = new \Doctrine\Common\Collections\ArrayCollection();
         $this->documentos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->centros = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add carreras
+     *
+     * @param \UNAH\SGOBundle\Entity\Carrera $carreras
+     * @return Facultad
+     */
+    public function addCarrera(\UNAH\SGOBundle\Entity\Carrera $carreras)
+    {
+        $this->carreras[] = $carreras;
+
+        return $this;
+    }
+
+    /**
+     * Remove carreras
+     *
+     * @param \UNAH\SGOBundle\Entity\Carrera $carreras
+     */
+    public function removeCarrera(\UNAH\SGOBundle\Entity\Carrera $carreras)
+    {
+        $this->carreras->removeElement($carreras);
+    }
+
+    /**
+     * Get carreras
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCarreras()
+    {
+        return $this->carreras;
     }
 
     /**
      * Add documentos
      *
      * @param \UNAH\SGOBundle\Entity\Documento $documentos
-     * @return TipoSolicitud
+     * @return Facultad
      */
     public function addDocumento(\UNAH\SGOBundle\Entity\Documento $documentos)
     {
@@ -140,32 +186,37 @@ class TipoSolicitud
     {
         return $this->documentos;
     }
-    
-    public function __toString()
-    {
-        return $this->nombre;
-    }
 
     /**
-     * Set coordinacion
+     * Add centros
      *
-     * @param \UNAH\SGOBundle\Entity\Coordinacion $coordinacion
-     * @return TipoSolicitud
+     * @param \UNAH\SGOBundle\Entity\Centro $centros
+     * @return Facultad
      */
-    public function setCoordinacion(\UNAH\SGOBundle\Entity\Coordinacion $coordinacion = null)
+    public function addCentro(\UNAH\SGOBundle\Entity\Centro $centros)
     {
-        $this->coordinacion = $coordinacion;
+        $this->centros[] = $centros;
 
         return $this;
     }
 
     /**
-     * Get coordinacion
+     * Remove centros
      *
-     * @return \UNAH\SGOBundle\Entity\Coordinacion 
+     * @param \UNAH\SGOBundle\Entity\Centro $centros
      */
-    public function getCoordinacion()
+    public function removeCentro(\UNAH\SGOBundle\Entity\Centro $centros)
     {
-        return $this->coordinacion;
+        $this->centros->removeElement($centros);
+    }
+
+    /**
+     * Get centros
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCentros()
+    {
+        return $this->centros;
     }
 }

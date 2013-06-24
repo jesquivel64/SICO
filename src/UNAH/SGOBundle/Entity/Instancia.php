@@ -5,12 +5,12 @@ namespace UNAH\SGOBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoSolicitud
+ * Instancia
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class TipoSolicitud
+class Instancia
 {
     /**
      * @var integer
@@ -36,15 +36,16 @@ class TipoSolicitud
     private $color;
     
     /**
-     * @ORM\OneToMany(targetEntity="Documento", mappedBy="tipoSolicitud")
+     * @ORM\OneToMany(targetEntity="Documento", mappedBy="instancia")
      */
     protected $documentos;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Coordinacion", inversedBy="solicitudes")
-     */
-    protected $coordinacion;
-    
+    public function __toString()
+    {
+        return $this->nombre;
+    }
+
+
     /**
      * Get id
      *
@@ -59,7 +60,7 @@ class TipoSolicitud
      * Set nombre
      *
      * @param string $nombre
-     * @return TipoSolicitud
+     * @return Instancia
      */
     public function setNombre($nombre)
     {
@@ -82,7 +83,7 @@ class TipoSolicitud
      * Set color
      *
      * @param string $color
-     * @return TipoSolicitud
+     * @return Instancia
      */
     public function setColor($color)
     {
@@ -112,7 +113,7 @@ class TipoSolicitud
      * Add documentos
      *
      * @param \UNAH\SGOBundle\Entity\Documento $documentos
-     * @return TipoSolicitud
+     * @return Instancia
      */
     public function addDocumento(\UNAH\SGOBundle\Entity\Documento $documentos)
     {
@@ -139,33 +140,5 @@ class TipoSolicitud
     public function getDocumentos()
     {
         return $this->documentos;
-    }
-    
-    public function __toString()
-    {
-        return $this->nombre;
-    }
-
-    /**
-     * Set coordinacion
-     *
-     * @param \UNAH\SGOBundle\Entity\Coordinacion $coordinacion
-     * @return TipoSolicitud
-     */
-    public function setCoordinacion(\UNAH\SGOBundle\Entity\Coordinacion $coordinacion = null)
-    {
-        $this->coordinacion = $coordinacion;
-
-        return $this;
-    }
-
-    /**
-     * Get coordinacion
-     *
-     * @return \UNAH\SGOBundle\Entity\Coordinacion 
-     */
-    public function getCoordinacion()
-    {
-        return $this->coordinacion;
     }
 }

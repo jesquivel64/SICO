@@ -1,0 +1,46 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+{% block content %}
+<section class="row">
+  <section class="span12 page-header">
+    <h1>{{ entity }} <small> Sistema Integrado de Correspondencia</small></h1>
+  </section>
+</section>
+<section class="row">
+  <section class="span12 full-print">
+    <table class="no-more-tables table table-striped table-bordered">
+      <caption>
+        Documentos Pendientes
+      </caption>
+      <thead>
+        <tr>
+          <th>N&uacute;mero</th>
+          <th>Descripci&oacute;n</th>
+          <th>Recibi&oacute;</th>
+          <th>Recepci&oacute;n</th>
+          <th>Emisi&oacute;n</th>
+          <th>Emisor</th>
+          <th class="no-print">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entity in documentos %}
+        <tr>
+          <td data-title="Número">{{ entity.numero }}</td>
+          <td data-title="Descripción">{{ entity.descripcion }}</td>
+          <td data-title="Recibio">{{ entity.recibio }}</td>
+          <td data-title="Fecha de Recibido">{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
+          <td data-title="Fecha de Emisión">{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
+          <td data-title="Emisor">
+            {% if entity.facultad %} {{ entity.facultad }} {% endif %}
+            {% if entity.carrera %} {{ entity.carrera }} {% endif %}
+            {% if entity.instancia %} {{ entity.instancia }} {% endif %}
+            {% if entity.centro %} {{ entity.centro }} {% endif %}
+          </td>
+          <td class="no-print"><a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a><a class="btn btn-success btn-block" href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}">Editar</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</section>
+{% endblock %}

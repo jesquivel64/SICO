@@ -69,17 +69,17 @@
   <div class="span6">
     <article class="graphic">
       <hgroup class="page-header">
-        <h2>Documentos Recibidos por Emisor</h2>
+        <h2>Documentos Recibidos por Centro</h2>
       </hgroup>
-      <canvas id="dependencias" width="300" height="300"></canvas>
+      <canvas id="centro" width="300" height="300"></canvas>
       <table class="table table-bordered table-striped no-more-tables">
         <caption>Leyenda</caption>
         <tbody>
-          {% for dato in emisor %}
+          {% for dato in centro %}
           <tr>
             <td>{{ dato.nombre }}</td>
             <td>{{ dato.cantidad }}</td>
-            <td>{{ (dato.cantidad / emisor_total * 100) // 1}}%</td>
+            <td>{{ (dato.cantidad / centro_total * 100) // 1}}%</td>
             <td style="background-color: {{ dato.color }};"></td>
           </tr>
           {% endfor %}
@@ -88,7 +88,65 @@
         <tfoot>
           <tr>
             <th>Total:</th>
-            <th>{{ emisor_total }}</th>
+            <th>{{ centro_total }}</th>
+            <th colspan="2">100%</th>
+          </tr>
+        </tfoot>
+      </table>
+    </article>
+  </div>
+</div>
+<div class="row">
+  <div class="span6">
+    <article class="graphic">
+      <hgroup class="page-header">
+        <h2>Documentos Recibidos por Facultad</h2>
+      </hgroup>
+      <canvas id="facultad" width="300" height="300"></canvas>
+      <table class="table table-bordered table-striped no-more-tables">
+        <caption>Leyenda</caption>
+        <tbody>
+          {% for dato in facultad %}
+          <tr>
+            <td>{{ dato.nombre }}</td>
+            <td>{{ dato.cantidad }}</td>
+            <td>{{ (dato.cantidad / facultad_total * 100) // 1}}%</td>
+            <td style="background-color: {{ dato.color }};"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total:</th>
+            <th>{{ facultad_total }}</th>
+            <th colspan="2">100%</th>
+          </tr>
+        </tfoot>
+      </table>
+    </article>
+  </div>
+  <div class="span6">
+    <article class="graphic">
+      <hgroup class="page-header">
+        <h2>Documentos Recibidos por Carrera</h2>
+      </hgroup>
+      <canvas id="carrera" width="300" height="300"></canvas>
+      <table class="table table-bordered table-striped no-more-tables">
+        <caption>Leyenda</caption>
+        <tbody>
+          {% for dato in carrera %}
+          <tr>
+            <td>{{ dato.nombre }}</td>
+            <td>{{ dato.cantidad }}</td>
+            <td>{{ (dato.cantidad / carrera_total * 100) // 1}}%</td>
+            <td style="background-color: {{ dato.color }};"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total:</th>
+            <th>{{ carrera_total }}</th>
             <th colspan="2">100%</th>
           </tr>
         </tfoot>
@@ -186,12 +244,12 @@
   ]
   var eficiencia = new Chart(ctx).Pie(data);
   
-  var ctx = document.getElementById("dependencias").getContext("2d");
+  var ctx = document.getElementById("centro").getContext("2d");
   data = [
-    {% for dato in emisor %}
+    {% for dato in centro %}
     {
       value: {{ dato.cantidad }},
-      label: '{{ (dato.cantidad / emisor_total * 100) // 1}}%',
+      label: '{{ (dato.cantidad / centro_total * 100) // 1}}%',
       labelColor : 'white',
       color: '{{ dato.color }}'
     },
@@ -200,7 +258,38 @@
       value: 0
     }
   ]
-  var emisor = new Chart(ctx).Pie(data);
+  var centro = new Chart(ctx).Pie(data);
+  
+  var ctx = document.getElementById("facultad").getContext("2d");
+  data = [
+    {% for dato in facultad %}
+    {
+      value: {{ dato.cantidad }},
+      label: '{{ (dato.cantidad / facultad_total * 100) // 1}}%',
+      labelColor : 'white',
+      color: '{{ dato.color }}'
+    },
+    {% endfor %}
+    {
+      value: 0
+    }
+  ]
+  var facultad = new Chart(ctx).Pie(data);
+  var ctx = document.getElementById("carrera").getContext("2d");
+  data = [
+    {% for dato in carrera %}
+    {
+      value: {{ dato.cantidad }},
+      label: '{{ (dato.cantidad / carrera_total * 100) // 1}}%',
+      labelColor : 'white',
+      color: '{{ dato.color }}'
+    },
+    {% endfor %}
+    {
+      value: 0
+    }
+  ]
+  var carrera = new Chart(ctx).Pie(data);
   
   var ctx = document.getElementById("tipo").getContext("2d");
   data = [

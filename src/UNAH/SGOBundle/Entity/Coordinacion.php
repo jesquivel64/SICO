@@ -5,12 +5,12 @@ namespace UNAH\SGOBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoSolicitud
+ * Coordinacion
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class TipoSolicitud
+class Coordinacion
 {
     /**
      * @var integer
@@ -20,14 +20,14 @@ class TipoSolicitud
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
     /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
      */
     private $nombre;
-
+    
     /**
      * @var string
      *
@@ -36,14 +36,20 @@ class TipoSolicitud
     private $color;
     
     /**
-     * @ORM\OneToMany(targetEntity="Documento", mappedBy="tipoSolicitud")
+     * @ORM\OneToMany(targetEntity="TipoSolicitud", mappedBy="coordinacion")
+     * @ORM\OrderBy({"nombre" = "ASC"})
+     */
+    protected $solicitudes;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Documento", mappedBy="coordinacion")
      */
     protected $documentos;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Coordinacion", inversedBy="solicitudes")
-     */
-    protected $coordinacion;
+    public function __toString()
+    {
+        return $this->nombre;
+    }
     
     /**
      * Get id
@@ -59,7 +65,7 @@ class TipoSolicitud
      * Set nombre
      *
      * @param string $nombre
-     * @return TipoSolicitud
+     * @return Coordinacion
      */
     public function setNombre($nombre)
     {
@@ -82,7 +88,7 @@ class TipoSolicitud
      * Set color
      *
      * @param string $color
-     * @return TipoSolicitud
+     * @return Coordinacion
      */
     public function setColor($color)
     {
@@ -105,14 +111,48 @@ class TipoSolicitud
      */
     public function __construct()
     {
+        $this->solicitudes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->documentos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add solicitudes
+     *
+     * @param \UNAH\SGOBundle\Entity\TipoSolicitud $solicitudes
+     * @return Coordinacion
+     */
+    public function addSolicitude(\UNAH\SGOBundle\Entity\TipoSolicitud $solicitudes)
+    {
+        $this->solicitudes[] = $solicitudes;
+
+        return $this;
+    }
+
+    /**
+     * Remove solicitudes
+     *
+     * @param \UNAH\SGOBundle\Entity\TipoSolicitud $solicitudes
+     */
+    public function removeSolicitude(\UNAH\SGOBundle\Entity\TipoSolicitud $solicitudes)
+    {
+        $this->solicitudes->removeElement($solicitudes);
+    }
+
+    /**
+     * Get solicitudes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSolicitudes()
+    {
+        return $this->solicitudes;
     }
 
     /**
      * Add documentos
      *
      * @param \UNAH\SGOBundle\Entity\Documento $documentos
-     * @return TipoSolicitud
+     * @return Coordinacion
      */
     public function addDocumento(\UNAH\SGOBundle\Entity\Documento $documentos)
     {
@@ -139,33 +179,5 @@ class TipoSolicitud
     public function getDocumentos()
     {
         return $this->documentos;
-    }
-    
-    public function __toString()
-    {
-        return $this->nombre;
-    }
-
-    /**
-     * Set coordinacion
-     *
-     * @param \UNAH\SGOBundle\Entity\Coordinacion $coordinacion
-     * @return TipoSolicitud
-     */
-    public function setCoordinacion(\UNAH\SGOBundle\Entity\Coordinacion $coordinacion = null)
-    {
-        $this->coordinacion = $coordinacion;
-
-        return $this;
-    }
-
-    /**
-     * Get coordinacion
-     *
-     * @return \UNAH\SGOBundle\Entity\Coordinacion 
-     */
-    public function getCoordinacion()
-    {
-        return $this->coordinacion;
     }
 }

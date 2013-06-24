@@ -269,18 +269,15 @@ class ColorGenerator {
             '#0F4D92',
             '#FFFF00',
         );
-        
-        if ($quantity >= count($source)) {
-            return false;
-        }
+        $quantity = (intval($quantity) == 0) ? 1 : intval($quantity);
         
         $colors = array();
-        $quantity = (intval($quantity) == 0) ? 1 : intval($quantity);
         $escogidos = array();
+        $source_amount = count($source);
         for ($i = 0; $i < $quantity; $i++) {
-            $choice = mt_rand(0, count($source));
-            while (in_array($choice, $escogidos)) {
-                $choice = mt_rand(0, count($source));
+            $choice = mt_rand(0, $source_amount);
+            while (in_array($choice, $escogidos) or $choice >= $source_amount) {
+                $choice = mt_rand(0, $source_amount);
             }
             $colors[] = $source[$choice];
             $escogidos[] =  $choice;

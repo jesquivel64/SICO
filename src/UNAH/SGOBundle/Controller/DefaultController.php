@@ -22,8 +22,10 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $tipos = $em->getRepository('UNAHSGOBundle:TipoDocumento')->findAll();
+        $coordinaciones = $em->getRepository('UNAHSGOBundle:Coordinacion')->findAll();
         return array(
             'tipos' => $tipos,
+            'coordinaciones' => $coordinaciones,
         );
     }
     

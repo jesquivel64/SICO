@@ -2,7 +2,7 @@
 {% block content %}
 <section class="row">
   <section class="span12 page-header">
-    <h1>Estad&iacute;stica por Tipo de Solicitud y Tiempo de Respuesta</h1>
+    <h1>Resumen de Documentos Recibidos <small> Sistema Integrado de Correspondencia</small></h1>
   </section>
 </section>
 <div class="row">
@@ -21,9 +21,16 @@
   <section class="span9">
     <section class="row">
       <section class="span9">
-        <hgroup class="page-header">
+        <div class="page-header">
           <h2>Solicitudes Recibidas<small> del {{ inicio|date("d/m/Y") }} al {{ fin|date("d/m/Y") }}</small></h2>
-        </hgroup>
+        </div>
+        {% if count == 0 %}
+        <p>No se encontraron Documentos Respondidos</p>
+        {% else %}
+        <p>
+          Tiempo Promedio de Respuesta: {{ tiempo }} Horas.
+        </p>
+        {% endif %}
         <table class="no-more-tables table table-striped table-bordered">
           <thead>
             <tr>
@@ -50,13 +57,34 @@
             </tr>
           </tfoot>
         </table>
-        {% if count == 0 %}
-        <p>No se encontraron Documentos Respondidos</p>
-        {% else %}
-        <p>
-          Tiempo Promedio de Respuesta: {{ tiempo }} Horas.
-        </p>
-        {% endif %}
+      </section>
+    </section>
+    <section class="row">
+      <section class="span9">
+        <table class="no-more-tables table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Coordinaci&oacute;n</th>
+              <th>Cantidad</th>
+              <th>Porcentaje</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for dato in coordinacion %}
+            <tr>
+              <td data-title="Tipo de Solicitud">{{ dato.nombre }}</td>
+              <td data-title="Cantidad">{{ dato.cantidad }}</td>
+              <td data-title="Porcentaje">{{ dato.porcentaje }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total de Solicitudes</th>
+              <th colspan="2">{{ recibidos }}</th>
+            </tr>
+          </tfoot>
+        </table>
       </section>
     </section>
   </section>

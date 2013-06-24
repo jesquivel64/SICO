@@ -7,7 +7,10 @@
       <div class="page-header">
         <h1>{{ entity.numero }} <small>{{ entity.tipo }}
           {% if entity.recibido %}
-          {{ entity.emisor }}
+          {% if entity.facultad %} {{ entity.facultad }} {% endif %}
+          {% if entity.carrera %} {{ entity.carrera }} {% endif %}
+          {% if entity.instancia %} {{ entity.instancia }} {% endif %}
+          {% if entity.centro %} {{ entity.centro }} {% endif %}
           {% endif %}{% if not entity.recibido %}Enviado{% endif %}</small></h1>
       </div>
     </div>
@@ -104,7 +107,10 @@
                 {% endif %}
                 {% if entity.recibido %}
                 <li>
-                  Emisor: {{ entity.emisor }}
+                  {% if entity.facultad %} {{ entity.facultad }} {% endif %}
+                  {% if entity.carrera %} {{ entity.carrera }} {% endif %}
+                  {% if entity.instancia %} {{ entity.instancia }} {% endif %}
+                  {% if entity.centro %} {{ entity.centro }} {% endif %}
                 </li>
                 {% endif %}
                 {% if not entity.recibido %}

@@ -1,17 +1,17 @@
 <?php
 
+
 namespace UNAH\SGOBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-use UNAH\SGOBundle\Entity\TipoDepartamento;
-use UNAH\SGOBundle\Entity\Departamento;
+use UNAH\SGOBundle\Entity\Carrera;
 
-class LoadDepartamentoData extends AbstractFixture implements OrderedFixtureInterface
+class LoadCarreraData extends AbstractFixture implements OrderedFixtureInterface
 {
-	/**
+    /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager)
@@ -145,105 +145,12 @@ class LoadDepartamentoData extends AbstractFixture implements OrderedFixtureInte
             'Terapia Funcional',
             'Trabajo Social'
         );
-        
-        $facultades = array(
-            'Facultad de Ciencias',
-            'Facultad de Ciencias Económicas',
-            'Facultad de Ciencias Espaciales',
-            'Facultad de Ciencias Jurídicas',
-            'Facultad de Ciencias Medicas',
-            'Facultad de Ingeniería',
-            'Facultad de Odontología',
-            'Facultad de Quimica y Farmacia',
-            'Facultad Humanidades y Arte'
-        );
-        
-        $instancias = array(
-            'Dirección Academica de Formación Tecnologica',
-            'Dirección de Admisión',
-            'Dirección de Autoevaluación',
-            'Dirección de Cultura',
-            'Dirección de Docencia',
-            'Dirección de Educación Superior',
-            'Dirección de Estudios de Postgrado',
-            'Dirección de Evaluación Permanente de la Calidad',
-            'Dirección de Formación Tecnologica',
-            'Dirección de Ingreso, Permanencia y Promoción',
-            'Dirección de Innovación Educativa',
-            'Dirección de Investigación Cientifica',
-            'Dirección de la DIE',
-            'Dirección de Vinculación Universidad Sociedad',
-            'Dirección del Instituto de Profesionalización y Superación Docente',
-            'Dirección del Observatorio',
-            'Dirección del Sistema de Administración',
-            'Dirección del Sistema de Educación a Distancia',
-            'Dirección Escuela Madrid',
-            'Dirección Instituto Forestal',
-            'Director ITST',
-            'ETF',
-            'Oficina de Registro',
-            'Prosene',
-            'Secretaria Ejecutiva de Desarrollo de Personal',
-            'Secretaria General',
-            'Secretario SEDI',
-            'SEDINAFROH',
-            'SUED',
-            'VOAE'
-        );
-        
-        $centros = array(
-            'Valle de Sula',
-            'TEC Danlí',
-            'Ciudad Universitaria (CU)',
-            'Litoral Atlántico CURLA',
-            'CUROC',
-            'CURVA',
-            'CURC',
-            'CURLP',
-            'CURNO',
-            'CURN',
-            'CURO'
-        );
-        
-        $carrera = $this->getReference('carrera');
-        $facultad = $this->getReference('facultad');
-        $instancia = $this->getReference('instancia');
-        $centro = $this->getReference('centro');
-        
-        $coloresCarreras = ColorGenerator::generateUniqueHexColors(count($carreras));
-        $coloresFacultades = ColorGenerator::generateUniqueHexColors(count($facultades));
-        $coloresInstancias = ColorGenerator::generateUniqueHexColors(count($instancias));
-        $coloresCentros = ColorGenerator::generateUniqueHexColors(count($centros));
+        $colores = ColorGenerator::generateUniqueHexColors(count($carreras));
         
         foreach ($carreras as $i => $nombre) {
-            $entity = new Departamento();
+            $entity = new Carrera();
             $entity->setNombre($nombre);
-            $entity->setColor($coloresCarreras[$i]);
-            $entity->setTipoDepartamento($carrera);
-            $manager->persist($entity);
-        }
-        
-        foreach ($facultades as $i => $nombre) {
-            $entity = new Departamento();
-            $entity->setNombre($nombre);
-            $entity->setColor($coloresFacultades[$i]);
-            $entity->setTipoDepartamento($facultad);
-            $manager->persist($entity);
-        }
-        
-        foreach ($instancias as $i => $nombre) {
-            $entity = new Departamento();
-            $entity->setNombre($nombre);
-            $entity->setColor($coloresInstancias[$i]);
-            $entity->setTipoDepartamento($instancia);
-            $manager->persist($entity);
-        }
-        
-        foreach ($centros as $i => $nombre) {
-            $entity = new Departamento();
-            $entity->setNombre($nombre);
-            $entity->setColor($coloresCentros[$i]);
-            $entity->setTipoDepartamento($centro);
+            $entity->setColor($colores[$i]);
             $manager->persist($entity);
         }
         
@@ -255,6 +162,7 @@ class LoadDepartamentoData extends AbstractFixture implements OrderedFixtureInte
      */
     public function getOrder()
     {
-        return 11; // the order in which fixtures will be loaded
+        return 5; // the order in which fixtures will be loaded
     }
 }
+

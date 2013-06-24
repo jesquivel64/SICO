@@ -74,7 +74,12 @@
                 <td data-title="Recibio">{{ entity.recibio }}</td>
                 <td data-title="Fecha de Recibido">{{ entity.getFechaDeRecibido|date("d/m/Y") }}</td>
                 <td data-title="Fecha de Emisión">{{ entity.getFechaDeEmision|date("d/m/Y") }}</td>
-                <td data-title="Emisor">{{ entity.emisor }}</td>
+                <td data-title="Emisor">
+                  {% if entity.facultad %} {{ entity.facultad }} {% endif %}
+                  {% if entity.carrera %} {{ entity.carrera }} {% endif %}
+                  {% if entity.instancia %} {{ entity.instancia }} {% endif %}
+                  {% if entity.centro %} {{ entity.centro }} {% endif %}
+                </td>
                 <td class="no-print"><a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a><a class="btn btn-success btn-block" href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}">Editar</a></td>
               </tr>
               {% endfor %}

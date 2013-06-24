@@ -41,3 +41,7 @@ UNAHSGOBundle_accion:
 UNAHSGOBundle_tipoaccion:
     resource: "@UNAHSGOBundle/Resources/config/routing/tipoaccion.yml"
     prefix:   /tipoaccion
+
+UNAHSGOBundle_coordinacion:
+    resource: "@UNAHSGOBundle/Resources/config/routing/coordinacion.yml"
+    prefix:   /coordinacion

@@ -904,7 +904,7 @@ class DocumentoController extends Controller
                 ->getQuery();
             $tipo_recibido = $query->getResult();
             
-            $qb = $em->createQueryBuilder('d', 'e');
+            $qb = $em->createQueryBuilder('d', 'c');
             
             $query = $qb->select('count(d) as cantidad')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
@@ -914,19 +914,90 @@ class DocumentoController extends Controller
                 ->setParameter('inicio', $form->get('inicio_periodo')->getData())
                 ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
-            $emisorTotal = $query->getSingleScalarResult();
+            $centroTotal = $query->getSingleScalarResult();
                 
-            $query = $qb->select('count(d) as cantidad, e.nombre, e.color')
-                ->leftJoin('d.emisor', 'e')
+            $query = $qb->select('count(d) as cantidad, c.nombre, c.color')
+                ->leftJoin('d.centro', 'c')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
-                ->groupBy('e.id')
+                ->groupBy('c.id')
                 ->setParameter('recibido', TRUE)
                 ->setParameter('inicio', $form->get('inicio_periodo')->getData())
                 ->setParameter('fin', $form->get('fin_periodo')->getData())
                 ->getQuery();
             
-            $emisor = $query->getResult();
+            $centro = $query->getResult();
+            $qb = $em->createQueryBuilder('d', 'i');
+            
+            $query = $qb->select('count(d) as cantidad')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            $instanciaTotal = $query->getSingleScalarResult();
+                
+            $query = $qb->select('count(d) as cantidad, i.nombre, i.color')
+                ->leftJoin('d.instancia', 'i')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('i.id')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            
+            $instancia = $query->getResult();
+            
+            $qb = $em->createQueryBuilder('d', 'f');
+            
+            $query = $qb->select('count(d) as cantidad')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            $facultadTotal = $query->getSingleScalarResult();
+                
+            $query = $qb->select('count(d) as cantidad, f.nombre, f.color')
+                ->leftJoin('d.facultad', 'f')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('f.id')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            
+            $facultad = $query->getResult();
+            
+            $qb = $em->createQueryBuilder('d', 'c');
+            
+            $query = $qb->select('count(d) as cantidad')
+                ->from('UNAH\SGOBundle\Entity\Documento', 'd')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            $carreraTotal = $query->getSingleScalarResult();
+                
+            $query = $qb->select('count(d) as cantidad, c.nombre, c.color')
+                ->leftJoin('d.carrera', 'c')
+                ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
+                ->andWhere('d.recibido = :recibido')
+                ->groupBy('c.id')
+                ->setParameter('recibido', TRUE)
+                ->setParameter('inicio', $form->get('inicio_periodo')->getData())
+                ->setParameter('fin', $form->get('fin_periodo')->getData())
+                ->getQuery();
+            
+            $carrera = $query->getResult();
             
             $qb = $em->createQueryBuilder('d', 't');
             
@@ -958,8 +1029,14 @@ class DocumentoController extends Controller
                 'respondidos' => $respondidos,
                 'noRespondidos' => $noRespondidos,
                 'enviados' => $enviados,
-                'emisor' => $emisor,
-                'emisor_total' => $emisorTotal,
+                'centro' => $centro,
+                'centro_total' => $centroTotal,
+                'instancia' => $instancia,
+                'instancia_total' => $instanciaTotal,
+                'facultad' => $facultad,
+                'facultad_total' => $facultadTotal,
+                'carrera' => $carrera,
+                'carrera_total' => $carreraTotal,
                 'tipo' => $tipo,
                 'tipo_total' => $tipoTotal,
                 'tipo_recibido' => $tipo_recibido,
@@ -1030,22 +1107,20 @@ class DocumentoController extends Controller
             }
             $tipificacion = $tipos;
             
-            $qb = $em->createQueryBuilder('d', 't');
-            $query = $qb->select('count(d) as cantidad, count(d) / :total *100 as porcentaje, t.nombre, t.color')
+            $qb = $em->createQueryBuilder('d', 'c');
+            $query = $qb->select('count(d) as cantidad, count(d) / :total *100 as porcentaje, c.nombre, c.color')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
-                ->leftJoin('d.tipoSolicitud', 't')
+                ->leftJoin('d.coordinacion', 'c')
                 ->where($qb->expr()->between('d.fechaDeRecibido', ':inicio', ':fin'))
                 ->andWhere('d.recibido = :recibido')
-                ->andWhere('d.gca = :cga')
-                ->groupBy('t.id')
+                ->groupBy('c.id')
                 ->setParameter('total', $recibidos)
                 ->setParameter('recibido', TRUE)
-                ->setParameter('cga', TRUE)
                 ->setParameter('inicio', $form->get('inicio_periodo1')->getData())
                 ->setParameter('fin', $form->get('fin_periodo1')->getData())
                 ->getQuery();
             
-            $cga = $query->getResult();
+            $coordinacion = $query->getResult();
             
             $qb = $em->createQueryBuilder();
             $query = $qb->select('d')
@@ -1089,7 +1164,7 @@ class DocumentoController extends Controller
             return array(
                 'recibidos' => $recibidos,
                 'tipificacion' => $tipificacion,
-                'cga' => $cga,
+                'coordinacion' => $coordinacion,
                 'tiempo' => $tiempo,
                 'count' => $count,
                 'inicio' => $form->get('inicio_periodo1')->getData(),

@@ -24,9 +24,42 @@ class Documento
     
     /**
      * @ORM\ManyToOne(targetEntity="TipoDocumento", inversedBy="documentos")
-     * @ORM\JoinColumn(name="tipo_documento_id", referencedColumnName="id")
      */
     protected $tipo;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Coordinacion", inversedBy="documentos")
+     */
+    protected $coordinacion;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoSolicitud", inversedBy="documentos")
+     */
+    protected $tipoSolicitud;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Centro", inversedBy="documentos")
+     */
+    protected $centro;
+    /**
+     * @ORM\ManyToOne(targetEntity="Instancia", inversedBy="documentos")
+     */
+    protected $instancia;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Facultad", inversedBy="documentos")
+     */
+    protected $facultad;
+    /**
+     * @ORM\ManyToOne(targetEntity="Carrera", inversedBy="documentos")
+     */
+    protected $carrera;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Departamento", inversedBy="documentosEnviados")
+     * @ORM\JoinTable(name="enviado_departamento")
+     */
+    protected $receptores;
     
     /**
      * @var string
@@ -38,7 +71,7 @@ class Documento
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
+     * @ORM\Column(name="descripcion", type="text", nullable=true)
      */
     protected $descripcion;
     
@@ -59,7 +92,7 @@ class Documento
     /**
      * @var string
      *
-     * @ORM\Column(name="destinatario", type="string", length=255, nullable=true)
+     * @ORM\Column(name="destinatario", type="text",  nullable=true)
      */
     protected $destinatario;
     
@@ -92,26 +125,18 @@ class Documento
     protected $fechaDeRecibido;
     
     /**
-     * @ORM\OneToMany(targetEntity="Adjunto", mappedBy="documento")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_de_respuesta", type="datetime", nullable=true)
      */
-    protected $adjuntos;
+    protected $fechaDeRespuesta;
     
     /**
-     * @ORM\OneToMany(targetEntity="Comentario", mappedBy="documento")
+     * @var integer
+     *
+     * @ORM\Column(name="tiempo", type="integer")
      */
-    protected $comentarios;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Departamento", inversedBy="documentosRecibidos")
-     * @ORM\JoinColumn(name="emisor_id", referencedColumnName="id")
-     */
-    protected $emisor;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="Departamento", inversedBy="documentosEnviados")
-     * @ORM\JoinTable(name="enviado_departamento")
-     */
-    protected $receptores;
+    protected $tiempo;
     
     /**
      * @var boolean
@@ -128,40 +153,11 @@ class Documento
     protected $recibido = FALSE;
     
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_de_respuesta", type="datetime", nullable=true)
-     */
-    protected $fechaDeRespuesta;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="Documento", inversedBy="respuestas")
-     * @ORM\JoinTable(name="documento_respuesta",
-     *      joinColumns={@ORM\JoinColumn(name="documento_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="respuesta_id", referencedColumnName="id")}
-     *      )
-     */
-    protected $respuestas;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="TipoSolicitud", inversedBy="documentos")
-     * @ORM\JoinColumn(name="tipo_solicitud_id", referencedColumnName="id")
-     */
-    protected $tipoSolicitud;
-    
-    /**
      * @var boolean
      *
      * @ORM\Column(name="responder", type="boolean", nullable=true)
      */
     protected $responder = FALSE;
-    
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="gca", type="boolean")
-     */
-    protected $gca = FALSE;
     
     /**
      * @var boolean
@@ -178,16 +174,28 @@ class Documento
     protected $copia = FALSE;
     
     /**
+     * @ORM\OneToMany(targetEntity="Adjunto", mappedBy="documento")
+     */
+    protected $adjuntos;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Accion", mappedBy="documento")
      */
     protected $acciones;
     
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tiempo", type="integer")
+     * @ORM\OneToMany(targetEntity="Comentario", mappedBy="documento")
      */
-    protected $tiempo;
+    protected $comentarios;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Documento", inversedBy="respuestas")
+     * @ORM\JoinTable(name="documento_respuesta",
+     *      joinColumns={@ORM\JoinColumn(name="documento_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="respuesta_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $respuestas;
     
     /**
      * @Assert\True(message = "La Fecha de Recepción no puede ser mayor que el día de hoy")
@@ -871,5 +879,120 @@ class Documento
     public function getTiempo()
     {
         return $this->tiempo;
+    }
+
+    /**
+     * Set coordinacion
+     *
+     * @param \UNAH\SGOBundle\Entity\Coordinacion $coordinacion
+     * @return Documento
+     */
+    public function setCoordinacion(\UNAH\SGOBundle\Entity\Coordinacion $coordinacion = null)
+    {
+        $this->coordinacion = $coordinacion;
+
+        return $this;
+    }
+
+    /**
+     * Get coordinacion
+     *
+     * @return \UNAH\SGOBundle\Entity\Coordinacion 
+     */
+    public function getCoordinacion()
+    {
+        return $this->coordinacion;
+    }
+
+    /**
+     * Set centro
+     *
+     * @param \UNAH\SGOBundle\Entity\Centro $centro
+     * @return Documento
+     */
+    public function setCentro(\UNAH\SGOBundle\Entity\Centro $centro = null)
+    {
+        $this->centro = $centro;
+
+        return $this;
+    }
+
+    /**
+     * Get centro
+     *
+     * @return \UNAH\SGOBundle\Entity\Centro 
+     */
+    public function getCentro()
+    {
+        return $this->centro;
+    }
+
+    /**
+     * Set instancia
+     *
+     * @param \UNAH\SGOBundle\Entity\Instancia $instancia
+     * @return Documento
+     */
+    public function setInstancia(\UNAH\SGOBundle\Entity\Instancia $instancia = null)
+    {
+        $this->instancia = $instancia;
+
+        return $this;
+    }
+
+    /**
+     * Get instancia
+     *
+     * @return \UNAH\SGOBundle\Entity\Instancia 
+     */
+    public function getInstancia()
+    {
+        return $this->instancia;
+    }
+
+    /**
+     * Set facultad
+     *
+     * @param \UNAH\SGOBundle\Entity\Facultad $facultad
+     * @return Documento
+     */
+    public function setFacultad(\UNAH\SGOBundle\Entity\Facultad $facultad = null)
+    {
+        $this->facultad = $facultad;
+
+        return $this;
+    }
+
+    /**
+     * Get facultad
+     *
+     * @return \UNAH\SGOBundle\Entity\Facultad 
+     */
+    public function getFacultad()
+    {
+        return $this->facultad;
+    }
+
+    /**
+     * Set carrera
+     *
+     * @param \UNAH\SGOBundle\Entity\Carrera $carrera
+     * @return Documento
+     */
+    public function setCarrera(\UNAH\SGOBundle\Entity\Carrera $carrera = null)
+    {
+        $this->carrera = $carrera;
+
+        return $this;
+    }
+
+    /**
+     * Get carrera
+     *
+     * @return \UNAH\SGOBundle\Entity\Carrera 
+     */
+    public function getCarrera()
+    {
+        return $this->carrera;
     }
 }

@@ -1,0 +1,30 @@
+coordinacion:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Coordinacion:index" }
+
+coordinacion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Coordinacion:show" }
+
+coordinacion_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:Coordinacion:new" }
+
+coordinacion_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:Coordinacion:create" }
+    requirements: { _method: post }
+
+coordinacion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Coordinacion:edit" }
+
+coordinacion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Coordinacion:update" }
+    requirements: { _method: post|put }
+
+coordinacion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Coordinacion:delete" }
+    requirements: { _method: post|delete }

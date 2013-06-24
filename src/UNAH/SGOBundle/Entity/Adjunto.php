@@ -81,25 +81,19 @@ class Adjunto
     /**
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
+     */ 
+     public function upload()
+     {
+        // the file property can be empty if the field is not required
         if (null === $this->file) {
             return;
         }
 
-        // you must throw an exception here if the file cannot be moved
-        // so that the entity is not persisted to the database
-        // which the UploadedFile move() method does
-        $this->file->move(
-            $this->getUploadRootDir(),
-            $this->file->getClientOriginalName()
-        );
-		$this->path = $this->file->getClientOriginalName();
-
+        $hashName = sha1($this->file->getClientOriginalName() . $this->getId() . mt_rand(0, 99999));
+        $this->filePath = $hashName . '.' . $this->file->guessExtension();
+        $this->file->move($this->getUploadRootDir(), $this->getFilePath());
         unset($this->file);
     }
-	
     /**
      * @ORM\PreRemove()
      */

@@ -1,5 +1,4 @@
 function SICO() {
-    $('input, textarea').placeholder();
     var boton = $('<a class="btn" href="#">Nuevo Tipo de Acción</a>');
     boton.click(function() {
         $('#dialog-tipo-accion').dialog('open');
@@ -36,6 +35,9 @@ function SICO() {
 	  changeMonth: true,
 	  changeYear: true
 	});
+    $('.chosen-select').chosen({
+    	allow_single_deselect: true
+    });
     $('.ajax-form').submit(function(event){
     	event.preventDefault();
 		var form = $(this);

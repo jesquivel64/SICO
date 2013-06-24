@@ -54,7 +54,10 @@
             {% endif %}
             {% if entity.recibido %}
             <li>
-              Emisor: {{ entity.emisor }}
+              {% if entity.facultad %} {{ entity.facultad }} {% endif %}
+              {% if entity.carrera %} {{ entity.carrera }} {% endif %}
+              {% if entity.instancia %} {{ entity.instancia }} {% endif %}
+              {% if entity.centro %} {{ entity.centro }} {% endif %}
             </li>
             {% endif %}
             {% if not entity.recibido %}

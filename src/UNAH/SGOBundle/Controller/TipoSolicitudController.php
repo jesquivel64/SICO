@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use UNAH\SGOBundle\Entity\TipoSolicitud;
+use UNAH\SGOBundle\Entity\Coordinacion;
 use UNAH\SGOBundle\Form\TipoSolicitudType;
 
 /**
@@ -27,6 +28,15 @@ class TipoSolicitudController extends Controller
         return $this->render('UNAHSGOBundle:TipoSolicitud:index.html.twig', array(
             'entities' => $entities,
         ));
+    }
+    
+    public function coordinacionAction($coordinacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $coordinacion = $em->getRepository('UNAHSGOBundle:Coordinacion')->find($coordinacion);
+        
+        $serializer = $this->container->get('jms_serializer');
+        return new Response($serializer->serialize($coordinacion->getSolicitudes(), 'json'));
     }
 
     /**

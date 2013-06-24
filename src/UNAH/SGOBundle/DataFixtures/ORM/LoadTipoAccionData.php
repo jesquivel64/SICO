@@ -3,20 +3,26 @@
 
 namespace UNAH\SGOBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 use UNAH\SGOBundle\Entity\TipoAccion;
 
-class LoadTipoAccionData extends AbstractFixture implements OrderedFixtureInterface
+class LoadTipoAccionData implements FixtureInterface, ContainerAwareInterface
 {
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null) {
+        $this -> container = $container;
+    }
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager)
     {
-        $colores = ColorGenerator::generateUniqueHexColors(5);
         $tipos = array(
             'Archivado',
             'Trasladar a para emitir Dictamen',
@@ -24,6 +30,7 @@ class LoadTipoAccionData extends AbstractFixture implements OrderedFixtureInterf
             'Programar Reunión, Cita, Taller o Evento',
             'Elaborar Oficio de Respuesta',
         );
+        $colores = ColorGenerator::generateUniqueHexColors(count($tipos));
         
         foreach ($tipos as $i => $nombre) {
             $entity = new TipoAccion();
@@ -33,14 +40,6 @@ class LoadTipoAccionData extends AbstractFixture implements OrderedFixtureInterf
         }
         
         $manager->flush();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getOrder()
-    {
-        return 6; // the order in which fixtures will be loaded
     }
 }
 

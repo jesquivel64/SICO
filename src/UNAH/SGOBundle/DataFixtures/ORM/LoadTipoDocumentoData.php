@@ -42,7 +42,7 @@ class LoadTipoDocumentoData extends AbstractFixture implements OrderedFixtureInt
      */
     public function getOrder()
     {
-        return 3; // the order in which fixtures will be loaded
+        return 1; // the order in which fixtures will be loaded
     }
 }
 
