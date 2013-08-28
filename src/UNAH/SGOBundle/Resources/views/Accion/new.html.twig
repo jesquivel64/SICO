@@ -3,7 +3,14 @@
 <section class="row">
   <section class="span12">
     <hgroup class="page-header">
-      <h1>Especificar una Acci&oacute;n <small>{{ documento.tipo }} {% if documento.recibido %} {{ documento.emisor }} {% else %} Enviado {% endif %} {{ documento.numero }}</small></h1>
+      <h1>Especificar una Acci&oacute;n <small>{{ documento.tipo }} {% if documento.recibido %}
+          {{ documento.instancia }}
+          {{ documento.carrera }},
+          {{ documento.facultad }},
+          {{ documento.centro }}
+        {% else %}
+          Enviado {% endif %}
+        {{ documento.numero }}</small></h1>
     </hgroup>
   </section>
 </section>

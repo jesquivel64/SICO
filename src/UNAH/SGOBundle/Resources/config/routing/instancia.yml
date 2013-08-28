@@ -1,0 +1,30 @@
+instancia:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Instancia:index" }
+
+instancia_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Instancia:show" }
+
+instancia_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:Instancia:new" }
+
+instancia_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:Instancia:create" }
+    requirements: { _method: post }
+
+instancia_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Instancia:edit" }
+
+instancia_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Instancia:update" }
+    requirements: { _method: post|put }
+
+instancia_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Instancia:delete" }
+    requirements: { _method: post|delete }

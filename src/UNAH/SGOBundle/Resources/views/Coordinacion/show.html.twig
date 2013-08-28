@@ -19,6 +19,7 @@
           <th>Recepci&oacute;n</th>
           <th>Emisi&oacute;n</th>
           <th>Emisor</th>
+          <th>Tipo de Solicitud</th>
           <th class="no-print">Acciones</th>
         </tr>
       </thead>
@@ -36,6 +37,7 @@
             {% if entity.instancia %} {{ entity.instancia }} {% endif %}
             {% if entity.centro %} {{ entity.centro }} {% endif %}
           </td>
+          <td>{{ entity.tipoSolicitud }}</td>
           <td class="no-print"><a class="btn btn-primary btn-block" href="{{ path('documento_show', { 'id': entity.id }) }}">Mostrar</a><a class="btn btn-success btn-block" href="{{ path('documento_edit_recibido', { 'id': entity.id }) }}">Editar</a></td>
         </tr>
         {% endfor %}

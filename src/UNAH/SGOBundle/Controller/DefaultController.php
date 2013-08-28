@@ -28,6 +28,23 @@ class DefaultController extends Controller
             'coordinaciones' => $coordinaciones,
         );
     }
+    /**
+     * Lists all Oficio entities.
+     *
+     * @Route("/", name="oficio")
+     * @Method("GET")
+     * @Template()
+     */
+    public function helpAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tipos = $em->getRepository('UNAHSGOBundle:TipoDocumento')->findAll();
+        $coordinaciones = $em->getRepository('UNAHSGOBundle:Coordinacion')->findAll();
+        return array(
+            'tipos' => $tipos,
+            'coordinaciones' => $coordinaciones,
+        );
+    }
     
     /**
      * Lists all Oficio entities.

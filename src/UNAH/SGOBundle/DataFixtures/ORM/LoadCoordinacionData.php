@@ -66,7 +66,6 @@ class LoadCoordinacionData extends AbstractFixture implements OrderedFixtureInte
                 $solicitud->setColor($sol_color[$j]);
                 $manager->persist($solicitud);
             }
-            
         }
         
         $manager->flush();

@@ -1,0 +1,30 @@
+facultad:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Facultad:index" }
+
+facultad_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Facultad:show" }
+
+facultad_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:Facultad:new" }
+
+facultad_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:Facultad:create" }
+    requirements: { _method: post }
+
+facultad_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Facultad:edit" }
+
+facultad_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Facultad:update" }
+    requirements: { _method: post|put }
+
+facultad_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Facultad:delete" }
+    requirements: { _method: post|delete }

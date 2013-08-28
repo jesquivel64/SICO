@@ -1,0 +1,102 @@
+{% extends "UNAHSGOBundle::layout.html.twig" %}
+
+{% block content %}
+<div class="row">
+  <section class="span12">
+    <div class="page-header">
+      <h1>Sistema Integrado de Correspondencia <small>Video Tutoriales</small></h1>
+    </div>
+  </section>
+</div>
+<div class="row">
+  <section class="span12">
+    <div class="page-header">
+      <a href="{{ asset('bundles/unahsgo/usuario.docx') }}" class="btn btn-info">Descargar Manual de Usuario</a>
+    </div>
+  </section>
+</div>
+<div class="row">
+  <section class="span12">
+    <div class="page-header">
+      <h2>Recibir Documento</h2>
+    </div>
+  </section>
+</div>
+<div class="row">
+  <div class="span6">
+    <video controls preload="auto" width="640" height="480">
+      <source src="{{ asset('bundles/unahsgo/video/recibir.mp4') }}"></source>
+    </video>
+  </div>
+</div>
+<div class="row">
+  <section class="span12">
+    <div class="page-header">
+      <h2>Adjuntar Archivo</h2>
+    </div>
+  </section>
+</div>
+<div class="row">
+  <div class="span6">
+    <video controls preload="auto" width="640" height="480">
+      <source src="{{ asset('bundles/unahsgo/video/adjuntar.mp4') }}"></source>
+    </video>
+  </div>
+</div>
+<div class="row">
+  <section class="span12">
+    <div class="page-header">
+      <h2>Editar Documento</h2>
+    </div>
+  </section>
+</div>
+<div class="row">
+  <div class="span6">
+    <video controls preload="auto" width="640" height="480">
+      <source src="{{ asset('bundles/unahsgo/video/editar.mp4') }}"></source>
+    </video>
+  </div>
+</div>
+<div class="row">
+  <section class="span12">
+    <div class="page-header">
+      <h2>Responder Documento</h2>
+    </div>
+  </section>
+</div>
+<div class="row">
+  <div class="span6">
+    <video controls preload="auto" width="640" height="480">
+      <source src="{{ asset('bundles/unahsgo/video/responder.mp4') }}"></source>
+    </video>
+  </div>
+</div>
+<div class="row">
+  <section class="span12">
+    <div class="page-header">
+      <h2>Registrar Seguimiento</h2>
+    </div>
+  </section>
+</div>
+<div class="row">
+  <div class="span6">
+    <video controls preload="auto" width="640" height="480">
+      <source src="{{ asset('bundles/unahsgo/video/seguimiento.mp4') }}"></source>
+    </video>
+  </div>
+</div>
+<div class="row">
+  <section class="span12">
+    <div class="page-header">
+      <h2>Estad&iacute;sticas de Documentos</h2>
+    </div>
+  </section>
+</div>
+<div class="row">
+  <div class="span6">
+    <video controls preload="auto" width="640" height="480">
+      <source src="{{ asset('bundles/unahsgo/video/estadisticas.mp4') }}"></source>
+    </video>
+  </div>
+</div>
+{% endblock %}

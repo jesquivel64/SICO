@@ -1,0 +1,30 @@
+centro:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Centro:index" }
+
+centro_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Centro:show" }
+
+centro_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:Centro:new" }
+
+centro_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:Centro:create" }
+    requirements: { _method: post }
+
+centro_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Centro:edit" }
+
+centro_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Centro:update" }
+    requirements: { _method: post|put }
+
+centro_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Centro:delete" }
+    requirements: { _method: post|delete }

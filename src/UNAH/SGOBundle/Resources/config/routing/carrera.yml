@@ -1,0 +1,30 @@
+carrera:
+    pattern:  /
+    defaults: { _controller: "UNAHSGOBundle:Carrera:index" }
+
+carrera_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UNAHSGOBundle:Carrera:show" }
+
+carrera_new:
+    pattern:  /new
+    defaults: { _controller: "UNAHSGOBundle:Carrera:new" }
+
+carrera_create:
+    pattern:  /create
+    defaults: { _controller: "UNAHSGOBundle:Carrera:create" }
+    requirements: { _method: post }
+
+carrera_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UNAHSGOBundle:Carrera:edit" }
+
+carrera_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UNAHSGOBundle:Carrera:update" }
+    requirements: { _method: post|put }
+
+carrera_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UNAHSGOBundle:Carrera:delete" }
+    requirements: { _method: post|delete }

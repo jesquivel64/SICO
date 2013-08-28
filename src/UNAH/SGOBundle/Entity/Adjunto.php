@@ -5,36 +5,37 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- */
+* @ORM\Entity
+* @ORM\HasLifecycleCallbacks
+*/
 class Adjunto
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+* @ORM\Id
+* @ORM\Column(type="integer")
+* @ORM\GeneratedValue(strategy="AUTO")
+*/
     public $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Documento", inversedBy="adjuntos")
-     * @ORM\JoinColumn(name="documento_id", referencedColumnName="id")
-     */
+* @ORM\ManyToOne(targetEntity="Documento", inversedBy="adjuntos")
+* @ORM\JoinColumn(name="documento_id", referencedColumnName="id")
+*/
     private $documento;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
+* @ORM\Column(type="string", length=255)
+*/
     protected $nombre;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+* @ORM\Column(type="string", length=255, nullable=true)
+*/
     public $path;
-	
-	/**
-     * @Assert\File(maxSize="100M")
-     */
+
+/**
+* @Assert\File(maxSize="100M")
+*/
     public $file;
     
     public function getAbsolutePath()
@@ -62,15 +63,15 @@ class Adjunto
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/documents';
+        return 'web/uploads/documents';
     }
-	
-	private $filenameForRemove;
+
+private $filenameForRemove;
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
+* @ORM\PrePersist()
+* @ORM\PreUpdate()
+*/
     public function preUpload()
     {
         if (null !== $this->file) {
@@ -79,32 +80,38 @@ class Adjunto
     }
 
     /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */ 
-     public function upload()
-     {
-        // the file property can be empty if the field is not required
+* @ORM\PostPersist()
+* @ORM\PostUpdate()
+*/
+    public function upload()
+    {
         if (null === $this->file) {
             return;
         }
 
-        $hashName = sha1($this->file->getClientOriginalName() . $this->getId() . mt_rand(0, 99999));
-        $this->filePath = $hashName . '.' . $this->file->guessExtension();
-        $this->file->move($this->getUploadRootDir(), $this->getFilePath());
+        // you must throw an exception here if the file cannot be moved
+        // so that the entity is not persisted to the database
+        // which the UploadedFile move() method does
+        $this->file->move(
+            $this->getUploadRootDir(),
+            $this->file->getClientOriginalName()
+        );
+$this->path = $this->file->getClientOriginalName();
+
         unset($this->file);
     }
+
     /**
-     * @ORM\PreRemove()
-     */
+* @ORM\PreRemove()
+*/
     public function storeFilenameForRemove()
     {
         $this->filenameForRemove = $this->getAbsolutePath();
     }
 
     /**
-     * @ORM\PostRemove()
-     */
+* @ORM\PostRemove()
+*/
     public function removeUpload()
     {
         if ($this->filenameForRemove) {
@@ -113,21 +120,21 @@ class Adjunto
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
-     */
+* Get id
+*
+* @return integer
+*/
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * Set nombre
-     *
-     * @param string $nombre
-     * @return Adjunto
-     */
+* Set nombre
+*
+* @param string $nombre
+* @return Adjunto
+*/
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -136,21 +143,21 @@ class Adjunto
     }
 
     /**
-     * Get nombre
-     *
-     * @return string 
-     */
+* Get nombre
+*
+* @return string
+*/
     public function getNombre()
     {
         return $this->nombre;
     }
 
     /**
-     * Set path
-     *
-     * @param string $path
-     * @return Adjunto
-     */
+* Set path
+*
+* @param string $path
+* @return Adjunto
+*/
     public function setPath($path)
     {
         $this->path = $path;
@@ -159,21 +166,21 @@ class Adjunto
     }
 
     /**
-     * Get path
-     *
-     * @return string 
-     */
+* Get path
+*
+* @return string
+*/
     public function getPath()
     {
         return $this->path;
     }
 
     /**
-     * Set documento
-     *
-     * @param \UNAH\SGOBundle\Entity\Documento $documento
-     * @return Adjunto
-     */
+* Set documento
+*
+* @param \UNAH\SGOBundle\Entity\Documento $documento
+* @return Adjunto
+*/
     public function setDocumento(\UNAH\SGOBundle\Entity\Documento $documento = null)
     {
         $this->documento = $documento;
@@ -182,10 +189,10 @@ class Adjunto
     }
 
     /**
-     * Get documento
-     *
-     * @return \UNAH\SGOBundle\Entity\Documento 
-     */
+* Get documento
+*
+* @return \UNAH\SGOBundle\Entity\Documento
+*/
     public function getDocumento()
     {
         return $this->documento;

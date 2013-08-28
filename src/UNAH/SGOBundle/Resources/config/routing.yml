@@ -6,6 +6,10 @@ UNAHSGOBundle_default:
     pattern:  /home
     defaults: { _controller: UNAHSGOBundle:Default:index }
 
+UNAHSGOBundle_help:
+    pattern:  /help
+    defaults: { _controller: UNAHSGOBundle:Default:help }
+
 UNAHSGOBundle_clasificar:
     pattern:  /clasificar
     defaults: { _controller: UNAHSGOBundle:Default:clasificar }
@@ -45,3 +49,19 @@ UNAHSGOBundle_tipoaccion:
 UNAHSGOBundle_coordinacion:
     resource: "@UNAHSGOBundle/Resources/config/routing/coordinacion.yml"
     prefix:   /coordinacion
+
+UNAHSGOBundle_instancia:
+    resource: "@UNAHSGOBundle/Resources/config/routing/instancia.yml"
+    prefix:   /instancia
+
+UNAHSGOBundle_carrera:
+    resource: "@UNAHSGOBundle/Resources/config/routing/carrera.yml"
+    prefix:   /carrera
+
+UNAHSGOBundle_facultad:
+    resource: "@UNAHSGOBundle/Resources/config/routing/facultad.yml"
+    prefix:   /facultad
+
+UNAHSGOBundle_centro:
+    resource: "@UNAHSGOBundle/Resources/config/routing/centro.yml"
+    prefix:   /centro

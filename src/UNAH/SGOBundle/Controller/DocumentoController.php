@@ -36,6 +36,7 @@ class DocumentoController extends Controller
         $periodo_form = $this->createPeriodoSearchForm();
         $resumen_form = $this->createResumenSearchForm();
         $comentario_form = $this->createComentarioEstadisticaForm();
+        
         return $this->render('UNAHSGOBundle:Documento:index.html.twig', array(
             'periodo_tipo_form' => $periodo_tipo_form->createView(),
             'periodo_form' => $periodo_form->createView(),
@@ -1489,7 +1490,6 @@ class DocumentoController extends Controller
             $query = $qb->select('d')
                 ->from('UNAH\SGOBundle\Entity\Documento', 'd')
                 ->where('d.descripcion LIKE :descripcion')
-                ->andWhere('d.emisor = :emisor')
                 ->andwhere('d.tipo = :tipo')
                 ->setParameter('tipo', $tipo)
                 ->setParameter('emisor', $emisor)
@@ -1499,7 +1499,6 @@ class DocumentoController extends Controller
             $documentos = $query->getResult();
             
             $query = $qb->select('count(d)')
-                ->where('d.emisor = :emisor')
                 ->andwhere('d.descripcion LIKE :descripcion')
                 ->andwhere('d.tipo = :tipo')
                 ->setParameter('tipo', $tipo)
@@ -1539,6 +1538,62 @@ class DocumentoController extends Controller
         return $this -> createFormBuilder()
         ->add('emisor', 'entity', array(
                         'class' => 'UNAH\SGOBundle\Entity\Departamento',
+                        )
+        )
+        ->add('tipo', 'entity', array(
+            'label' => 'Documento',
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
+    
+    private function createFacultadSearchForm() {
+        return $this -> createFormBuilder()
+        ->add('facultad', 'entity', array(
+                        'class' => 'UNAH\SGOBundle\Entity\Facultad',
+                        )
+        )
+        ->add('tipo', 'entity', array(
+            'label' => 'Documento',
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
+    
+    private function createCarreraSearchForm() {
+        return $this -> createFormBuilder()
+        ->add('carrera', 'entity', array(
+                        'class' => 'UNAH\SGOBundle\Entity\Carrera',
+                        )
+        )
+        ->add('tipo', 'entity', array(
+            'label' => 'Documento',
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
+    
+    private function createCentroSearchForm() {
+        return $this -> createFormBuilder()
+        ->add('centro', 'entity', array(
+                        'class' => 'UNAH\SGOBundle\Entity\Centro',
+                        )
+        )
+        ->add('tipo', 'entity', array(
+            'label' => 'Documento',
+            'class' => 'UNAH\SGOBundle\Entity\TipoDocumento',
+            )
+        )
+        ->getForm();
+    }
+    
+    private function createInstanciaSearchForm() {
+        return $this -> createFormBuilder()
+        ->add('instancia', 'entity', array(
+                        'class' => 'UNAH\SGOBundle\Entity\Instancia',
                         )
         )
         ->add('tipo', 'entity', array(
