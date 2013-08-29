@@ -198,6 +198,6 @@ class TipoDocumento
      */
     public function getImagen()
     {
-        return $this->imagen;
+        return ucfirst($this->imagen);
     }
 }
